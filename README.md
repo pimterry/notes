@@ -5,11 +5,13 @@ Simple delightful command-line note taking
 
 You already have a tool that backs up and syncs your data (be it Dropbox, iCloud, Seafile or whatever). You already have a text editor on your desktop, your laptops, your phone and that tablet you've forgotten about. You want to take notes on these myriad fancy boxes.
 
-You could use a web 2.0 note taking app that reimplements both of these parts from scratch, badly. You could tie yourself to a tool that holds all your data for you in their own brand-new format, locks you to their (often bloated) UI, and then steadily removes features unless you pay (hey Evernote).
+You could use a web X.0 note taking app that reimplements all of that from scratch (poorly). You could tie yourself to a tool that holds all your data for you in its own brand-new format, locks you into its (often bloated) UI, and then steadily removes features unless you start paying (hey Evernote). You don't have to.
 
-Or you could just have a folder full of text files, synced with your sync-thing of choice, edited with your edit-thing of choice, and accessible from a million other new tools too, when you next fancy a change. You can do that with little more than windows explorer and notepad, but it's nice to have a specialised tool to make this a little neater.
+Instead, you could have a simple folder full of simple text files, synced with your sync-thing of choice, edited with your edit-thing of choice. It's easy to understand, easy to use, and accessible from a million other new tools too whenever you next fancy a change. You can do this with little more than windows explorer and notepad, but it's nice to have a specialised tool to add on top and make this a little neater where you can.
 
-That's where `notes` comes in. Bring your own data syncing, bring your own text editor, put your notes in good old fashioned files, and `notes` will give you a CLI tool to glue it all together.   
+**That's where `notes` comes in. Bring your own data syncing, bring your own text editor, put your notes in good old fashioned files, and `notes` will give you a CLI tool to neatly glue it all together.**
+
+This is just one tool in the chain. `notes` is a command line tool, and some people will want a proper UI, or a web interface, or something that works on mobile. You can use this in one place and solve every other step in that chain any other way you like though &mdash; there's no shortage of simple file browsers and text editors that'll get the job done on any platform you like.
 
 ## How do I install this?
 
