@@ -1,29 +1,61 @@
 #!/bin/sh
 
-ls_notes() {
-    echo "No notes found"
-    return 1
+configured_dir=${NOTES_DIRECTORY%/} # Remove trailing slashes
+notes_dir="${configured_dir:-$HOME/notes}"
+escaped_notes_dir=$(echo $notes_dir | sed -e 's/[]\/$*.^|[]/\\&/g')
+
+without_notes_dir() {
+    cat | sed -e s/^$escaped_notes_dir//g | sed -E "s/^\/+//g" 
+}
+
+find_notes() {
+    find_output=$(find "$notes_dir" -ipath "$notes_dir/*$**" -type f 2>&1)
+    find_result=$?
+    formatted_output=$(echo "$find_output" | without_notes_dir)
+
+    if [[ $find_result == 0 && $formatted_output ]]; then
+        echo "$formatted_output"
+        return 0
+    else 
+        return 2
+    fi
+}
+
+usage() {
+	cat <<EOF
+notes is a command line note taking tool.
+
+Usage:
+    notes find [pattern]                # Search notes by filename and path
+    notes --help                        # Print this usage information
+
+Your notes directory is $notes_dir. You can
+override this by setting \$NOTES_DIRECTORY to your preferred path.
+EOF
 }
 
 main() {
 	ret=0
     cmd=""
-	[ -z "$1" ] && 1="ls"
+	[ -z "$1" ] && echo "No command specified\n" && usage && exit 1
 
     case "$1" in
-        "ls" )
-            cmd="ls_notes"
+        "find" )
+            cmd="find_notes"
             ;;
         --help | -help | -h )
             cmd="usage"
             ;;
         * )
-            cmd="usage && exit 1"
+            echo "$1 is not a recognized notes command.\n"
+            cmd="usage"
+            ret=1
             ;;
     esac
     shift
 
-    $cmd
-	exit $?
+    $cmd $@
+    ret=$[$ret+$?]
+    exit $ret
 }
 main "$@"
