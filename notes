@@ -27,6 +27,7 @@ notes is a command line note taking tool.
 
 Usage:
     notes find [pattern]                # Search notes by filename and path
+    notes open                          # Open your notes directory
     notes --help                        # Print this usage information
 
 Your notes directory is $notes_dir. You can
@@ -42,6 +43,9 @@ main() {
     case "$1" in
         "find" )
             cmd="find_notes"
+            ;;
+        "open" )
+            cmd="open $notes_dir"
             ;;
         --help | -help | -h )
             cmd="usage"
