@@ -2,7 +2,7 @@
 
 configured_dir=${NOTES_DIRECTORY%/} # Remove trailing slashes
 notes_dir="${configured_dir:-$HOME/notes}"
-escaped_notes_dir=$(echo $notes_dir | sed -e 's/[]\/$*.^|[]/\\&/g')
+escaped_notes_dir=$(printf $notes_dir | sed -e 's/[]\/$*.^|[]/\\&/g')
 
 without_notes_dir() {
     cat | sed -e s/^$escaped_notes_dir//g | sed -E "s/^\/+//g" 
@@ -11,10 +11,10 @@ without_notes_dir() {
 find_notes() {
     find_output=$(find "$notes_dir" -ipath "$notes_dir/*$**" -type f 2>&1)
     find_result=$?
-    formatted_output=$(echo "$find_output" | without_notes_dir)
+    formatted_output=$(printf "$find_output" | without_notes_dir)
 
     if [[ $find_result == 0 && $formatted_output ]]; then
-        echo "$formatted_output"
+        printf "$formatted_output"
         return 0
     else
         return 2
@@ -23,16 +23,16 @@ find_notes() {
 
 grep_notes() {
     if [ ! "$#" -gt 0 ]; then
-        echo "Grep requires a pattern, but none was provided."
+        printf "Grep requires a pattern, but none was provided."
         return 1
     fi
 
     grep_output=$(grep -r "$notes_dir" -e "$*" 2>&1)
     grep_result=$?
-    formatted_output=$(echo "$grep_output" | without_notes_dir)
+    formatted_output=$(printf "$grep_output" | without_notes_dir)
 
     if [[ $grep_result == 0 && $formatted_output ]]; then
-        echo "$formatted_output"
+        printf "$formatted_output"
         return 0
     else
         return 2
@@ -66,7 +66,7 @@ main() {
     cmd=""
 
 	if [ -z "$1" ]; then
-        echo "No command specified\n"
+        printf "No command specified\n\n"
         usage
         exit 1
     fi
@@ -88,7 +88,7 @@ main() {
             cmd="usage"
             ;;
         * )
-            echo "$1 is not a recognized notes command.\n"
+            printf "$1 is not a recognized notes command.\n\n"
             cmd="usage"
             ret=1
             ;;
