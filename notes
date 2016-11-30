@@ -16,7 +16,25 @@ find_notes() {
     if [[ $find_result == 0 && $formatted_output ]]; then
         echo "$formatted_output"
         return 0
-    else 
+    else
+        return 2
+    fi
+}
+
+grep_notes() {
+    if [ ! "$#" -gt 0 ]; then
+        echo "Grep requires a pattern, but none was provided."
+        return 1
+    fi
+
+    grep_output=$(grep -r "$notes_dir" -e "$*" 2>&1)
+    grep_result=$?
+    formatted_output=$(echo "$grep_output" | without_notes_dir)
+
+    if [[ $grep_result == 0 && $formatted_output ]]; then
+        echo "$formatted_output"
+        return 0
+    else
         return 2
     fi
 }
@@ -32,6 +50,7 @@ notes is a command line note taking tool.
 Usage:
     notes (new|n) <name>                # Create a new note
     notes find [pattern]                # Search notes by filename and path
+    notes grep <pattern>                # Search notes by content
     notes open                          # Open your notes directory
     notes --help                        # Print this usage information
 
@@ -43,7 +62,12 @@ EOF
 main() {
 	ret=0
     cmd=""
-	[ -z "$1" ] && echo "No command specified\n" && usage && exit 1
+
+	if [ -z "$1" ]; then
+        echo "No command specified\n"
+        usage
+        exit 1
+    fi
 
     case "$1" in
         "n" | "new" )
@@ -51,6 +75,9 @@ main() {
             ;;
         "find" )
             cmd="find_notes"
+            ;;
+        "grep" )
+            cmd="grep_notes"
             ;;
         "open" )
             cmd="open $notes_dir"
