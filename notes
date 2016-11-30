@@ -40,7 +40,9 @@ grep_notes() {
 }
 
 new_note() {
-    $EDITOR $notes_dir/$1.md
+    note_path=$notes_dir/$1.md 
+    mkdir -p $(dirname $note_path)
+    $EDITOR $note_path
 }
 
 usage() {

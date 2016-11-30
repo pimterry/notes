@@ -24,3 +24,10 @@ notes="./notes"
   assert_success
   assert_exists "$NOTES_DIRECTORY/note.md"
 }
+
+@test "Should create new notes within subfolders" {
+  run $notes new subfolder/note
+
+  assert_success
+  assert_exists "$NOTES_DIRECTORY/subfolder/note.md"
+}
