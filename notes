@@ -1,0 +1,29 @@
+#!/bin/sh
+
+ls_notes() {
+    echo "No notes found"
+    return 1
+}
+
+main() {
+	ret=0
+    cmd=""
+	[ -z "$1" ] && 1="ls"
+
+    case "$1" in
+        "ls" )
+            cmd="ls_notes"
+            ;;
+        --help | -help | -h )
+            cmd="usage"
+            ;;
+        * )
+            cmd="usage && exit 1"
+            ;;
+    esac
+    shift
+
+    $cmd
+	exit $?
+}
+main "$@"
