@@ -50,7 +50,7 @@ usage() {
 notes is a command line note taking tool.
 
 Usage:
-    notes (new|n) <name>                # Create a new note
+    notes new <name>                # Create a new note
     notes find [pattern]                # Search notes by filename and path
     notes grep <pattern>                # Search notes by content
     notes open                          # Open your notes directory
@@ -72,7 +72,7 @@ main() {
     fi
 
     case "$1" in
-        "n" | "new" )
+        "new" )
             cmd="new_note"
             ;;
         "find" )

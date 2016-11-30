@@ -18,13 +18,6 @@ notes="./notes"
   assert_exists "$NOTES_DIRECTORY/note.md"
 }
 
-@test "Should create a new note with the given name, using 'n' alias" {
-  run $notes n note
-
-  assert_success
-  assert_exists "$NOTES_DIRECTORY/note.md"
-}
-
 @test "Should create new notes within subfolders" {
   run $notes new subfolder/note
 
