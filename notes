@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 configured_dir=${NOTES_DIRECTORY%/} # Remove trailing slashes
 notes_dir="${configured_dir:-$HOME/notes}"
