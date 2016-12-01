@@ -19,7 +19,7 @@ Download `notes`, `chmod +x`, put it in your `$path`. This will probably do it:
 
 ```bash
 curl https://cdn.rawgit.com/pimterry/notes/v0.1.0/notes > /usr/local/bin/notes && chmod +x /usr/local/bin/notes
-``` 
+```
 
 By default your notes live in ~/notes, but you can change that to anywhere you like by setting the `$NOTES_DIRECTORY` environmental variable.
 
@@ -53,7 +53,7 @@ Combine these together! This opens each matching note in your `$EDITOR` in turn.
 
 All the above works. Here's what's coming next:
 
-- [ ] Combining find and grep, to match anything one
+- [ ] Combining find and grep, to match either one
 - [ ] More interesting and nicer looking file/grep search result formatting (...only when not piping?)
 - [ ] Make the file extension optional
 - [ ] Bash/zsh command autocompletion
