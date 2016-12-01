@@ -17,7 +17,7 @@ This is just one tool in the chain. `notes` is a command line tool, and some peo
 
 Download `notes`, `chmod +x`, put it in your `$path`. This will probably do it:
 
-```
+```bash
 curl https://cdn.rawgit.com/pimterry/notes/v0.1.0/notes > /usr/local/bin/notes
 ``` 
 
@@ -25,39 +25,27 @@ By default your notes live in ~/notes, but you can change that to anywhere you l
 
 ## How do I use it?
 
-```
-notes new <note-name>
-```
+### `notes new <note-name>`
 
 Opens your `$EDITOR` of choice for a new note, with the given name. The name can include slashes, if you want put your note in a subfolder.
 
-```
-notes find <part-of-a-note's-name>
-```
+### `notes find <part-of-a-note-name>`
 
 Searches note filenames and paths for the given string, and returns all the matches.
 
-```
-notes grep <part-of-a-note's-content>
-```
+### `notes grep <part-of-some-note-content>`
 
 Searches all note content for the given string and returns all the matches.
 
-```
-notes open
-```
+### `notes open`
 
 Opens your notes folder in your default configured file explorer.
 
-```
-notes open <note-name>
-```
+### `notes open <note-name>`
 
 Opens a given note in your `$EDITOR`. Name can be an absolute path, or a relative path in your notes (.md suffix optional).
 
-```
-notes grep/find <pattern> | notes open
-```
+### `notes grep/find <pattern> | notes open`
 
 Combine these together! This opens each matching note in your `$EDITOR` in turn.
 
