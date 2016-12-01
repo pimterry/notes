@@ -28,6 +28,6 @@ notes="./notes"
   run $notes grep my-pattern
 
   assert_success
-  assert_line "matching-node.md:my-pattern"
+  assert_line "matching-node.md"
   refute_line "non-matching-node.md"
 }

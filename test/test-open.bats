@@ -35,7 +35,7 @@ notes="./notes"
   assert_output "Opening $NOTES_DIRECTORY"
 }
 
-@test "Opens a file passed by pipe if provided" {
+@test "Opens a file passed by pipe from find" {
   touch $NOTES_DIRECTORY/note.md
 
   run bash -c "$notes find | $notes open"
@@ -44,7 +44,16 @@ notes="./notes"
   assert_output "Editing $NOTES_DIRECTORY/note.md"
 }
 
-@test "Opens multiple files passed by pipe if provided" {
+@test "Opens a file passed by pipe from grep" {
+  echo "hi" > $NOTES_DIRECTORY/note.md
+
+  run bash -c "$notes grep 'hi' | $notes open"
+
+  assert_success
+  assert_output "Editing $NOTES_DIRECTORY/note.md"
+}
+
+@test "Opens multiple files passed by pipe from find" {
   touch $NOTES_DIRECTORY/note.md
   touch $NOTES_DIRECTORY/note2.md
 

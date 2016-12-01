@@ -27,7 +27,7 @@ grep_notes() {
         return 1
     fi
 
-    grep_output=$(grep -r "$notes_dir" -e "$*" 2>&1)
+    grep_output=$(grep -r "$notes_dir" -l -e "$*" 2>&1)
     grep_result=$?
     formatted_output=$(printf "$grep_output" | without_notes_dir)
 
