@@ -33,7 +33,7 @@ By default your notes live in ~/notes, but you can change that to anywhere you l
 
 ### `notes new <note-name>`
 
-Opens your `$EDITOR` of choice for a new note, with the given name. The name can include slashes, if you want put your note in a subfolder.
+Opens your `$EDITOR` of choice for a new note, with the given name. The name can include slashes, if you want to put your note in a subfolder.
 
 ### `notes find <part-of-a-note-name>`
 
