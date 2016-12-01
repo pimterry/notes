@@ -1,4 +1,4 @@
-# notes
+# notes [![Travis Build Status](https://img.shields.io/travis/pimterry/notes.svg)](https://travis-ci.org/pimterry/notes)
 Simple delightful command-line note taking
 
 ## Why do I want this?
