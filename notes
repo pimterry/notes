@@ -100,16 +100,16 @@ main() {
     fi
 
     case "$1" in
-        "new" )
+        "new"|"n" )
             cmd="new_note"
             ;;
-        "find" )
+        "find"|"f" )
             cmd="find_notes"
             ;;
-        "grep" )
+        "grep"|"g" )
             cmd="grep_notes"
             ;;
-        "open" )
+        "open"|"o" )
             cmd="open_something"
             ;;
         --help | -help | -h )
