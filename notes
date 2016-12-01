@@ -40,9 +40,9 @@ grep_notes() {
 }
 
 new_note() {
-    note_name=$1
-    mkdir -p $(dirname $notes_dir/$note_name)
-    open_note $note_name.md
+    note_name="$*"
+    mkdir -p $(dirname "$notes_dir/$note_name")
+    open_note "$note_name.md"
 }
 
 open_something() {
