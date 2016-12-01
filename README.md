@@ -29,7 +29,7 @@ By default your notes live in ~/notes, but you can change that to anywhere you l
 notes new <note-name>
 ```
 
-Opens your $EDITOR of choice for a new note, with the given name. The name can include slashes, if you want put your note in a subfolder.
+Opens your `$EDITOR` of choice for a new note, with the given name. The name can include slashes, if you want put your note in a subfolder.
 
 ```
 notes find <part-of-a-note's-name>
@@ -41,7 +41,7 @@ Searches note filenames and paths for the given string, and returns all the matc
 notes grep <part-of-a-note's-content>
 ```
 
-Search all note content for the given string and returns all the matches.
+Searches all note content for the given string and returns all the matches.
 
 ```
 notes open
@@ -49,17 +49,29 @@ notes open
 
 Opens your notes folder in your default configured file explorer.
 
+```
+notes open <note-name>
+```
+
+Opens a given note in your `$EDITOR`. Name can be an absolute path, or a relative path in your notes (.md suffix optional).
+
+```
+notes grep/find <pattern> | notes open
+```
+
+Combine these together! This opens each matching note in your `$EDITOR` in turn.
+
 ## Tell me of the future
 
 All the above works. Here's what's coming next:
 
-- [ ] Note edit command
-- [ ] Combining find and grep, to match either one
-- [ ] Pipe filenames (from `notes find` or `notes grep` or anything else) to `notes open` to open all matching notes 
+- [ ] Combining find and grep, to match anything one
+- [ ] More interesting and nicer looking file/grep search result formatting (...only when not piping?)
+- [ ] Make the file extension optional
 - [ ] Bash/zsh command autocompletion
 - [ ] Bash/zsh note name autocompletion
-- [ ] Shorthand aliases `notes o`, `notes g`, `notes n` 
-- [ ] Interactive mode: `notes` should open a scrollable list of notes, open your editor when you pick one, and reappear after you close it.
+- [ ] Shorthand aliases `notes o`, `notes g`, `notes n`
+- [ ] Interactive mode? `notes` could open a scrollable list of notes, open your editor when you pick one, and reappear after you close it.
 
 ## I want to help
 
