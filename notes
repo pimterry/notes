@@ -90,10 +90,10 @@ EOF
 }
 
 main() {
-	ret=0
+    ret=0
     cmd=""
 
-	if [ -z "$1" ]; then
+    if [ -z "$1" ]; then
         printf "No command specified\n\n"
         usage
         exit 1
