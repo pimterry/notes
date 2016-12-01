@@ -22,12 +22,21 @@ notes="./notes"
 }
 
 @test "Should match only the files containing the given pattern when grepping" {
-  echo "my-pattern" > $NOTES_DIRECTORY/matching-node.md
-  echo "some-other-pattern" > $NOTES_DIRECTORY/non-matching-node.md
+  echo "my-pattern" > $NOTES_DIRECTORY/matching-note.md
+  echo "some-other-pattern" > $NOTES_DIRECTORY/non-matching-note.md
 
   run $notes grep my-pattern
 
   assert_success
-  assert_line "matching-node.md"
-  refute_line "non-matching-node.md"
+  assert_line "matching-note.md"
+  refute_line "non-matching-note.md"
+}
+
+@test "Should grep case-insensitively" {
+  echo "LETTERS" > $NOTES_DIRECTORY/matching-note.md
+
+  run $notes grep letter
+
+  assert_success
+  assert_line "matching-note.md"
 }
