@@ -4,11 +4,15 @@ load 'libs/bats-support/load'
 load 'libs/bats-assert/load'
 load 'helpers'
 
-# Set up a directory for our notes
-TMP_DIRECTORY=$(mktemp -d)
-export NOTES_DIRECTORY="$TMP_DIRECTORY"
-export EDITOR=touch
+setup() {
+  setupNotesEnv
+}
 
+teardown() {
+  teardownNotesEnv
+}
+
+export EDITOR=touch
 notes="./notes"
 
 @test "Should create a new note with the given name" {

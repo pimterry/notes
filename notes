@@ -4,6 +4,13 @@ configured_dir=${NOTES_DIRECTORY%/} # Remove trailing slashes
 notes_dir="${configured_dir:-$HOME/notes}"
 escaped_notes_dir=$(printf $notes_dir | sed -e 's/[]\/$*.^|[]/\\&/g')
 
+# If we have a STDIN, use it, otherwise get one. This helps us stub the tty better.
+if tty >/dev/null 2>&1; then
+    TTY=$(tty)
+else
+    TTY=/dev/tty
+fi
+
 without_notes_dir() {
     cat | sed -e s/^$escaped_notes_dir//g | sed -E "s/^\/+//g" 
 }
@@ -40,9 +47,24 @@ grep_notes() {
 }
 
 new_note() {
-    note_path=$notes_dir/$1.md 
-    mkdir -p $(dirname $note_path)
-    $EDITOR $note_path
+    note_name=$1
+    mkdir -p $(dirname $notes_dir/$note_name)
+    open_note $note_name.md
+}
+
+open_something() {
+    if [[ -p /dev/stdin ]]; then
+        read note_names
+        while read note_name; do
+            open_note "$note_name"
+        done <<< $note_names
+    else
+        open $notes_dir
+    fi
+}
+
+open_note() {
+    $EDITOR "$notes_dir/$1" < $TTY > $TTY
 }
 
 usage() {
@@ -50,10 +72,12 @@ usage() {
 notes is a command line note taking tool.
 
 Usage:
-    notes new <name>                # Create a new note
+    notes new <name>                    # Create a new note
     notes find [pattern]                # Search notes by filename and path
     notes grep <pattern>                # Search notes by content
     notes open                          # Open your notes directory
+    notes open <name>                   # Open a note for editing by full name
+    echo <name> | notes open            # Open all note filenames piped in
     notes --help                        # Print this usage information
 
 Your notes directory is $notes_dir. You can
@@ -82,7 +106,7 @@ main() {
             cmd="grep_notes"
             ;;
         "open" )
-            cmd="open $notes_dir"
+            cmd="open_something"
             ;;
         --help | -help | -h )
             cmd="usage"

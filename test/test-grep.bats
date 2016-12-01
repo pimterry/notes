@@ -2,10 +2,15 @@
 
 load 'libs/bats-support/load'
 load 'libs/bats-assert/load'
+load 'helpers'
 
-# Set up a directory for our notes
-TMP_DIRECTORY=$(mktemp -d)
-export NOTES_DIRECTORY="$TMP_DIRECTORY"
+setup() {
+  setupNotesEnv
+}
+
+teardown() {
+  teardownNotesEnv
+}
 
 notes="./notes"
 
