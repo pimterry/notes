@@ -4,13 +4,6 @@ configured_dir=${NOTES_DIRECTORY%/} # Remove trailing slashes
 notes_dir="${configured_dir:-$HOME/notes}"
 escaped_notes_dir=$(printf $notes_dir | sed -e 's/[]\/$*.^|[]/\\&/g')
 
-# If we have a STDIN, use it, otherwise get one. This helps us stub the tty better.
-if tty >/dev/null 2>&1; then
-    TTY=$(tty)
-else
-    TTY=/dev/tty
-fi
-
 without_notes_dir() {
     cat | sed -e s/^$escaped_notes_dir//g | sed -E "s/^\/+//g" 
 }
@@ -64,7 +57,7 @@ open_something() {
 }
 
 open_note() {
-    $EDITOR "$notes_dir/$1" < $TTY > $TTY
+    $EDITOR "$notes_dir/$1" < /dev/tty
 }
 
 usage() {

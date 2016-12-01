@@ -29,9 +29,6 @@ notes="./notes"
 }
 
 @test "Opens the configured notes directory if set" {
-  TMP_DIRECTORY=$(mktemp -d)
-  export NOTES_DIRECTORY="$TMP_DIRECTORY"
-
   run $notes open
 
   assert_success
@@ -39,12 +36,10 @@ notes="./notes"
 }
 
 @test "Opens a file passed by pipe if provided" {
-  TMP_DIRECTORY=$(mktemp -d)
-  export NOTES_DIRECTORY="$TMP_DIRECTORY"
   touch $NOTES_DIRECTORY/note.md
 
   run bash -c "$notes find | $notes open"
 
   assert_success
-  assert_equal "$(cat $FAKE_TTY)" "Editing $NOTES_DIRECTORY/note.md"
+  assert_output "Editing $NOTES_DIRECTORY/note.md"
 }
