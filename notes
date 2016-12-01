@@ -14,7 +14,7 @@ find_notes() {
     formatted_output=$(printf "$find_output" | without_notes_dir)
 
     if [[ $find_result == 0 && $formatted_output ]]; then
-        printf "$formatted_output"
+        printf "$formatted_output\n"
         return 0
     else
         return 2
@@ -32,7 +32,7 @@ grep_notes() {
     formatted_output=$(printf "$grep_output" | without_notes_dir)
 
     if [[ $grep_result == 0 && $formatted_output ]]; then
-        printf "$formatted_output"
+        printf "$formatted_output\n"
         return 0
     else
         return 2
