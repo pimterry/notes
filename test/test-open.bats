@@ -43,3 +43,14 @@ notes="./notes"
   assert_success
   assert_output "Editing $NOTES_DIRECTORY/note.md"
 }
+
+@test "Opens multiple files passed by pipe if provided" {
+  touch $NOTES_DIRECTORY/note.md
+  touch $NOTES_DIRECTORY/note2.md
+
+  run bash -c "$notes find | $notes open"
+
+  assert_success
+  assert_line "Editing $NOTES_DIRECTORY/note.md"
+  assert_line "Editing $NOTES_DIRECTORY/note2.md"
+}

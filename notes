@@ -47,10 +47,10 @@ new_note() {
 
 open_something() {
     if [[ -p /dev/stdin ]]; then
-        read note_names
+        read -d'\n' note_names
         while read note_name; do
             open_note "$note_name"
-        done <<< $note_names
+        done <<< "$note_names"
     else
         open $notes_dir
     fi
