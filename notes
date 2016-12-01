@@ -51,13 +51,24 @@ open_something() {
         while read note_name; do
             open_note "$note_name"
         done <<< "$note_names"
+    elif [ $# -gt 0 ]; then
+        open_note "$*"
     else
         open $notes_dir
     fi
 }
 
 open_note() {
-    $EDITOR "$notes_dir/$1" < /dev/tty
+    note_path=$1
+
+    if [[ "$note_path" != *.md ]]; then
+        note_path="$note_path.md"
+    fi
+    if [ ! -f "$note_path" ]; then
+        note_path="$notes_dir/$note_path"
+    fi
+
+    $EDITOR "$note_path" < /dev/tty
 }
 
 usage() {

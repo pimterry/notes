@@ -54,3 +54,21 @@ notes="./notes"
   assert_line "Editing $NOTES_DIRECTORY/note.md"
   assert_line "Editing $NOTES_DIRECTORY/note2.md"
 }
+
+@test "Accepts relative notes paths to open" {
+  touch $NOTES_DIRECTORY/note.md
+
+  run bash -c "$notes open note.md"
+
+  assert_success
+  assert_output "Editing $NOTES_DIRECTORY/note.md"
+}
+
+@test "Accepts names without .md to open" {
+  touch $NOTES_DIRECTORY/note.md
+
+  run bash -c "$notes open note"
+
+  assert_success
+  assert_output "Editing $NOTES_DIRECTORY/note.md"
+}
