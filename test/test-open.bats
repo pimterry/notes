@@ -29,8 +29,11 @@ notes="./notes"
   assert_output "Opening $HOME/notes" 
 }
 
-@test "Exits if EDITOR not configured" {
+@test "Exits if \$EDITOR isn't set and 'editor' doesn't exist" {
   unset EDITOR
+  function type() { [ $1 != "editor" ]; } # Pretend editor doesn't exist.
+  export -f type
+
   run $notes open test
 
   assert_failure
