@@ -5,7 +5,7 @@ notes_dir="${configured_dir:-$HOME/notes}"
 escaped_notes_dir=$(printf $notes_dir | sed -e 's/[]\/$*.^|[]/\\&/g')
 
 # If no $EDITOR, look for `editor` (symlink on debian/ubuntu/etc)
-if [ -z $EDITOR ] && type editor &>/dev/null; then
+if [ -z "$EDITOR" ] && type editor &>/dev/null; then
     EDITOR=editor
 fi
 
@@ -18,7 +18,7 @@ find_notes() {
     find_result=$?
     formatted_output=$(printf "$find_output" | without_notes_dir)
 
-    if [[ $find_result == 0 && $formatted_output ]]; then
+    if [[ $find_result == 0 && "$formatted_output" ]]; then
         printf "$formatted_output\n"
         return 0
     else
@@ -36,7 +36,7 @@ grep_notes() {
     grep_result=$?
     formatted_output=$(printf "$grep_output" | without_notes_dir)
 
-    if [[ $grep_result == 0 && $formatted_output ]]; then
+    if [[ $grep_result == 0 && "$formatted_output" ]]; then
         printf "$formatted_output\n"
         return 0
     else
