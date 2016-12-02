@@ -83,7 +83,7 @@ notes="./notes"
   assert_output "Editing $NOTES_DIRECTORY/note.md"
 }
 
-@test "Uses 'editor' if $EDITOR is not available" {
+@test "Uses 'editor' if \$EDITOR is not available" {
   unset EDITOR
   # Simulate a `editor` symlink (as in Debian/Ubuntu/etc)
   function editor() { echo "Editor bin, editing $*"; }
