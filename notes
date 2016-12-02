@@ -85,13 +85,15 @@ usage() {
 notes is a command line note taking tool.
 
 Usage:
-    notes new <name>                    # Create a new note
-    notes find [pattern]                # Search notes by filename and path
-    notes grep <pattern>                # Search notes by content
-    notes open                          # Open your notes directory
-    notes open <name>                   # Open a note for editing by full name
-    echo <name> | notes open            # Open all note filenames piped in
-    notes --help                        # Print this usage information
+    notes new|n <name>                    # Create a new note
+    notes find|f [pattern]                # Search notes by filename and path
+    notes grep|g <pattern>                # Search notes by content
+    notes open|o                          # Open your notes directory
+    notes open|o <name>                   # Open a note for editing by full name
+    echo <name> | notes open|o            # Open all note filenames piped in
+    notes --help                          # Print this usage information
+
+'command|c' means you can use 'command' or the equivalent shorthand alias 'c'
 
 Your notes directory is $notes_dir. You can
 override this by setting \$NOTES_DIRECTORY to your preferred path.
