@@ -6,6 +6,7 @@ load 'helpers'
 
 function open() { echo "Opening $*"; }
 export -f open
+
 function edit() { echo "Editing $*"; }
 export -f edit
 export EDITOR="edit"
@@ -80,4 +81,16 @@ notes="./notes"
 
   assert_success
   assert_output "Editing $NOTES_DIRECTORY/note.md"
+}
+
+@test "Uses 'editor' if $EDITOR is not available" {
+  unset EDITOR
+  # Simulate a `editor` symlink (as in Debian/Ubuntu/etc)
+  function editor() { echo "Editor bin, editing $*"; }
+  export -f editor
+
+  run bash -c "$notes open note.md"
+
+  assert_success
+  assert_output "Editor bin, editing $NOTES_DIRECTORY/note.md"
 }
