@@ -33,23 +33,23 @@ By default your notes live in ~/notes, but you can change that to anywhere you l
 
 ### `notes new <note-name>`
 
-Opens your `$EDITOR` of choice for a new note, with the given name. The name can include slashes, if you want to put your note in a subfolder.
+Opens your `$EDITOR` of choice for a new note, with the given name. The name can include slashes, if you want to put your note in a subfolder. Shorthand alias also available with `notes n`.
 
 ### `notes find <part-of-a-note-name>`
 
-Searches note filenames and paths for the given string, and returns all the matches.
+Searches note filenames and paths for the given string, and returns all the matches. Shorthand alias also available with `notes f`.
 
 ### `notes grep <part-of-some-note-content>`
 
-Searches all note content for the given string and returns all the matches.
+Searches all note content for the given string and returns all the matches. Shorthand alias also available with `notes g`.
 
 ### `notes open`
 
-Opens your notes folder in your default configured file explorer.
+Opens your notes folder in your default configured file explorer. Shorthand alias also available with `notes o`.
 
 ### `notes open <note-name>`
 
-Opens a given note in your `$EDITOR`. Name can be an absolute path, or a relative path in your notes (.md suffix optional).
+Opens a given note in your `$EDITOR`. Name can be an absolute path, or a relative path in your notes (.md suffix optional). Shorthand alias also available with `notes o`.
 
 ### `notes grep/find <pattern> | notes open`
 
@@ -64,7 +64,6 @@ All the above works. Here's what's coming next:
 - [ ] Make the file extension optional
 - [ ] Bash/zsh command autocompletion
 - [ ] Bash/zsh note name autocompletion
-- [ ] Shorthand aliases `notes o`, `notes g`, `notes n`
 - [ ] Interactive mode? `notes` could open a scrollable list of notes, open your editor when you pick one, and reappear after you close it.
 - [ ] Tree view.
 - [ ] Easy way to see short notes snippets in find/grep/tree? Could be option (`--snippets`) or by piping to a command (`notes find | notes snippets`). Maybe call it `head`?
