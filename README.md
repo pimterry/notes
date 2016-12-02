@@ -66,6 +66,9 @@ All the above works. Here's what's coming next:
 - [ ] Bash/zsh note name autocompletion
 - [ ] Shorthand aliases `notes o`, `notes g`, `notes n`
 - [ ] Interactive mode? `notes` could open a scrollable list of notes, open your editor when you pick one, and reappear after you close it.
+- [ ] Tree view.
+- [ ] Easy way to see short notes snippets in find/grep/tree? Could be option (`--snippets`) or by piping to a command (`notes find | notes snippets`). Maybe call it `head`?
+- [ ] Version control - probably by finding an easy (optional) way to integrate this automatically with Git.
 
 ## I want to help
 
