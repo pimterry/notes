@@ -24,7 +24,7 @@ This is just one tool in the chain. `notes` is a command line tool, and some peo
 Download `notes`, `chmod +x`, put it in your `$path`. This will probably do it:
 
 ```bash
-curl https://cdn.rawgit.com/pimterry/notes/v0.1.1/notes > /usr/local/bin/notes && chmod +x /usr/local/bin/notes
+curl https://cdn.rawgit.com/pimterry/notes/v0.1.2/notes > /usr/local/bin/notes && chmod +x /usr/local/bin/notes
 ```
 
 By default your notes live in ~/notes, but you can change that to anywhere you like by setting the `$NOTES_DIRECTORY` environmental variable.
