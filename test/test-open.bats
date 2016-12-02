@@ -28,6 +28,13 @@ notes="./notes"
   assert_output "Opening $HOME/notes" 
 }
 
+@test "Exits if EDITOR not configured" {
+  unset EDITOR
+  run $notes open test
+
+  assert_failure
+}
+
 @test "Opens the configured notes directory if set" {
   run $notes open
 
