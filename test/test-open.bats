@@ -29,17 +29,6 @@ notes="./notes"
   assert_output "Opening $HOME/notes" 
 }
 
-@test "Exits if \$EDITOR isn't set and 'editor' doesn't exist" {
-  unset EDITOR
-  function type() { [ $1 != "editor" ]; } # Pretend editor doesn't exist.
-  export -f type
-
-  run $notes open test
-
-  assert_failure
-  assert_output "Please set \$EDITOR to edit notes"
-}
-
 @test "Opens the configured notes directory if set" {
   run $notes open
 
@@ -104,4 +93,26 @@ notes="./notes"
 
   assert_success
   assert_output "Editor bin, editing $NOTES_DIRECTORY/note.md"
+}
+
+@test "Uses \$EDITOR over 'editor' if both are available" {
+  # Simulate a `editor` symlink (as in Debian/Ubuntu/etc)
+  function editor() { echo "Editor bin, editing $*"; }
+  export -f editor
+
+  run bash -c "$notes open note.md"
+
+  assert_success
+  assert_output "Editing $NOTES_DIRECTORY/note.md"
+}
+
+@test "Exits if \$EDITOR isn't set and 'editor' doesn't exist" {
+  unset EDITOR
+  function type() { [ $1 != "editor" ]; } # Pretend editor doesn't exist.
+  export -f type
+
+  run $notes open test
+
+  assert_failure
+  assert_output "Please set \$EDITOR to edit notes"
 }
