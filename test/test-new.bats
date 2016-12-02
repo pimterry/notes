@@ -22,6 +22,13 @@ notes="./notes"
   assert_exists "$NOTES_DIRECTORY/note.md"
 }
 
+@test "Should create new notes when using the shorthand alias" {
+  run $notes n note
+
+  assert_success
+  assert_exists "$NOTES_DIRECTORY/note.md"
+}
+
 @test "Should create new notes within subfolders" {
   run $notes new subfolder/note
 

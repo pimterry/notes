@@ -32,6 +32,14 @@ notes="./notes"
   assert_line "note2.md"
 }
 
+@test "Should find notes when using the find shorthand alias" {
+  touch $NOTES_DIRECTORY/note.md
+
+  run $notes f
+  assert_success
+  assert_line "note.md"
+}
+
 @test "Should show matching notes only if a pattern is provided to find" {
   touch $NOTES_DIRECTORY/match-note1.md
   touch $NOTES_DIRECTORY/hide-note2.md

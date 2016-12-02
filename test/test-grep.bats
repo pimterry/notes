@@ -32,6 +32,15 @@ notes="./notes"
   refute_line "non-matching-note.md"
 }
 
+@test "Should grep notes when using the grep shorthand alias" {
+  echo "my-pattern" > $NOTES_DIRECTORY/matching-note.md
+
+  run $notes g my-pattern
+
+  assert_success
+  assert_line "matching-note.md"
+}
+
 @test "Should grep case-insensitively" {
   echo "LETTERS" > $NOTES_DIRECTORY/matching-note.md
 

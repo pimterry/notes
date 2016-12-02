@@ -54,6 +54,15 @@ notes="./notes"
   assert_output "Editing $NOTES_DIRECTORY/note.md"
 }
 
+@test "Opens a file passed by pipe when using the shorthand open alias" {
+  touch $NOTES_DIRECTORY/note.md
+
+  run bash -c "$notes find | $notes o"
+
+  assert_success
+  assert_output "Editing $NOTES_DIRECTORY/note.md"
+}
+
 @test "Opens multiple files passed by pipe from find" {
   touch $NOTES_DIRECTORY/note.md
   touch $NOTES_DIRECTORY/note2.md
