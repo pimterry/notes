@@ -34,6 +34,7 @@ notes="./notes"
   run $notes open test
 
   assert_failure
+  assert_output "Please set \$EDITOR to edit notes"
 }
 
 @test "Opens the configured notes directory if set" {
