@@ -29,6 +29,18 @@ curl https://cdn.rawgit.com/pimterry/notes/v0.1.2/notes > /usr/local/bin/notes &
 
 By default your notes live in ~/notes, but you can change that to anywhere you like by setting the `$NOTES_DIRECTORY` environmental variable.
 
+### Bash completion
+
+If you want bash autocompletion copy the completion script into the bash completion directory. The bash completion directory is `/usr/share/bash-completion/completions/` on a typical debian jessie install, you can you can get the bash completion directory by running the following command:
+
+    pkg-config --variable=completionsdir bash-completion
+
+Installing the completions might be as follows:
+
+```bash
+curl https://cdn.rawgit.com/pimterry/notes/v0.1.1/notes.bash_completion > /usr/share/bash-completion/completions/notes
+```
+
 ## How do I use it?
 
 ### `notes new <note-name>`
@@ -62,8 +74,8 @@ All the above works. Here's what's coming next:
 - [ ] Combining find and grep, to match either one
 - [ ] More interesting and nicer looking file/grep search result formatting (...only when not piping?)
 - [ ] Make the file extension optional
-- [ ] Bash/zsh command autocompletion
-- [ ] Bash/zsh note name autocompletion
+- [ ] zsh command autocompletion
+- [ ] zsh note name autocompletion
 - [ ] Interactive mode? `notes` could open a scrollable list of notes, open your editor when you pick one, and reappear after you close it.
 - [ ] Tree view.
 - [ ] Easy way to see short notes snippets in find/grep/tree? Could be option (`--snippets`) or by piping to a command (`notes find | notes snippets`). Maybe call it `head`?
