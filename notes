@@ -182,7 +182,11 @@ main() {
             ;;
         "ls" )
             cmd="ls_notes"
-        "search"|"s")
+            ;;
+        "search"|"s" )
+            cmd="search_filenames_and_contents"
+            ;;
+        "search"|"s" )
             cmd="search_filenames_and_contents"
             ;;
         "find"|"f" )
