@@ -9,7 +9,7 @@ This demo uses zsh, vim and dropbox, but don't panic, that's just me. `notes` wi
 
 You already have a tool that backs up and syncs your data (be it Dropbox, iCloud, Seafile or whatever). You already have a text editor on your desktop, your laptops, your phone and that tablet you've forgotten about.
 
-You want to take notes. 
+You want to take notes.
 
 You could use a web X.0 note taking app that reimplements all of that from scratch (poorly). You could tie yourself to a tool that holds all your data for you in its own brand-new format, locks you into its (often bloated) UI, and then steadily removes features unless you start paying (hey Evernote). You don't have to.
 
@@ -49,7 +49,7 @@ Opens your notes folder in your default configured file explorer. Shorthand alia
 
 ### `notes open <note-name>`
 
-Opens a given note in your `$EDITOR`. Name can be an absolute path, or a relative path in your notes (.md suffix optional). Shorthand alias also available with `notes o`.
+Opens a given note in your `$EDITOR` (`$NOTES_EDITOR` instead if it exists). Name can be an absolute path, or a relative path in your notes (.md suffix optional). Shorthand alias also available with `notes o`.
 
 ### `notes grep/find <pattern> | notes open`
 
