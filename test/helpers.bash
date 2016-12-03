@@ -1,5 +1,9 @@
 assert_exists() {
-  assert [ -f "$1" ]
+  assert [ -e "$1" ]
+}
+
+refute_exists() {
+  assert [ ! -e "$1" ]
 }
 
 setupNotesEnv() {
