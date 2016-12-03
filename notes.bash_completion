@@ -3,7 +3,10 @@
 _notes_complete_notes() {
     local configured_dir=${NOTES_DIRECTORY%/} # Remove trailing slashes
     local notes_dir="${configured_dir:-$HOME/notes}"
-    local items=($(compgen -f "$notes_dir/$1"))
+    local OLD_IFS="$IFS"
+    IFS=$'\n'
+    local items=($(compgen -f "$notes_dir/$1" | sort ))
+    IFS="$OLD_IFS"
     for item in "${items[@]}"; do
         [[ -d $item ]] && item="$item/"
         local filename=${item#$notes_dir/}
@@ -11,10 +14,14 @@ _notes_complete_notes() {
     done
 }
 
+_notes_complete_commands() {
+    local valid_commands="new find grep open"
+    COMPREPLY=($(compgen -W "${valid_commands}" -- "${1}"))
+}
+
 _notes()
 {
     local cur
-    readonly commands="new find grep open"
 
     COMPREPLY=()   # Array variable storing the possible completions.
     cur=${COMP_WORDS[COMP_CWORD]}
@@ -35,7 +42,7 @@ _notes()
         esac
     else
         compopt +o nospace
-        COMPREPLY=($(compgen -W "${commands}" -- "${cur}"))
+        _notes_complete_commands "$cur"
     fi
     return 0
 }
