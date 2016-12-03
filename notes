@@ -50,6 +50,22 @@ new_note() {
     open_note "$note_name.md"
 }
 
+remove_note() {
+    local rm_args=()
+    if [[ "$1" == "-r" || "$1" == "--recursive" ]]; then
+        rm_args+=("--recursive")
+        shift
+    fi
+
+    local note_name="$*"
+    local to_remove="$notes_dir/$note_name"
+
+    if [ -f "$notes_dir/$note_name.md" ]; then
+        to_remove="$notes_dir/$note_name.md"
+    fi
+    rm "${rm_args[@]}" "$to_remove"
+}
+
 open_something() {
     if [[ -p /dev/stdin ]]; then
         read -d'\n' note_names
@@ -90,6 +106,7 @@ Usage:
     notes grep|g <pattern>                # Search notes by content
     notes open|o                          # Open your notes directory
     notes open|o <name>                   # Open a note for editing by full name
+    notes rm [-r | --recursive] <name>    # Remove note, or folder if -r or --recursive is given
     echo <name> | notes open|o            # Open all note filenames piped in
     notes --help                          # Print this usage information
 
@@ -122,6 +139,9 @@ main() {
             ;;
         "open"|"o" )
             cmd="open_something"
+            ;;
+        "rm" )
+            cmd="remove_note"
             ;;
         --help | -help | -h )
             cmd="usage"
