@@ -26,7 +26,7 @@ notes="./notes"
   run $notes open
 
   assert_success
-  assert_output "Opening $HOME/notes" 
+  assert_output "Opening $HOME/notes"
 }
 
 @test "Opens the configured notes directory if set" {
@@ -113,6 +113,21 @@ notes="./notes"
 
   assert_success
   assert_output "Editing $NOTES_DIRECTORY/note.md"
+}
+
+@test "Uses \$NOTES_EDITOR over \$EDITOR and 'editor' if it is available" {
+  function notes_edit() { echo "Editing with \$NOTES_EDITOR $*"; }
+  export -f notes_edit
+  export NOTES_EDITOR="notes_edit"
+
+  # Simulate a `editor` symlink (as in Debian/Ubuntu/etc)
+  function editor() { echo "Editor bin, editing $*"; }
+  export -f editor
+
+  run bash -c "$notes open note.md"
+  
+  assert_success
+  assert_output "Editing with \$NOTES_EDITOR $NOTES_DIRECTORY/note.md"
 }
 
 @test "Exits if \$EDITOR isn't set and 'editor' doesn't exist" {

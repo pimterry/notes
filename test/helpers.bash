@@ -4,6 +4,9 @@ assert_exists() {
 
 setupNotesEnv() {
   export NOTES_DIRECTORY="$(mktemp -d)"
+
+  # Prevent from interfering with tests if set by user
+  unset NOTES_EDITOR
 }
 
 teardownNotesEnv() {
