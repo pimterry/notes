@@ -10,7 +10,7 @@ if [ -z "$EDITOR" ] && type editor &>/dev/null; then
 fi
 
 without_notes_dir() {
-    cat | sed -e s/^$escaped_notes_dir//g | sed -E "s/^\/+//g" 
+    cat | sed -e s/^$escaped_notes_dir//g | sed -E "s/^\/+//g"
 }
 
 find_notes() {
@@ -114,7 +114,7 @@ main() {
         "new"|"n" )
             cmd="new_note"
             ;;
-        "find"|"f" )
+        "find"|"f"|"ls" )
             cmd="find_notes"
             ;;
         "grep"|"g" )
