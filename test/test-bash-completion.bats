@@ -44,3 +44,11 @@ teardown() {
   assert_equal "${COMPREPLY[0]}" 'my note'
   assert_equal 1 "${#COMPREPLY[@]}"
 }
+
+@test "Should ignore hidden files" {
+  touch "$NOTES_DIRECTORY/note1.md"
+  touch "$NOTES_DIRECTORY/.hiddennote.md"
+  _notes_complete_notes ""
+  assert_equal "${COMPREPLY[0]}" 'note1'
+  assert_equal 1 "${#COMPREPLY[@]}"
+}

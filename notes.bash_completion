@@ -8,6 +8,7 @@ _notes_complete_notes() {
     local items=($(compgen -f "$notes_dir/$1" | sort ))
     IFS="$OLD_IFS"
     for item in "${items[@]}"; do
+        [[ $item =~ /\.[^/]*$ ]] && continue
         [[ -d $item ]] && item="$item/"
         local filename=${item#$notes_dir/}
         COMPREPLY+=("${filename%.md}")
