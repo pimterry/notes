@@ -35,6 +35,10 @@ By default your notes live in ~/notes, but you can change that to anywhere you l
 
 Opens your `$EDITOR` of choice for a new note, with the given name. The name can include slashes, if you want to put your note in a subfolder. Shorthand alias also available with `notes n`.
 
+### `notes ls`
+
+Lists all notes (same as `notes find` with no arguments)
+
 ### `notes find <part-of-a-note-name>`
 
 Searches note filenames and paths for the given string, and returns all the matches. Shorthand alias also available with `notes f`.

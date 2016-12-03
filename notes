@@ -10,7 +10,7 @@ if [ -z "$EDITOR" ] && type editor &>/dev/null; then
 fi
 
 without_notes_dir() {
-    cat | sed -e s/^$escaped_notes_dir//g | sed -E "s/^\/+//g" 
+    cat | sed -e s/^$escaped_notes_dir//g | sed -E "s/^\/+//g"
 }
 
 find_notes() {
@@ -102,6 +102,7 @@ notes is a command line note taking tool.
 
 Usage:
     notes new|n <name>                    # Create a new note
+    notes ls                              # List all notes
     notes find|f [pattern]                # Search notes by filename and path
     notes grep|g <pattern>                # Search notes by content
     notes open|o                          # Open your notes directory
@@ -131,7 +132,7 @@ main() {
         "new"|"n" )
             cmd="new_note"
             ;;
-        "find"|"f" )
+        "find"|"f"|"ls" )
             cmd="find_notes"
             ;;
         "grep"|"g" )
