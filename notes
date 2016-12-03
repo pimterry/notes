@@ -13,6 +13,18 @@ without_notes_dir() {
     cat | sed -e "s/^$escaped_notes_dir//g" | sed -E "s/^\/+//g"
 }
 
+ls_notes() {
+    ls_output=$(ls -p "$notes_dir/$*" 2>&1)
+    ls_result=$?
+
+    if [[ $ls_result == 0 && "$ls_output" ]]; then
+        printf "$ls_output\n"
+        return 0
+    else
+        return 2
+    fi
+}
+
 find_notes() {
     find_output=$(find "$notes_dir" -ipath "$notes_dir/*$**" -type f 2>&1)
     find_result=$?
@@ -102,6 +114,7 @@ notes is a command line note taking tool.
 
 Usage:
     notes new|n <name>                    # Create a new note
+    notes ls <pattern>                    # List notes by path
     notes find|f [pattern]                # Search notes by filename and path
     notes grep|g <pattern>                # Search notes by content
     notes open|o                          # Open your notes directory
@@ -130,6 +143,9 @@ main() {
     case "$1" in
         "new"|"n" )
             cmd="new_note"
+            ;;
+        "ls" )
+            cmd="ls_notes"
             ;;
         "find"|"f" )
             cmd="find_notes"
