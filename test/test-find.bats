@@ -82,3 +82,13 @@ notes="./notes"
   assert_success
   assert_output "path with spaces/note.md"
 }
+
+@test "Should find files inside notes directories with spaces" {
+  mkdir "$NOTES_DIRECTORY/path with spaces"
+  touch "$NOTES_DIRECTORY/path with spaces/note.md"
+
+  NOTES_DIRECTORY="$NOTES_DIRECTORY/path with spaces" run $notes find
+
+  assert_success
+  assert_output "note.md"
+}
