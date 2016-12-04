@@ -42,3 +42,10 @@ notes="./notes"
   assert_success
   assert_exists "$NOTES_DIRECTORY/note with spaces.md"
 }
+
+@test "Should create notes within subfolders with spaces" {
+  run $notes new "subfolder with spaces/note"
+
+  assert_success
+  assert_exists "$NOTES_DIRECTORY/subfolder with spaces/note.md"
+}

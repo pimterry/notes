@@ -46,7 +46,7 @@ grep_notes() {
 
 new_note() {
     note_name="$*"
-    mkdir -p $(dirname "$notes_dir/$note_name")
+    mkdir -p "$(dirname "$notes_dir/$note_name")"
     open_note "$note_name.md"
 }
 
@@ -154,7 +154,7 @@ main() {
     esac
     shift
 
-    $cmd $@
+    $cmd "$@"
     ret=$[$ret+$?]
     exit $ret
 }
