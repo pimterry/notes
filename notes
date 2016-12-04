@@ -2,7 +2,7 @@
 
 configured_dir=${NOTES_DIRECTORY%/} # Remove trailing slashes
 notes_dir="${configured_dir:-$HOME/notes}"
-escaped_notes_dir=$(printf $notes_dir | sed -e 's/[]\/$*.^|[]/\\&/g')
+escaped_notes_dir="$(printf "$notes_dir" | sed -e 's/[]\/$*.^|[]/\\&/g')"
 
 # If no $EDITOR, look for `editor` (symlink on debian/ubuntu/etc)
 if [ -z "$EDITOR" ] && type editor &>/dev/null; then
@@ -10,7 +10,7 @@ if [ -z "$EDITOR" ] && type editor &>/dev/null; then
 fi
 
 without_notes_dir() {
-    cat | sed -e s/^$escaped_notes_dir//g | sed -E "s/^\/+//g" 
+    cat | sed -e "s/^$escaped_notes_dir//g" | sed -E "s/^\/+//g"
 }
 
 find_notes() {
