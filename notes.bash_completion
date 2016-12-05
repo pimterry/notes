@@ -1,0 +1,51 @@
+#!/bin/bash
+
+_notes_complete_notes() {
+    local configured_dir=${NOTES_DIRECTORY%/} # Remove trailing slashes
+    local notes_dir="${configured_dir:-$HOME/notes}"
+    local OLD_IFS="$IFS"
+    IFS=$'\n'
+    local items=($(compgen -f "$notes_dir/$1" | sort ))
+    IFS="$OLD_IFS"
+    for item in "${items[@]}"; do
+        [[ $item =~ /\.[^/]*$ ]] && continue
+        [[ -d $item ]] && item="$item/"
+        local filename=${item#$notes_dir/}
+        COMPREPLY+=("${filename%.md}")
+    done
+}
+
+_notes_complete_commands() {
+    local valid_commands="new find grep open"
+    COMPREPLY=($(compgen -W "${valid_commands}" -- "${1}"))
+}
+
+_notes()
+{
+    local cur
+
+    COMPREPLY=()   # Array variable storing the possible completions.
+    cur=${COMP_WORDS[COMP_CWORD]}
+
+    if [[ $COMP_CWORD -gt 1 ]]; then
+        case "${COMP_WORDS[1]}" in
+            new)
+                _notes_complete_notes "$cur"
+                ;;
+            find)
+                _notes_complete_notes "$cur"
+                ;;
+            grep)
+                ;;
+            open)
+                _notes_complete_notes "$cur"
+                ;;
+        esac
+    else
+        compopt +o nospace
+        _notes_complete_commands "$cur"
+    fi
+    return 0
+}
+
+complete -o filenames -o nospace -F _notes notes
