@@ -79,19 +79,20 @@ Combine these together! This opens each matching note in your `$EDITOR` in turn.
 
 All the above works. Here's what's coming next:
 
-- [ ] Combining find and grep, to match either one
-- [ ] More interesting and nicer looking file/grep search result formatting (...only when not piping?)
-- [ ] Make the file extension optional
-- [ ] zsh command autocompletion
-- [ ] zsh note name autocompletion
-- [ ] Interactive mode? `notes` could open a scrollable list of notes, open your editor when you pick one, and reappear after you close it.
-- [ ] Tree view.
-- [ ] Easy way to see short notes snippets in find/grep/tree? Could be option (`--snippets`) or by piping to a command (`notes find | notes snippets`). Maybe call it `head`?
-- [ ] Version control - probably by finding an easy (optional) way to integrate this automatically with Git.
+- [ ] Combining find and grep, to match either one (https://github.com/pimterry/notes/issues/16)
+- [ ] More interesting and nicer looking file/grep search result formatting, perhaps only when not piping? (https://github.com/pimterry/notes/issues/27)
+- [ ] Make the file extension optional (https://github.com/pimterry/notes/issues/24)
+- [ ] zsh command and note name autocompletion (https://github.com/pimterry/notes/issues/25)
+- [ ] Interactive mode? `notes` could open a scrollable list of notes, open your editor when you pick one, and reappear after you close it. (https://github.com/pimterry/notes/issues/17)
+- [ ] Tree view (https://github.com/pimterry/notes/issues/26)
+- [ ] Easy way to see short notes snippets in find/grep/tree? Could be option (`--snippets`) or by piping to a command (`notes find | notes snippets`). Maybe call it `head`? (https://github.com/pimterry/notes/issues/22)
+- [ ] Version control - probably by finding an easy (optional) way to integrate this automatically with Git (https://github.com/pimterry/notes/issues/12)
 
 ## I want to help
 
-Great! Jump in. Feel free to play around, open an issue with new feature ideas or open PRs for fixes (although check with an issue first if you want to do anything substantial).
+Great! Jump in. Feel free to play around, open an issue with new feature ideas or open PRs for fixes and improvements. Do check with an issue first if you're planning to do anything substantial to avoid disappointment.
+
+Remember that `notes` is intended to be a small toolbox of commands - if it's possible to build your extension as an independent wrapper building on the existing notes commands, that's probably a better first step. Create new functionality on top of `notes` and then file issues to extend `notes` to better support that wrapper, or to merge your wrapper in as a built-in command later, once you're sure it works and it's useful.
 
 If you want to get the code locally you'll need to:
 
@@ -101,8 +102,10 @@ git submodule update --init --recursive
 ./test.sh # Check the tests work before you make any changes
 ```
 
+If you install [`entr`](http://entrproject.org/) you can also run `./dev.sh`, which will watch all files within the project directory, and rerun tests any time they change.
+
 If you submit a PR, please make sure it:
 
-* Doesn't break existing tests
+* Doesn't break any existing tests
 * Adds new tests, if appropriate
 * Adds new documentation, if appropriate
