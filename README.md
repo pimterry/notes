@@ -51,17 +51,17 @@ curl https://cdn.rawgit.com/pimterry/notes/v0.1.1/notes.bash_completion > /usr/s
 
 Opens your `$EDITOR` of choice for a new note, with the given name. The name can include slashes, if you want to put your note in a subfolder. Shorthand alias also available with `notes n`.
 
-### `notes ls <directory-pattern>`
-
-Lists notes and subdirectories non-recursively.
-
 ### `notes find <part-of-a-note-name>`
 
-Searches note filenames and paths for the given string, and returns all the matches. Shorthand alias also available with `notes f`.
+Searches note filenames and paths for the given string, and returns every single match. If no pattern is specified, this returns every single note. Shorthand alias also available with `notes f`.
 
 ### `notes grep <part-of-some-note-content>`
 
 Searches all note content for the given string and returns all the matches. Shorthand alias also available with `notes g`.
+
+### `notes ls <directory>`
+
+Lists note names and note directories at a single level. Lists all top level notes and directories if no path is provided, or the top-level contents of a directory if one is provided.
 
 ### `notes open`
 
