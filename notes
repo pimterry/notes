@@ -31,9 +31,9 @@ ls_notes() {
 }
 
 find_notes() {
-    find_output=$(find "$notes_dir" -ipath "$notes_dir/*$**" -type f 2>&1)
-    find_result=$?
-    formatted_output=$(printf "$find_output" | without_notes_dir)
+    local find_output=$(find "$notes_dir" -ipath "$notes_dir/*$**" -type f 2>&1)
+    local find_result=$?
+    local formatted_output=$(printf "$find_output" | without_notes_dir)
 
     if [[ $find_result == 0 && "$formatted_output" ]]; then
         printf "$formatted_output\n"
@@ -49,9 +49,9 @@ grep_notes() {
         return 1
     fi
 
-    grep_output=$(grep -r "$notes_dir" -li -e "$*" 2>&1)
-    grep_result=$?
-    formatted_output=$(printf "$grep_output" | without_notes_dir)
+    local grep_output=$(grep -r "$notes_dir" -li -e "$*" 2>&1)
+    local grep_result=$?
+    local formatted_output=$(printf "$grep_output" | without_notes_dir)
 
     if [[ $grep_result == 0 && "$formatted_output" ]]; then
         printf "$formatted_output\n"
@@ -62,7 +62,7 @@ grep_notes() {
 }
 
 new_note() {
-    note_name="$*"
+    local note_name="$*"
     mkdir -p "$(dirname "$notes_dir/$note_name")"
     open_note "$note_name.md"
 }
@@ -97,7 +97,7 @@ open_something() {
 }
 
 open_note() {
-    note_path=$1
+    local note_path=$1
 
     if [[ "$note_path" != *.md ]]; then
         note_path="$note_path.md"
@@ -136,8 +136,8 @@ EOF
 }
 
 main() {
-    ret=0
-    cmd=""
+    local ret=0
+    local cmd=""
 
     if [ -z "$1" ]; then
         printf "No command specified\n\n"
