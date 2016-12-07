@@ -1,0 +1,6 @@
+# This is an example configuration file for notes 
+# To use it, copy to ~/.config/notes/config
+# This config is case sensitive
+
+# Set the editor that notes are opened with
+EDITOR=nano

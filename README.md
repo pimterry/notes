@@ -29,6 +29,10 @@ curl https://cdn.rawgit.com/pimterry/notes/v0.1.2/notes > /usr/local/bin/notes &
 
 By default your notes live in ~/notes, but you can change that to anywhere you like by setting the `$NOTES_DIRECTORY` environmental variable.
 
+## How do I configure this?
+
+You can set the configuration by creating a file at "~/.config/notes/config". We've included an example for you (config.example) that you can copy.
+
 ### Bash completion
 
 If you want bash autocompletion copy the completion script into the bash completion directory. The bash completion directory is `/usr/share/bash-completion/completions/` on a typical debian jessie install, you can you can get the bash completion directory by running the following command:
