@@ -66,5 +66,16 @@ notes="./notes"
   assert_success
   refute_line "hide-note.md"
   refute_line "match-dir/"
-  assert_line "match-note1.md"
+  assert_line "match-dir/match-note1.md"
 }
+
+@test "Should list contents of a subdirectory if the pattern includes slashes" {
+  mkdir -p $NOTES_DIRECTORY/match-dir/child-dir
+  touch $NOTES_DIRECTORY/match-dir/child-dir/match-note1.md
+
+  run $notes ls match-dir/child-dir/
+
+  assert_success
+  assert_line "match-dir/child-dir/match-note1.md"
+}
+

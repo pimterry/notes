@@ -19,11 +19,19 @@ without_notes_dir() {
 }
 
 ls_notes() {
-    ls_output=$(ls -p "$notes_dir/$*" 2>&1)
-    ls_result=$?
+    local ls_output=$(ls -p "$notes_dir/$*" 2>&1)
+    local ls_result=$?
+    local formatted_output
 
-    if [[ $ls_result == 0 && "$ls_output" ]]; then
-        printf "$ls_output\n"
+    if [ $# -gt 0 ]; then
+        local path_prefix=$(printf "${*%/}" | sed -e 's/[]\/$*.^|[]/\\&/g')
+        formatted_output=$(printf "$ls_output" | sed -E "s/^/$path_prefix\//")
+    else
+        formatted_output=$ls_output
+    fi
+
+    if [[ $ls_result == 0 && "$formatted_output" ]]; then
+        printf "$formatted_output\n"
         return 0
     else
         return 2
