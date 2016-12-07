@@ -29,11 +29,7 @@ curl https://cdn.rawgit.com/pimterry/notes/v0.1.2/notes > /usr/local/bin/notes &
 
 By default your notes live in ~/notes, but you can change that to anywhere you like by setting the `$NOTES_DIRECTORY` environmental variable.
 
-## How do I configure this?
-
-You can set the configuration by creating a file at "~/.config/notes/config". We've included an example for you (config.example) that you can copy.
-
-### Bash completion
+#### Installing Bash completion
 
 If you want bash autocompletion copy the completion script into the bash completion directory. The bash completion directory is `/usr/share/bash-completion/completions/` on a typical debian jessie install, you can you can get the bash completion directory by running the following command:
 
@@ -44,6 +40,14 @@ Installing the completions might be as follows:
 ```bash
 curl https://cdn.rawgit.com/pimterry/notes/v0.1.1/notes.bash_completion > /usr/share/bash-completion/completions/notes
 ```
+
+## How do I configure this?
+
+You can set your favourite text editor and your notes directory by setting the `$EDITOR` and `$NOTES_DIRECTORY` environmental variables.
+
+Most users shouldn't need to do any more than that. If you're doing anything more complicated though, you can configure `notes` config directly in "~/.config/notes/config", including EDITOR and NOTES_DIRECTORY. We've included an example in this repo for you ([config.example](config.example)) that you can copy. Any values set in the config file override values in environment variables.
+
+Right now this mainly exists in case you want to use a different `EDITOR` for notes than the one you have set in your environment generally, but this is where all other config will be living in future.
 
 ## How do I use it?
 
