@@ -24,22 +24,26 @@ This is just one tool in the chain. `notes` is a command line tool, and some peo
 Download `notes`, `chmod +x`, put it in your `$path`. This will probably do it:
 
 ```bash
-curl https://cdn.rawgit.com/pimterry/notes/v0.1.2/notes > /usr/local/bin/notes && chmod +x /usr/local/bin/notes
+curl https://cdn.rawgit.com/pimterry/notes/v0.2.0/notes > /usr/local/bin/notes && chmod +x /usr/local/bin/notes
 ```
 
 By default your notes live in ~/notes, but you can change that to anywhere you like by setting the `$NOTES_DIRECTORY` environmental variable.
 
 #### Installing Bash completion
 
-If you want bash autocompletion copy the completion script into the bash completion directory. The bash completion directory is `/usr/share/bash-completion/completions/` on a typical debian jessie install, you can you can get the bash completion directory by running the following command:
+`notes` includes bash autocompletion, to let you tab-complete commands and your note names. This requires Bash > 4.0 and [bash-completion](https://github.com/scop/bash-completion) to be installed - it's probably available from your friendly local package manager.
+
+To enable completion for notes, copy the completion script into your bash completion directory, and it should be automatically loaded. The bash completion directory is `/usr/share/bash-completion/completions/` on a typical Debian install, or `/usr/local/etc/bash_completion.d/` on OSX with `bash-completion` from homebrew. You may be able to find your own bash completion directory by running the following command:
 
     pkg-config --variable=completionsdir bash-completion
 
 Installing the completions might be as follows:
 
 ```bash
-curl https://cdn.rawgit.com/pimterry/notes/v0.1.1/notes.bash_completion > /usr/share/bash-completion/completions/notes
+curl https://cdn.rawgit.com/pimterry/notes/v0.2.0/notes.bash_completion > /usr/share/bash-completion/completions/notes
 ```
+
+You'll need to open a new shell for this to take effect.
 
 ## How do I configure this?
 
