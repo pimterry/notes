@@ -81,7 +81,7 @@ Opens a given note in your `$EDITOR`. Name can be an absolute path, or a relativ
 
 ### `notes rm [-r | --recursive] <note-name>`
 
-Remove the given note if it exists. If `-r` or `--recursive` is given, delete the folders/notes recursively.
+Removes the given note if it exists. If `-r` or `--recursive` is given, deletes the folders/notes recursively.
 
 ### `notes grep/find <pattern> | notes open`
 
