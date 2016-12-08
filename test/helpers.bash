@@ -8,14 +8,17 @@ refute_exists() {
 
 assert_contains() {
   local item
-  local items=(${@:2})
-  for item in "${items[@]}"; do
+  for item in "${@:2}"; do
     if [[ "$item" == "$1" ]]; then
       return 0
     fi
   done
 
-  fail "$1 not found in: ${items[@]}"
+  batslib_print_kv_single_or_multi 8 \
+        'expected' "$1" \
+        'actual'   "$(echo ${@:2})" \
+      | batslib_decorate 'item was not found in the array' \
+      | fail
 }
 
 setupNotesEnv() {
