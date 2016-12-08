@@ -17,10 +17,12 @@ teardown() {
 @test "Should list all commands" {
   touch $NOTES_DIRECTORY/note1.md
   _notes_complete_commands ""
-  assert_contains "new" ${COMPREPLY[@]}
-  assert_contains "find" ${COMPREPLY[@]}
-  assert_contains "grep" ${COMPREPLY[@]}
-  assert_contains "open" ${COMPREPLY[@]}
+  assert_contains "new"  "${COMPREPLY[@]}"
+  assert_contains "find" "${COMPREPLY[@]}"
+  assert_contains "grep" "${COMPREPLY[@]}"
+  assert_contains "open" "${COMPREPLY[@]}"
+  assert_contains "ls"   "${COMPREPLY[@]}"
+  assert_contains "rm"   "${COMPREPLY[@]}"
 }
 
 @test "Should show matching note when found" {

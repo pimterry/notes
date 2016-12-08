@@ -16,7 +16,7 @@ _notes_complete_notes() {
 }
 
 _notes_complete_commands() {
-    local valid_commands="new find grep open"
+    local valid_commands="new find grep open ls rm"
     COMPREPLY=($(compgen -W "${valid_commands}" -- "${1}"))
 }
 
