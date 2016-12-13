@@ -29,18 +29,24 @@ curl https://cdn.rawgit.com/pimterry/notes/v0.2.0/notes > /usr/local/bin/notes &
 
 By default your notes live in ~/notes, but you can change that to anywhere you like by setting the `$NOTES_DIRECTORY` environmental variable.
 
-#### Installing Bash completion
+#### Installing auto completion
 
-`notes` includes bash autocompletion, to let you tab-complete commands and your note names. This requires Bash > 4.0 and [bash-completion](https://github.com/scop/bash-completion) to be installed - it's probably available from your friendly local package manager.
+`notes` includes auto completion, to let you tab-complete commands and your note names. This requires Bash > 4.0 and [bash-completion](https://github.com/scop/bash-completion) or Zsh to be installed - it's probably available from your friendly local package manager.
 
-To enable completion for notes, copy the completion script into your bash completion directory, and it should be automatically loaded. The bash completion directory is `/usr/share/bash-completion/completions/` on a typical Debian install, or `/usr/local/etc/bash_completion.d/` on OSX with `bash-completion` from homebrew. You may be able to find your own bash completion directory by running the following command:
+To enable completion for notes, copy the completion script into your bash or zsh completion directory, and it should be automatically loaded. The bash completion directory is `/usr/share/bash-completion/completions/` on a typical Debian install, or `/usr/local/etc/bash_completion.d/` on OSX with `bash-completion` from homebrew. The zsh completion directory is `/usr/share/zsh/functions/Completion/` in Linux. You may be able to find your own bash completion directory by running the following command:
 
     pkg-config --variable=completionsdir bash-completion
 
 Installing the completions might be as follows:
 
+Bash
 ```bash
 curl https://cdn.rawgit.com/pimterry/notes/v0.2.0/notes.bash_completion > /usr/share/bash-completion/completions/notes
+```
+
+Zsh
+```bash
+curl https://cdn.rawgit.com/pimterry/notes/v0.2.0/notes._notes > /usr/share/zsh/functions/Completion/
 ```
 
 You'll need to open a new shell for this to take effect.
@@ -94,7 +100,6 @@ All the above works. Here's what's coming next:
 - [ ] Combining find and grep, to match either one (https://github.com/pimterry/notes/issues/16)
 - [ ] More interesting and nicer looking file/grep search result formatting, perhaps only when not piping? (https://github.com/pimterry/notes/issues/27)
 - [ ] Make the file extension optional (https://github.com/pimterry/notes/issues/24)
-- [ ] zsh command and note name autocompletion (https://github.com/pimterry/notes/issues/25)
 - [ ] Interactive mode? `notes` could open a scrollable list of notes, open your editor when you pick one, and reappear after you close it. (https://github.com/pimterry/notes/issues/17)
 - [ ] Tree view (https://github.com/pimterry/notes/issues/26)
 - [ ] Easy way to see short notes snippets in find/grep/tree? Could be option (`--snippets`) or by piping to a command (`notes find | notes snippets`). Maybe call it `head`? (https://github.com/pimterry/notes/issues/22)
