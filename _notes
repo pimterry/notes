@@ -1,0 +1,80 @@
+#compdef notes
+# ------------------------------------------------------------------------------
+# Copyright (c) 2016 Github zsh-users - http://github.com/zsh-users
+# All rights reserved.
+#
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions are met:
+#     * Redistributions of source code must retain the above copyright
+#       notice, this list of conditions and the following disclaimer.
+#     * Redistributions in binary form must reproduce the above copyright
+#       notice, this list of conditions and the following disclaimer in the
+#       documentation and/or other materials provided with the distribution.
+#     * Neither the name of the zsh-users nor the
+#       names of its contributors may be used to endorse or promote products
+#       derived from this software without specific prior written permission.
+#
+# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+# ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+# WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+# DISCLAIMED. IN NO EVENT SHALL ZSH-USERS BE LIABLE FOR ANY
+# DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+# (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+# LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+# ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+# SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+# ------------------------------------------------------------------------------
+# Description
+# -----------
+#
+#  Simple delightful note taking, with more unix and less lock-in. (https://github.com/pimterry/notes)
+#
+# ------------------------------------------------------------------------------
+# Authors
+# -------
+#
+#  * Tim Perry      (https://github.com/pimterry)
+#  * Stefen Ramirez (https://github.com/RODNOTGOD)
+#
+# ------------------------------------------------------------------------------
+
+__notes_cmd ()
+{
+  local -a list
+  list=(
+    new:'Create new file'
+    ls:'<pattern> List notes by path'
+    find:'[pattern] Search notes by filename and path'
+    grep:'<pattern> Search notes by content'
+    open:'<name> Open a notes for editing by full name'
+    rm:'[-r | --recursive] <name> Remove note, or folder if -r or --recursive is given]'
+    --help:'Show usage'
+  )
+  _describe -t sub-commands 'sub commands' list && _ret=0
+}
+
+_notes ()
+{
+  local configured_dir=${NOTES_DIRECTORY%/}
+  local note_dir="${configured_dir:-$HOME/notes}"
+
+  if (($CURRENT == 2)); then
+    _alternative 'sub-commands:files:__notes_cmd' && _ret=0
+  elif (($CURRENT == 3)); then
+    case $words[2] in
+      open|rm|new)
+        _path_files -W "${note_dir}" && _ret=0;;
+      ls)
+        _path_files -W "${note_dir}" -/ && _ret=0;;
+    esac
+  fi
+}
+
+# Local Variables:
+# mode: Shell-Script
+# sh-indentation: 2
+# indent-tabs-mode: nil
+# sh-basic-offset: 2
+# End:
+# vim: ft=zsh sw=2 ts=2 et
