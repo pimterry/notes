@@ -46,7 +46,7 @@ curl https://cdn.rawgit.com/pimterry/notes/v0.2.0/notes.bash_completion > /usr/s
 
 Zsh
 ```bash
-curl https://cdn.rawgit.com/pimterry/notes/v0.2.0/notes._notes > /usr/share/zsh/functions/Completion/
+curl https://cdn.rawgit.com/pimterry/notes/v0.2.0/notes._notes > /usr/share/zsh/site-functions/_notes
 ```
 
 You'll need to open a new shell for this to take effect.
