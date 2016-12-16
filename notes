@@ -103,7 +103,7 @@ new_note() {
         note_name=$resolved_name
     fi
     mkdir -p "$(dirname "$notes_dir/$note_name")"
-    open_note "$note_name$file_ext"
+    open_note "$note_name"
 }
 
 remove_note() {
@@ -146,16 +146,12 @@ open_note() {
     local ext_check
     local buffer=()
 
-
     for arg in $@; do
-
         ext_check=true
         note_path=$arg
-
         if echo $note_path | grep -q '\.[a-z]'; then
             ext_check=false
         fi
-
         if [[ "$note_path" != *$file_ext ]] && $ext_check; then
             note_path="$note_path$file_ext"
         fi
