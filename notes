@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 
+GREP_COLOR=always
+
 # Look for configuration file at ~/.config/notes/config and use it
-if [ -f ~/.config/notes/config ]; then 
+if [ -f ~/.config/notes/config ]; then
     . ~/.config/notes/config
 fi
 
@@ -15,7 +17,7 @@ if [ -z "$EDITOR" ] && type editor &>/dev/null; then
 fi
 
 without_notes_dir() {
-    cat | sed -e "s/^$escaped_notes_dir//g" | sed -E "s/^\/+//g"
+    cat | sed -e "s/$escaped_notes_dir//g" | sed -E "s/^\/+//g"
 }
 
 ls_notes() {
@@ -53,11 +55,22 @@ find_notes() {
 
 grep_notes() {
     if [ ! "$#" -gt 0 ]; then
-        printf "Grep requires a pattern, but none was provided."
+        printf "Grep requires a pattern, but none was provided.\n"
         return 1
     fi
 
-    local grep_output=$(grep -r "$notes_dir" -li -e "$*" 2>&1)
+	local grep_output
+	if [[ -t 1 ]]; then
+		matches=$(grep --color=$GREP_COLOR -r $NOTES_DIRECTORY -in -e "$*" 2>&1)
+		IFS=$'\n'
+		for result in $matches; do
+			len=${#result}
+			grep_output+="$(echo ${result})\n"
+		done
+	else
+		grep_output=$(grep -r "$notes_dir" -li -e "$*" 2>&1)
+	fi
+
     local grep_result=$?
     local formatted_output=$(printf "$grep_output" | without_notes_dir)
 
@@ -94,9 +107,11 @@ remove_note() {
 open_something() {
     if [[ -p /dev/stdin ]]; then
         read -d'\n' note_names
+		local buffer=()
         while read note_name; do
-            open_note "$note_name"
+             buffer+=$note_name
         done <<< "$note_names"
+		open_note $note_names
     elif [ $# -gt 0 ]; then
         open_note "$*"
     else
@@ -105,20 +120,25 @@ open_something() {
 }
 
 open_note() {
-    local note_path=$1
+    local note_path
+	local buffer=()
 
-    if [[ "$note_path" != *.md ]]; then
-        note_path="$note_path.md"
-    fi
-    if [ ! -f "$note_path" ]; then
-        note_path="$notes_dir/$note_path"
-    fi
-    if [ -z "$EDITOR" ]; then
-        printf "Please set \$EDITOR to edit notes\n"
-        exit 1
-    fi
+	for arg in $@; do
+		note_path=$arg
+		if [[ "$note_path" != *.md ]]; then
+			note_path="$note_path.md"
+		fi
+		if [ ! -f "$note_path" ]; then
+			note_path="$notes_dir/$note_path"
+		fi
+		if [ -z "$EDITOR" ]; then
+			printf "Please set \$EDITOR to edit notes\n"
+			exit 1
+		fi
+		buffer+="$note_path "
+	done
 
-    $EDITOR "$note_path" < /dev/tty
+    $EDITOR $buffer < /dev/tty
 }
 
 usage() {
