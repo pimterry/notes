@@ -85,8 +85,23 @@ grep_notes() {
     fi
 }
 
+generate_name() {
+    local append_num=0
+    local format_string="`date +$QUICKNOTE_FORMAT`"
+    # Initial test has no append
+    resolved_name=$format_string
+    while [[ -e "$notes_dir/$resolved_name$file_ext" ]]; do
+        append_num=$[$append_num+1]
+        resolved_name=$format_string.$append_num
+    done
+}
+
 new_note() {
     local note_name="$*"
+    if [[ $note_name == "" ]]; then
+        generate_name
+        note_name=$resolved_name
+    fi
     mkdir -p "$(dirname "$notes_dir/$note_name")"
     open_note "$note_name$file_ext"
 }
