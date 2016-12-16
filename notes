@@ -108,21 +108,23 @@ new_note() {
 
 remove_note() {
     local rm_args=()
-    local files="$@"
+    local len=${#@}
 
     if [[ "$1" == "-r" || "$1" == "--recursive" ]]; then
         rm_args+=("--recursive")
         shift
     fi
 
-    for files; do
-        local note_name="$*"
+    len=${#@}
+    for i in $(seq 1 $len); do
+        local note_name="$1"
         local to_remove="$notes_dir/$note_name"
 
         if [ -f "$notes_dir/$note_name$file_ext" ]; then
             to_remove="$notes_dir/$note_name$file_ext"
         fi
         rm "${rm_args[@]}" "$to_remove"
+        shift
     done
 }
 
@@ -144,7 +146,7 @@ open_something() {
 open_note() {
     local note_path
     local ext_check
-	local buffer=$@
+    local buffer=$@
     local files=()
 
     IFS=','
