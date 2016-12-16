@@ -103,7 +103,7 @@ new_note() {
         note_name=$resolved_name
     fi
     mkdir -p "$(dirname "$notes_dir/$note_name")"
-    open_note "$note_name$file_ext"
+    open_note "$note_name"
 }
 
 remove_note() {
