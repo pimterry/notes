@@ -22,6 +22,23 @@ notes="./notes"
   assert_exists "$NOTES_DIRECTORY/note.md"
 }
 
+@test "Should create quicknote without a name given" {
+  today=`date "+%Y-%m-%d"`
+  run $notes new
+
+  assert_success
+  assert_exists "$NOTES_DIRECTORY/quicknote-$today.md"
+}
+
+@test "Should append to name if quicknote already exists" {
+  today=`date "+%Y-%m-%d"`
+  run $notes new
+  run $notes new
+
+  assert_success
+  assert_exists "$NOTES_DIRECTORY/quicknote-$today.1.md"
+}
+
 @test "Should create new notes when using the shorthand alias" {
   run $notes n note
 

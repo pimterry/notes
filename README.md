@@ -49,6 +49,8 @@ You'll need to open a new shell for this to take effect.
 
 You can set your favourite text editor and your notes directory by setting the `$EDITOR` and `$NOTES_DIRECTORY` environmental variables.
 
+You can also set `$QUICKNOTE_FORMAT` to change the way that quicknotes are generated. The string is formatted using the `date` command. 
+
 Most users shouldn't need to do any more than that. If you're doing anything more complicated though, you can configure `notes` config directly in "~/.config/notes/config", including EDITOR and NOTES_DIRECTORY. We've included an example in this repo for you ([config.example](config.example)) that you can copy. Any values set in the config file override values in environment variables.
 
 Right now this mainly exists in case you want to use a different `EDITOR` for notes than the one you have set in your environment generally, but this is where all other config will be living in future.
@@ -58,6 +60,9 @@ Right now this mainly exists in case you want to use a different `EDITOR` for no
 ### `notes new <note-name>`
 
 Opens your `$EDITOR` of choice for a new note, with the given name. The name can include slashes, if you want to put your note in a subfolder. Shorthand alias also available with `notes n`.
+
+### `notes new`
+Creates a quicknote with the name of the format `quicknote-YYYY-MM-DD.md`. This can be changed in the configuration file.
 
 ### `notes find <part-of-a-note-name>`
 
