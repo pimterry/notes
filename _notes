@@ -67,6 +67,11 @@ _notes ()
       new|n|ls)
         _path_files -W "${note_dir}" -/ && _ret=0;;
     esac
+  elif (($CURRENT >= 3)); then
+    case $words[2] in
+      rm)
+        _path_files -W "${note_dir}" && _ret=0;;
+    esac
   fi
 }
 
