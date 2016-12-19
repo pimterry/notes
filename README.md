@@ -27,7 +27,7 @@ Download `notes`, `chmod +x`, put it in your `$path`. This will probably do it:
 curl https://cdn.rawgit.com/pimterry/notes/v0.2.0/notes > /usr/local/bin/notes && chmod +x /usr/local/bin/notes
 ```
 
-By default your notes live in ~/notes, but you can change that to anywhere you like by setting the `$NOTES_DIRECTORY` environmental variable.
+By default your notes live in ~/notes, but you can change that to anywhere you like by setting the `$NOTES_DIRECTORY` environmental variable. See [how do I configure this?](#how-do-i-configure-this) for more details.
 
 #### Installing Bash completion
 
@@ -47,22 +47,17 @@ You'll need to open a new shell for this to take effect.
 
 ## How do I configure this?
 
-You can set your favourite text editor and your notes directory by setting the `$EDITOR` and `$NOTES_DIRECTORY` environmental variables.
+To get started with you'll want to set `$EDITOR` to your favourite text editor, and probably `$NOTES_DIRECTORY` to the directory in which you'd like to use to store your notes (this defaults to `~/notes`). You'll typically want to set these as environment variables in your `.bashrc`, `.zshrc`, or similar.
 
-You can also set `$QUICKNOTE_FORMAT` to change the way that quicknotes are generated. The string is formatted using the `date` command. 
+There are also more complex options available. You can set any configuration properties either in the environment, or in a config file (stored in `~/.config/notes/config`), with settings in config overriding those in your environment. This allows you to configure a different `$EDITOR` for notes to everything else, if you like. The config file is a good choice for more complex set ups, but probably not worth worrying about to start with. We've included an example config in this repo for you ([config.example](config.example)) that you can copy if you like. 
 
-Most users shouldn't need to do any more than that. If you're doing anything more complicated though, you can configure `notes` config directly in "~/.config/notes/config", including EDITOR and NOTES_DIRECTORY. We've included an example in this repo for you ([config.example](config.example)) that you can copy. Any values set in the config file override values in environment variables.
-
-Right now this mainly exists in case you want to use a different `EDITOR` for notes than the one you have set in your environment generally, but this is where all other config will be living in future.
+The only other configuration property right now is `$QUICKNOTE_FORMAT`, which changes the way that quicknote filenames are generated. The string is formatted by passing it to the `date` command, and defaults to `quicknote-%Y-%m-%d`.
 
 ## How do I use it?
 
 ### `notes new <note-name>`
 
-Opens your `$EDITOR` of choice for a new note, with the given name. The name can include slashes, if you want to put your note in a subfolder. Shorthand alias also available with `notes n`.
-
-### `notes new`
-Creates a quicknote with the name of the format `quicknote-YYYY-MM-DD.md`. This can be changed in the configuration file.
+Opens your `$EDITOR` of choice for a new note, with the given name. The name can include slashes, if you want to put your note in a subfolder. Leave out the name if you want one to be generated for you (e.g. `quicknote-2016-12-21.md` - format configurable with `$QUICKNOTE_FORMAT`). Shorthand alias also available with `notes n`.
 
 ### `notes find <part-of-a-note-name>`
 

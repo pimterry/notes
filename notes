@@ -93,30 +93,31 @@ grep_notes() {
         return 2
     fi
 }
+
 generate_name() {
     local append_num=0
     local format_string="`date +$QUICKNOTE_FORMAT`"
     # Initial test has no append
-    resolved_name=$format_string
+    local resolved_name=$format_string
     while [[ -e "$notes_dir/$resolved_name.md" ]]
     do
         append_num=$[$append_num+1]
         resolved_name=$format_string.$append_num
     done
+    printf $resolved_name
 }
 
 new_note() {
     local note_name="$*"
     if [[ $note_name == "" ]]; then
-         generate_name 
-         note_name=$resolved_name
+         note_name="$(generate_name)"
     fi
     mkdir -p "$(dirname "$notes_dir/$note_name")"
     open_note "$note_name.md"
 }
 
 remove_note() {
-    local rm_arga=()
+    local rm_args=()
     if [[ "$1" == "-r" || "$1" == "--recursive" ]]; then
         rm_args+=("--recursive")
         shift
