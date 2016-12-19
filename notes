@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
 QUICKNOTE_FORMAT="quicknote-%Y-%m-%d"
-PREFERED_EXT=.md
-GREP_COLOR=always
+PREFERED_EXT=".md"
+GREP_COLOR="always"
 
 # Look for configuration file at ~/.config/notes/config and use it
 if [ -f ~/.config/notes/config ]; then

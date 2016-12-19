@@ -62,9 +62,9 @@ _notes ()
     _alternative 'sub-commands:files:__notes_cmd' && _ret=0
   elif (($CURRENT == 3)); then
     case $words[2] in
-      open|rm|new)
+      open|o|rm)
         _path_files -W "${note_dir}" && _ret=0;;
-      ls)
+      new|n|ls)
         _path_files -W "${note_dir}" -/ && _ret=0;;
     esac
   fi
