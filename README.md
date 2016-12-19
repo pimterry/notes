@@ -67,6 +67,10 @@ Searches note filenames and paths for the given string, and returns every single
 
 Searches all note content for the given string and returns all the matches. Shorthand alias also available with `notes g`.
 
+### `notes search <part-of-a-note-name-or-note-content>`
+
+Searches all note content and note filenames for the given string and returns all the matches. Shorthand alias also available with `notes s`.
+
 ### `notes ls <directory>`
 
 Lists note names and note directories at a single level. Lists all top level notes and directories if no path is provided, or the top-level contents of a directory if one is provided.
@@ -91,7 +95,6 @@ Combine these together! This opens each matching note in your `$EDITOR` in turn.
 
 All the above works. Here's what's coming next:
 
-- [ ] Combining find and grep, to match either one (https://github.com/pimterry/notes/issues/16)
 - [ ] More interesting and nicer looking file/grep search result formatting, perhaps only when not piping? (https://github.com/pimterry/notes/issues/27)
 - [ ] Make the file extension optional (https://github.com/pimterry/notes/issues/24)
 - [ ] zsh command and note name autocompletion (https://github.com/pimterry/notes/issues/25)

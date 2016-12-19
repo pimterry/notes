@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Look for configuration file at ~/.config/notes/config and use it
-if [ -f ~/.config/notes/config ]; then 
+if [ -f ~/.config/notes/config ]; then
     . ~/.config/notes/config
 fi
 
@@ -31,6 +31,28 @@ ls_notes() {
     fi
 
     if [[ $ls_result == 0 && "$formatted_output" ]]; then
+        printf "$formatted_output\n"
+        return 0
+    else
+        return 2
+    fi
+}
+
+search_filenames_and_contents() {
+    if [ "$#" -gt 0 ]; then
+        find_output=$(find "$notes_dir" -type f -exec bash -c \
+            "shopt -s nocasematch
+            grep -il \"$*\" \"{}\" || if [[ \"{}\" =~ \"$*\" ]]; then
+                echo \"{}\";
+            fi" \;\
+        )
+    else
+        find_output=$(find "$notes_dir" -type f)
+    fi
+    find_result=$?
+    formatted_output=$(printf "$find_output" | without_notes_dir)
+
+    if [[ $find_result == 0 && "$formatted_output" ]]; then
         printf "$formatted_output\n"
         return 0
     else
@@ -130,6 +152,7 @@ Usage:
     notes ls <pattern>                    # List notes by path
     notes find|f [pattern]                # Search notes by filename and path
     notes grep|g <pattern>                # Search notes by content
+    notes search|s [pattern]              # Search notes by filename or content
     notes open|o                          # Open your notes directory
     notes open|o <name>                   # Open a note for editing by full name
     notes rm [-r | --recursive] <name>    # Remove note, or folder if -r or --recursive is given
@@ -159,6 +182,9 @@ main() {
             ;;
         "ls" )
             cmd="ls_notes"
+            ;;
+        "search"|"s" )
+            cmd="search_filenames_and_contents"
             ;;
         "find"|"f" )
             cmd="find_notes"
