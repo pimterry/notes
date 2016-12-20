@@ -4,7 +4,7 @@
 QUICKNOTE_FORMAT="quicknote-%Y-%m-%d"
 NOTES_EXT="md"
 # Look for configuration file at ~/.config/notes/config and use it
-if [ -f ~/.config/notes/config ]; then 
+if [ -f ~/.config/notes/config ]; then
     . ~/.config/notes/config
 fi
 
@@ -34,6 +34,28 @@ ls_notes() {
     fi
 
     if [[ $ls_result == 0 && "$formatted_output" ]]; then
+        printf "$formatted_output\n"
+        return 0
+    else
+        return 2
+    fi
+}
+
+search_filenames_and_contents() {
+    if [ "$#" -gt 0 ]; then
+        find_output=$(find "$notes_dir" -type f -exec bash -c \
+            "shopt -s nocasematch
+            grep -il \"$*\" \"{}\" || if [[ \"{}\" =~ \"$*\" ]]; then
+                echo \"{}\";
+            fi" \;\
+        )
+    else
+        find_output=$(find "$notes_dir" -type f)
+    fi
+    find_result=$?
+    formatted_output=$(printf "$find_output" | without_notes_dir)
+
+    if [[ $find_result == 0 && "$formatted_output" ]]; then
         printf "$formatted_output\n"
         return 0
     else
@@ -71,30 +93,31 @@ grep_notes() {
         return 2
     fi
 }
+
 generate_name() {
     local append_num=0
     local format_string="`date +$QUICKNOTE_FORMAT`"
     # Initial test has no append
-    resolved_name=$format_string
+    local resolved_name=$format_string
     while [[ -e "$notes_dir/$resolved_name.$NOTES_EXT" ]]
     do
         append_num=$[$append_num+1]
         resolved_name=$format_string.$append_num
     done
+    printf $resolved_name
 }
 
 new_note() {
     local note_name="$*"
     if [[ $note_name == "" ]]; then
-         generate_name 
-         note_name=$resolved_name
+         note_name="$(generate_name)"
     fi
     mkdir -p "$(dirname "$notes_dir/$note_name")"
     open_note "$note_name.$NOTES_EXT"
 }
 
 remove_note() {
-    local rm_arga=()
+    local rm_args=()
     if [[ "$1" == "-r" || "$1" == "--recursive" ]]; then
         rm_args+=("--recursive")
         shift
@@ -148,6 +171,7 @@ Usage:
     notes ls <pattern>                    # List notes by path
     notes find|f [pattern]                # Search notes by filename and path
     notes grep|g <pattern>                # Search notes by content
+    notes search|s [pattern]              # Search notes by filename or content
     notes open|o                          # Open your notes directory
     notes open|o <name>                   # Open a note for editing by full name
     notes rm [-r | --recursive] <name>    # Remove note, or folder if -r or --recursive is given
@@ -177,6 +201,9 @@ main() {
             ;;
         "ls" )
             cmd="ls_notes"
+            ;;
+        "search"|"s" )
+            cmd="search_filenames_and_contents"
             ;;
         "find"|"f" )
             cmd="find_notes"

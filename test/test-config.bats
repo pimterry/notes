@@ -7,12 +7,13 @@ load 'helpers'
 setup() {
   setupNotesEnv
 }
+
 teardown() {
   teardownNotesEnv
 }
+
 export EDITOR=touch
 notes="./notes"
-
 
 @test "Configuration should override QUICKNOTE_FORMAT" {
   mkdir -p $HOME/.config/notes
