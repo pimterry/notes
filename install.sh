@@ -28,6 +28,8 @@ echo "Downloading and Extracting Notes from Repository..."
 
 echo "Moving Files into Place..."
     mv "$extract_dir"/notes /usr/local/bin/notes
+    # Make it runnable
+    chmod a+x /usr/local/bin/notes
     # Do we have bash completion abilities?
     if [ -d "$bash_completion_dir" ]; then
         mv "$extract_dir"/notes.bash_completion "$bash_completions_dir"/notes
