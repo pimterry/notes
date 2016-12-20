@@ -4,3 +4,6 @@
 
 # Set the editor that notes are opened with
 EDITOR=nano
+
+# Change the quicknote format to get rid of the word "quicknote"
+QUICKNOTE_FORMAT="%Y-%m-%d"
