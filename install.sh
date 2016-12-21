@@ -2,7 +2,6 @@
 
 # This is an install script for notes
 
-
 function assertInstalled() {
     for var in "$@"; do
         if ! which $var &> /dev/null; then
@@ -15,24 +14,22 @@ function assertInstalled() {
 # Yay, Echo self documents! :D
 echo "Checking for root..."
     [ "$(whoami)" != "root" ] && exec sudo -- "$0" "$@"
-# Get user's home directory so we can dum config later
-user_home=$(getent passwd $SUDO_USER | cut -d: -f6)
 
-
+# Make sure we have everything actually installed that we need to install this.
 echo "Checking for Dependencies..."
-    assertInstalled bash curl tar
+    assertInstalled bash curl tar mktemp
+
+# Variable Definitions go here. 
+user_home=`eval echo ~$SUDO_USER`
+bash_completion_dir=`pkg-config --variable=completionsdir bash-completion 2>/dev/null`
+extract_dir=$(mktemp -d /tmp/notes.XXXXX)
 
 echo "Downloading and Extracting Notes from Repository..."
-    extract_dir=$(mktemp -d)
     curl -L https://api.github.com/repos/pimterry/notes/tarball | tar -xzp -C $extract_dir --strip-components=1
-
-# Pre-setup check for bash completion directory
-bash_completion_dir=`pkg-config --variable=completionsdir bash-completion` 2>/dev/null
 
 echo "Moving Files into Place..."
     mv $extract_dir/notes /usr/local/bin/notes
     # Make it runnable
-    chmod a+x /usr/local/bin/notes
     # Do we have bash completion abilities?
     if [ -d $bash_completion_dir ]; then
         mv $extract_dir/notes.bash_completion $bash_completion_dir/notes
@@ -40,7 +37,10 @@ echo "Moving Files into Place..."
     mkdir -p $user_home/.config/notes/
     mv $extract_dir/config.example $user_home/.config/notes/config.example
 
+echo "Fixing Permissions..."
+    chown -R $SUDO_USER $user_home/.config/notes 
+    chmod a+x /usr/local/bin/notes
+
 echo "Cleaning Up..."
     rm -rf $extract_dir
-
 echo "All done."
