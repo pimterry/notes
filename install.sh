@@ -36,11 +36,12 @@ echo "Moving Files into Place..."
     fi
     mkdir -p $user_home/.config/notes/
     mv $extract_dir/config.example $user_home/.config/notes/config.example
-
+    mv $extract_dir/notes.1 /usr/local/share/man/man1/notes.1
 echo "Fixing Permissions..."
     chown -R $SUDO_USER $user_home/.config/notes 
     chmod a+x /usr/local/bin/notes
-
+echo "Installing Man page..."
+    mandb
 echo "Cleaning Up..."
     rm -rf $extract_dir
 echo "All done."
