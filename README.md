@@ -21,29 +21,13 @@ This is just one tool in the chain. `notes` is a command line tool, and some peo
 
 ## How do I install this?
 
-Download `notes`, `chmod +x`, put it in your `$path`. This will probably do it:
+To get up and running, run this from the command line:
 
 ```bash
-curl https://cdn.rawgit.com/pimterry/notes/v0.2.0/notes > /usr/local/bin/notes && chmod +x /usr/local/bin/notes
+curl -s https://raw.githubusercontent.com/pimterry/notes/master/setup.sh | sudo bash
 ```
 
-By default your notes live in ~/notes, but you can change that to anywhere you like by setting the `$NOTES_DIRECTORY` environmental variable. See [how do I configure this?](#how-do-i-configure-this) for more details.
-
-#### Installing Bash completion
-
-`notes` includes bash autocompletion, to let you tab-complete commands and your note names. This requires Bash > 4.0 and [bash-completion](https://github.com/scop/bash-completion) to be installed - it's probably available from your friendly local package manager.
-
-To enable completion for notes, copy the completion script into your bash completion directory, and it should be automatically loaded. The bash completion directory is `/usr/share/bash-completion/completions/` on a typical Debian install, or `/usr/local/etc/bash_completion.d/` on OSX with `bash-completion` from homebrew. You may be able to find your own bash completion directory by running the following command:
-
-    pkg-config --variable=completionsdir bash-completion
-
-Installing the completions might be as follows:
-
-```bash
-curl https://cdn.rawgit.com/pimterry/notes/v0.2.0/notes.bash_completion > /usr/share/bash-completion/completions/notes
-```
-
-You'll need to open a new shell for this to take effect.
+If you are worried about what this might do to your system, view the script code first: [setup.sh](https://github.com/pimterry/notes/blob/master/setup.sh)
 
 ## How do I configure this?
 
