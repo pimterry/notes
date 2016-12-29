@@ -46,6 +46,7 @@ __notes_cmd ()
     ls:'<pattern> List notes by path'
     find:'[pattern] Search notes by filename and path'
     grep:'<pattern> Search notes by content'
+    search:'[pattern] Search notes by filename or content'
     open:'<name> Open a notes for editing by full name'
     rm:'[-r | --recursive] <name> Remove note, or folder if -r or --recursive is given]'
     --help:'Show usage'
