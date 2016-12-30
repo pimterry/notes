@@ -87,11 +87,13 @@ grep_notes() {
     local grep_output
     if [[ -t 1 ]]; then
         matches=$(grep --color=$GREP_COLOR -r $NOTES_DIRECTORY -in -e "$*" 2>&1)
+        OLDIFS=$IFS
         IFS=$'\n'
         for result in $matches; do
             len=${#result}
             grep_output+="$(echo ${result})\n"
         done
+        IFS=$OLDIFS
     else
         grep_output=$(grep -r "$notes_dir" -li -e "$*" 2>&1)
     fi
@@ -171,6 +173,7 @@ open_note() {
     local buffer=$@
     local files=()
 
+    OLDIFS=$IFS
     IFS=','
     for arg in $buffer; do
         ext_check=true
@@ -190,6 +193,7 @@ open_note() {
         fi
         files+=(${note_path})
     done
+    IFS=$OLDIFS
 
     $EDITOR ${files[@]} < /dev/tty
 }
