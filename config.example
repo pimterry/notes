@@ -7,3 +7,6 @@ EDITOR=nano
 
 # Change the quicknote format to get rid of the word "quicknote"
 QUICKNOTE_FORMAT="%Y-%m-%d"
+
+# Set extension to plain txt instead of markdown
+NOTES_EXT="txt"

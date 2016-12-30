@@ -2,7 +2,7 @@
 
 # Default Date string before config
 QUICKNOTE_FORMAT="quicknote-%Y-%m-%d"
-
+NOTES_EXT="md"
 # Look for configuration file at ~/.config/notes/config and use it
 if [ -f ~/.config/notes/config ]; then
     . ~/.config/notes/config
@@ -99,7 +99,7 @@ generate_name() {
     local format_string="`date +$QUICKNOTE_FORMAT`"
     # Initial test has no append
     local resolved_name=$format_string
-    while [[ -e "$notes_dir/$resolved_name.md" ]]
+    while [[ -e "$notes_dir/$resolved_name.$NOTES_EXT" ]]
     do
         append_num=$[$append_num+1]
         resolved_name=$format_string.$append_num
@@ -113,7 +113,7 @@ new_note() {
          note_name="$(generate_name)"
     fi
     mkdir -p "$(dirname "$notes_dir/$note_name")"
-    open_note "$note_name.md"
+    open_note "$note_name.$NOTES_EXT"
 }
 
 remove_note() {
@@ -126,8 +126,8 @@ remove_note() {
     local note_name="$*"
     local to_remove="$notes_dir/$note_name"
 
-    if [ -f "$notes_dir/$note_name.md" ]; then
-        to_remove="$notes_dir/$note_name.md"
+    if [ -f "$notes_dir/$note_name.$NOTES_EXT" ]; then
+        to_remove="$notes_dir/$note_name.$NOTES_EXT"
     fi
     rm "${rm_args[@]}" "$to_remove"
 }
@@ -148,8 +148,8 @@ open_something() {
 open_note() {
     local note_path=$1
 
-    if [[ "$note_path" != *.md ]]; then
-        note_path="$note_path.md"
+    if [[ "$note_path" != *.$NOTES_EXT ]]; then
+        note_path="$note_path.$NOTES_EXT"
     fi
     if [ ! -f "$note_path" ]; then
         note_path="$notes_dir/$note_path"
