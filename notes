@@ -155,10 +155,9 @@ remove_note() {
 open_something() {
     if [[ -p /dev/stdin ]]; then
         read -d $"\n" note_names
-        local buffer=()
-        while read note_name; do
+		while read note_name; do
             buffer+="${note_name},"
-        done <<< "$note_names"
+		done <<< "$note_names"
         open_note ${buffer[@]}
     elif [ $# -gt 0 ]; then
         open_note "$*"
@@ -169,19 +168,15 @@ open_something() {
 
 open_note() {
     local note_path
-    local ext_check
-    local buffer=$@
+	local ext_check
+	local buffer=$@
     local files=()
 
-    OLDIFS=$IFS
-    IFS=','
-    for arg in $buffer; do
-        ext_check=true
-        note_path="$arg"
-        if echo $note_path | grep -q '\.[a-z]'; then
-            ext_check=false
-        fi
-        if [[ "$note_path" != *$file_ext ]] && $ext_check; then
+	OLDIFS=$IFS; IFS=','
+	for file in $buffer; do
+		note_path=$file
+        ext_check=$(echo $note_path | grep -e '\.[a-z]')
+		if [[ -z ${ext_check} ]]; then
             note_path="$note_path$file_ext"
         fi
         if [ ! -f "$note_path" ]; then
@@ -191,11 +186,10 @@ open_note() {
             printf "Please set \$EDITOR to edit notes\n"
             exit 1
         fi
-        files+=(${note_path})
-    done
-    IFS=$OLDIFS
+        files+=("${note_path}")
+    done; IFS=$OLDIFS
 
-    $EDITOR ${files[@]} < /dev/tty
+    $EDITOR "${files[@]}" < /dev/tty
 }
 
 usage() {
