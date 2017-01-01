@@ -175,7 +175,7 @@ open_note() {
 	OLDIFS=$IFS; IFS=','
 	for file in $buffer; do
 		note_path=$file
-        ext_check=$(echo $note_path | grep -e '\.[a-z]')
+        ext_check=$(echo ${note_path:1:-1} | grep -e '\.[a-z]')
 		if [[ -z ${ext_check} ]]; then
             note_path="$note_path$file_ext"
         fi
