@@ -20,7 +20,7 @@ if [ -z "$EDITOR" ] && type editor &>/dev/null; then
 fi
 
 without_notes_dir() {
-    cat | sed -e "s/$escaped_notes_dir//g" | sed -E "s/^\/+//g"
+    cat | sed -e "s/^$escaped_notes_dir//g" | sed -E "s/^\/+//g"
 }
 
 ls_notes() {
@@ -91,7 +91,8 @@ grep_notes() {
         IFS=$'\n'
         for result in $matches; do
             len=${#result}
-            grep_output+="$(echo ${result})\n"
+            result=$(echo $result|cut -d'/' -f2-)
+            grep_output+="$(echo /${result})\n"
         done
         IFS=$OLDIFS
     else
@@ -155,9 +156,9 @@ remove_note() {
 open_something() {
     if [[ -p /dev/stdin ]]; then
         read -d $"\n" note_names
-		while read note_name; do
+        while read note_name; do
             buffer+="${note_name},"
-		done <<< "$note_names"
+        done <<< "$note_names"
         open_note ${buffer[@]}
     elif [ $# -gt 0 ]; then
         open_note "$*"
@@ -168,15 +169,15 @@ open_something() {
 
 open_note() {
     local note_path
-	local ext_check
-	local buffer=$@
+    local ext_check
+    local buffer=$@
     local files=()
 
-	OLDIFS=$IFS; IFS=','
-	for file in $buffer; do
-		note_path=$file
+    OLDIFS=$IFS; IFS=','
+    for file in $buffer; do
+        note_path=$file
         ext_check=$(echo ${note_path:1:-1} | grep -e '\.[a-z]')
-		if [[ -z ${ext_check} ]]; then
+        if [[ -z ${ext_check} ]]; then
             note_path="$note_path$file_ext"
         fi
         if [ ! -f "$note_path" ]; then
