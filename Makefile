@@ -1,7 +1,7 @@
 PREFIX ?= /usr/local
 BASH_COMPLETION_DIR := $(shell pkg-config --variable=completionsdir bash-completion) 
 # pkg-config adds a space for some reason, we have to strip it off.
-BASH_COMPLETION_DIR := $(strip BASH_COMPLETION_DIR)
+BASH_COMPLETION_DIR := $(strip $(BASH_COMPLETION_DIR))
 USERDIR ?= $(HOME)
 
 install: 
@@ -13,7 +13,7 @@ install:
 	install -m777 -D config.example $(USERDIR)/.config/notes/config.example
 	install -D notes.1 $(PREFIX)/share/man/man1/notes.1
 	mandb 1>/dev/null
-unintstall:
+uninstall:
 	rm -f $(PREFIX)/bin/notes
 	rm -f $(PREFIX)/share/man/man1/notes.1
 	rm -f $(BASH_COMPLETION_DIR)/notes
