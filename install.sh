@@ -27,7 +27,7 @@ extract_dir=$(mktemp -d /tmp/notes.XXXXX)
 echo "Downloading and Extracting Notes from Repository..."
     curl -L https://api.github.com/repos/pimterry/notes/tarball | tar -xzp -C $extract_dir --strip-components=1
 echo "Installing notes..."
-    cd $extract_dir && make USER_DIR=$user_home
+    cd $extract_dir && make USERDIR=$user_home
 echo "Cleaning Up..."
     rm -rf $extract_dir
 echo "All done."
