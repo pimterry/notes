@@ -21,13 +21,17 @@ echo "Checking for Dependencies..."
 
 # Variable Definitions go here. 
 user_home=`eval echo ~$SUDO_USER`
-bash_completion_dir=`pkg-config --variable=completionsdir bash-completion 2>/dev/null`
 extract_dir=$(mktemp -d /tmp/notes.XXXXX)
 
 echo "Downloading and Extracting Notes from Repository..."
     curl -L https://api.github.com/repos/pimterry/notes/tarball | tar -xzp -C $extract_dir --strip-components=1
-echo "Installing notes..."
+if [ "$uninstall" != "1" ]; then
+    echo "Installing notes..."
     cd $extract_dir && make USERDIR=$user_home
+else
+    echo "Uninstalling notes..."
+    cd $extract_dir && make uninstall USERDIR=$user_home
+fi
 echo "Cleaning Up..."
     rm -rf $extract_dir
 echo "All done."
