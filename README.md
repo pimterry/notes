@@ -57,7 +57,13 @@ To get started with you'll want to set `$EDITOR` to your favourite text editor, 
 
 There are also more complex options available. You can set any configuration properties either in the environment, or in a config file (stored in `~/.config/notes/config`), with settings in config overriding those in your environment. This allows you to configure a different `$EDITOR` for notes to everything else, if you like. The config file is a good choice for more complex set ups, but probably not worth worrying about to start with. We've included an example config in this repo for you ([config.example](config.example)) that you can copy if you like. 
 
-The only other configuration property right now is `$QUICKNOTE_FORMAT`, which changes the way that quicknote filenames are generated. The string is formatted by passing it to the `date` command, and defaults to `quicknote-%Y-%m-%d`.
+### What are the configuration options?
+
+* `QUICKNOTE_FORMAT` changes the way that quicknotes are generated. The string formatted using the `date` command. 
+* `NOTES_EXT` changes the default extension that notes are saved with.
+* `NOTES_DIRECTORY` changes the directory in which notes are stored.
+* `EDITOR` can also be overriden here, for `notes` only.
+
 
 ## How do I use it?
 

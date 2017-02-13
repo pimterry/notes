@@ -33,3 +33,12 @@ notes="./notes"
   assert_success
   assert_line "$NOTES_DIRECTORY/test.md"
 }
+
+@test "Configuration should override file extension" {
+  mkdir -p $HOME/.config/notes
+  echo "NOTES_EXT=txt" > $HOME/.config/notes/config
+  run $notes new test
+
+  assert_success
+  assert_exists "$NOTES_DIRECTORY/test.txt"
+}

@@ -2,7 +2,7 @@
 
 # Default Date string before config
 QUICKNOTE_FORMAT="quicknote-%Y-%m-%d"
-
+NOTES_EXT="md"
 # Look for configuration file at ~/.config/notes/config and use it
 if [ -f ~/.config/notes/config ]; then
     . ~/.config/notes/config
@@ -114,7 +114,7 @@ generate_name() {
     local format_string="`date +$QUICKNOTE_FORMAT`"
     # Initial test has no append
     local resolved_name=$format_string
-    while [[ -e "$notes_dir/$resolved_name.md" ]]
+    while [[ -e "$notes_dir/$resolved_name.$NOTES_EXT" ]]
     do
         append_num=$[$append_num+1]
         resolved_name=$format_string.$append_num
