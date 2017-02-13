@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
+# Default Date string before config
 QUICKNOTE_FORMAT="quicknote-%Y-%m-%d"
-PREFERED_EXT=".md"
 GREP_COLOR="always"
-
+NOTES_EXT=".md"
 # Look for configuration file at ~/.config/notes/config and use it
 if [ -f ~/.config/notes/config ]; then
     . ~/.config/notes/config
@@ -114,21 +114,21 @@ generate_name() {
     local append_num=0
     local format_string="`date +$QUICKNOTE_FORMAT`"
     # Initial test has no append
-    resolved_name=$format_string
-    while [[ -e "$notes_dir/$resolved_name$file_ext" ]]; do
+    local resolved_name=$format_string
+    while [[ -e "$notes_dir/$resolved_name$NOTES_EXT" ]]; do
         append_num=$[$append_num+1]
         resolved_name=$format_string.$append_num
     done
+    printf $resolved_name
 }
 
 new_note() {
     local note_name="$*"
     if [[ $note_name == "" ]]; then
-        generate_name
-        note_name=$resolved_name
+         note_name="$(generate_name)"
     fi
     mkdir -p "$(dirname "$notes_dir/$note_name")"
-    open_note "$note_name"
+    open_note "$note_name$NOTES_EXT"
 }
 
 remove_note() {
@@ -145,8 +145,8 @@ remove_note() {
         local note_name="$1"
         local to_remove="$notes_dir/$note_name"
 
-        if [ -f "$notes_dir/$note_name$file_ext" ]; then
-            to_remove="$notes_dir/$note_name$file_ext"
+        if [ -f "$notes_dir/$note_name$NOTES_EXT" ]; then
+            to_remove="$notes_dir/$note_name$NOTES_EXT"
         fi
         rm "${rm_args[@]}" "$to_remove"
         shift
@@ -178,10 +178,10 @@ open_note() {
         note_path=$file
         ext_check=$(echo ${note_path:1:-1} | grep -e '\.[a-z]')
         if [[ -z ${ext_check} ]]; then
-            note_path="$note_path$file_ext"
+            note_path="$note_path$NOTES_EXT"
         fi
         if [ ! -f "$note_path" ]; then
-            note_path="$notes_dir/$note_path"
+            note_path="$notes_dir/$NOTES_EXT"
         fi
         if [ -z "$EDITOR" ]; then
             printf "Please set \$EDITOR to edit notes\n"
@@ -233,7 +233,7 @@ main() {
         "ls" )
             cmd="ls_notes"
             ;;
-        "search"|"s")
+        "search"|"s" )
             cmd="search_filenames_and_contents"
             ;;
         "find"|"f" )

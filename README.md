@@ -27,7 +27,7 @@ Download `notes`, `chmod +x`, put it in your `$path`. This will probably do it:
 curl https://cdn.rawgit.com/pimterry/notes/v0.2.0/notes > /usr/local/bin/notes && chmod +x /usr/local/bin/notes
 ```
 
-By default your notes live in ~/notes, but you can change that to anywhere you like by setting the `$NOTES_DIRECTORY` environmental variable.
+By default your notes live in ~/notes, but you can change that to anywhere you like by setting the `$NOTES_DIRECTORY` environmental variable. See [how do I configure this?](#how-do-i-configure-this) for more details.
 
 #### Installing auto completion
 
@@ -53,17 +53,23 @@ You'll need to open a new shell for this to take effect.
 
 ## How do I configure this?
 
-You can set your favourite text editor and your notes directory by setting the `$EDITOR` and `$NOTES_DIRECTORY` environmental variables.
+To get started with you'll want to set `$EDITOR` to your favourite text editor, and probably `$NOTES_DIRECTORY` to the directory in which you'd like to use to store your notes (this defaults to `~/notes`). You'll typically want to set these as environment variables in your `.bashrc`, `.zshrc`, or similar.
 
-Most users shouldn't need to do any more than that. If you're doing anything more complicated though, you can configure `notes` config directly in "~/.config/notes/config", including EDITOR and NOTES_DIRECTORY. We've included an example in this repo for you ([config.example](config.example)) that you can copy. Any values set in the config file override values in environment variables.
+There are also more complex options available. You can set any configuration properties either in the environment, or in a config file (stored in `~/.config/notes/config`), with settings in config overriding those in your environment. This allows you to configure a different `$EDITOR` for notes to everything else, if you like. The config file is a good choice for more complex set ups, but probably not worth worrying about to start with. We've included an example config in this repo for you ([config.example](config.example)) that you can copy if you like. 
 
-Right now this mainly exists in case you want to use a different `EDITOR` for notes than the one you have set in your environment generally, but this is where all other config will be living in future.
+### What are the configuration options?
+
+* `QUICKNOTE_FORMAT` changes the way that quicknotes are generated. The string formatted using the `date` command. 
+* `NOTES_EXT` changes the default extension that notes are saved with.
+* `NOTES_DIRECTORY` changes the directory in which notes are stored.
+* `EDITOR` can also be overriden here, for `notes` only.
+
 
 ## How do I use it?
 
 ### `notes new <note-name>`
 
-Opens your `$EDITOR` of choice for a new note, with the given name. The name can include slashes, if you want to put your note in a subfolder. Shorthand alias also available with `notes n`.
+Opens your `$EDITOR` of choice for a new note, with the given name. The name can include slashes, if you want to put your note in a subfolder. Leave out the name if you want one to be generated for you (e.g. `quicknote-2016-12-21.md` - format configurable with `$QUICKNOTE_FORMAT`). Shorthand alias also available with `notes n`.
 
 ### `notes find <part-of-a-note-name>`
 
@@ -72,6 +78,10 @@ Searches note filenames and paths for the given string, and returns every single
 ### `notes grep <part-of-some-note-content>`
 
 Searches all note content for the given string and returns all the matches. Shorthand alias also available with `notes g`.
+
+### `notes search <part-of-a-note-name-or-note-content>`
+
+Searches all note content and note filenames for the given string and returns all the matches. Shorthand alias also available with `notes s`.
 
 ### `notes ls <directory>`
 
@@ -97,7 +107,6 @@ Combine these together! This opens each matching note in your `$EDITOR` in turn.
 
 All the above works. Here's what's coming next:
 
-- [ ] Combining find and grep, to match either one (https://github.com/pimterry/notes/issues/16)
 - [ ] More interesting and nicer looking file/grep search result formatting, perhaps only when not piping? (https://github.com/pimterry/notes/issues/27)
 - [ ] Make the file extension optional (https://github.com/pimterry/notes/issues/24)
 - [ ] Interactive mode? `notes` could open a scrollable list of notes, open your editor when you pick one, and reappear after you close it. (https://github.com/pimterry/notes/issues/17)
