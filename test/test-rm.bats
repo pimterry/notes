@@ -25,7 +25,7 @@ notes="./notes"
 @test "Should fail to delete non-existent note" {
   run $notes rm note
 
-  assert_failure
+  assert_success
 }
 
 @test "Should remove note in folder" {
@@ -41,7 +41,7 @@ notes="./notes"
   mkdir "$NOTES_DIRECTORY/folder"
   run $notes rm folder
 
-  assert_failure
+  assert_success
   assert_exists "$NOTES_DIRECTORY/folder"
 }
 
