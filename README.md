@@ -44,14 +44,19 @@ Bash
 curl https://cdn.rawgit.com/pimterry/notes/v0.2.0/notes.bash_completion > /usr/share/bash-completion/completions/notes
 ```
 
-Zsh
+Zsh  
+On *buntu based distros
+```bash
+curl https://cdn.rawgit.com/pimterry/notes/v0.2.0/notes._notes > /usr/local/share/site-functions/_notes
+```
+On other Unix distros the command should as follows
 ```bash
 curl https://cdn.rawgit.com/pimterry/notes/v0.2.0/notes._notes > /usr/share/zsh/site-functions/_notes
 ```
 
 You'll need to open a new shell for this to take effect.
 
-## How do I configure this?
+# How do I configure this?
 
 To get started with you'll want to set `$EDITOR` to your favourite text editor, and probably `$NOTES_DIRECTORY` to the directory in which you'd like to use to store your notes (this defaults to `~/notes`). You'll typically want to set these as environment variables in your `.bashrc`, `.zshrc`, or similar.
 
