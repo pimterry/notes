@@ -181,7 +181,7 @@ open_note() {
             note_path="$note_path$NOTES_EXT"
         fi
         if [ ! -f "$note_path" ]; then
-            note_path="$notes_dir/$NOTES_EXT"
+            note_path="$notes_dir/$note_path"
         fi
         if [ -z "$EDITOR" ]; then
             printf "Please set \$EDITOR to edit notes\n"
