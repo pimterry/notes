@@ -10,3 +10,8 @@ complete -c notes -n '__fish_use_subcommand' -xa rm --description "Remove note o
 
 complete -c notes -xs h -l help --description "Print this usage information"
 complete -c notes -n 'contains rm (commandline -poc)' -x -s r -l recursive --description "Delete an item recursively"
+
+complete -c notes -n 'contains open (commandline -poc)' -xa  '(cd $NOTES_DIRECTORY)'
+complete -c notes -n 'contains new  (commandline -poc)' -xfa '(cd $NOTES_DIRECTORY)'
+complete -c notes -n 'contains rm   (commandline -poc)' -xa  '(cd $NOTES_DIRECTORY)'
+complete -c notes -n 'contains ls   (commandline -poc)' -xfa '(cd $NOTES_DIRECTORY)'
