@@ -2,7 +2,8 @@
 
 # Default Date string before config
 QUICKNOTE_FORMAT="quicknote-%Y-%m-%d"
-NOTES_EXT="md"
+GREP_COLOR="always"
+NOTES_EXT=".md"
 # Look for configuration file at ~/.config/notes/config and use it
 if [ -f ~/.config/notes/config ]; then
     . ~/.config/notes/config
@@ -83,6 +84,20 @@ grep_notes() {
     fi
 
     local grep_output=$(grep -r "$notes_dir" -li -e "$*" 2>&1)
+    if [[ -t 1 ]]; then
+        matches=$(grep --color=$GREP_COLOR -r $NOTES_DIRECTORY -in -e "$*" 2>&1)
+        OLDIFS=$IFS
+        IFS=$'\n'
+        for result in $matches; do
+            len=${#result}
+            result=$(echo $result|cut -d'/' -f2-)
+            grep_output+="$(echo /${result})\n"
+        done
+        IFS=$OLDIFS
+    else
+        grep_output=$(grep -r "$notes_dir" -li -e "$*" 2>&1)
+    fi
+
     local grep_result=$?
     local formatted_output=$(printf "$grep_output" | without_notes_dir)
 
@@ -99,8 +114,7 @@ generate_name() {
     local format_string="`date +$QUICKNOTE_FORMAT`"
     # Initial test has no append
     local resolved_name=$format_string
-    while [[ -e "$notes_dir/$resolved_name.$NOTES_EXT" ]]
-    do
+    while [[ -e "$notes_dir/$resolved_name$NOTES_EXT" ]]; do
         append_num=$[$append_num+1]
         resolved_name=$format_string.$append_num
     done
@@ -113,31 +127,38 @@ new_note() {
          note_name="$(generate_name)"
     fi
     mkdir -p "$(dirname "$notes_dir/$note_name")"
-    open_note "$note_name.$NOTES_EXT"
+    open_note "$note_name$NOTES_EXT"
 }
 
 remove_note() {
     local rm_args=()
+    local len=${#@}
+
     if [[ "$1" == "-r" || "$1" == "--recursive" ]]; then
         rm_args+=("--recursive")
         shift
     fi
 
-    local note_name="$*"
-    local to_remove="$notes_dir/$note_name"
+    len=${#@}
+    for i in $(seq 1 $len); do
+    	local note_name="$*"
+    	local to_remove="$notes_dir/$note_name"
 
-    if [ -f "$notes_dir/$note_name.$NOTES_EXT" ]; then
-        to_remove="$notes_dir/$note_name.$NOTES_EXT"
-    fi
-    rm "${rm_args[@]}" "$to_remove"
+        if [ -f "$notes_dir/$note_name$NOTES_EXT" ]; then
+            to_remove="$notes_dir/$note_name$NOTES_EXT"
+        fi
+        rm "${rm_args[@]}" "$to_remove"
+        shift
+    done
 }
 
 open_something() {
     if [[ -p /dev/stdin ]]; then
-        read -d'\n' note_names
+        read -d'$\n' note_names
         while read note_name; do
-            open_note "$note_name"
+            buffer+="${note_name},"
         done <<< "$note_names"
+        open_note ${buffer[@]}
     elif [ $# -gt 0 ]; then
         open_note "$*"
     else
@@ -146,24 +167,33 @@ open_something() {
 }
 
 open_note() {
-    local note_path=$1
+    local note_path
+    local ext_check
+    local buffer=$@
+    local files=()
 
-    if [[ "$note_path" != *.$NOTES_EXT ]]; then
-        note_path="$note_path.$NOTES_EXT"
-    fi
-    if [ ! -f "$note_path" ]; then
-        note_path="$notes_dir/$note_path"
-    fi
-    if [ -z "$EDITOR" ]; then
-        printf "Please set \$EDITOR to edit notes\n"
-        exit 1
-    fi
+    OLDIFS=$IFS; IFS=','
+    for file in $buffer; do
+        note_path=$file
+        ext_check=$(echo ${note_path:1:-1} | grep -e '\.[a-z]')
+        if [[ -z ${ext_check} ]]; then
+            note_path="$note_path$NOTES_EXT"
+        fi
+        if [ ! -f "$note_path" ]; then
+            note_path="$notes_dir/$note_path"
+        fi
+        if [ -z "$EDITOR" ]; then
+            printf "Please set \$EDITOR to edit notes\n"
+            exit 1
+        fi
+        files+=("${note_path}")
+    done; IFS=$OLDIFS
 
-    $EDITOR "$note_path" < /dev/tty
+    $EDITOR "${files[@]}" < /dev/tty
 }
 
 usage() {
-	cat <<EOF
+    cat <<EOF
 notes is a command line note taking tool.
 
 Usage:

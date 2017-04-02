@@ -68,6 +68,7 @@ There are also more complex options available. You can set any configuration pro
 * `NOTES_EXT` changes the default extension that notes are saved with.
 * `NOTES_DIRECTORY` changes the directory in which notes are stored.
 * `EDITOR` can also be overriden here, for `notes` only.
+* `GREP_COLOR` show if colors appear in grep searches options are: never, always, auto
 
 
 ## How do I use it?
