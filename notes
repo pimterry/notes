@@ -9,6 +9,7 @@ if [ -f ~/.config/notes/config ]; then
     . ~/.config/notes/config
 fi
 
+file_ext=$PREFERED_EXT
 configured_dir=${NOTES_DIRECTORY%/} # Remove trailing slashes
 notes_dir="${configured_dir:-$HOME/notes}"
 escaped_notes_dir="$(printf "$notes_dir" | sed -e 's/[]\/$*.^|[]/\\&/g')"
@@ -79,11 +80,12 @@ find_notes() {
 
 grep_notes() {
     if [ ! "$#" -gt 0 ]; then
-        printf "Grep requires a pattern, but none was provided."
+        printf "Grep requires a pattern, but none was provided.\n"
         return 1
     fi
 
-    local grep_output=$(grep -r "$notes_dir" -li -e "$*" 2>&1)
+    # local grep_output=$(grep -r "$notes_dir" -li -e "$*" 2>&1)
+    local grep_output
     if [[ -t 1 ]]; then
         matches=$(grep --color=$GREP_COLOR -r $NOTES_DIRECTORY -in -e "$*" 2>&1)
         OLDIFS=$IFS
@@ -141,8 +143,8 @@ remove_note() {
 
     len=${#@}
     for i in $(seq 1 $len); do
-    	local note_name="$*"
-    	local to_remove="$notes_dir/$note_name"
+        local note_name="$1"
+        local to_remove="$notes_dir/$note_name"
 
         if [ -f "$notes_dir/$note_name$NOTES_EXT" ]; then
             to_remove="$notes_dir/$note_name$NOTES_EXT"
@@ -154,7 +156,7 @@ remove_note() {
 
 open_something() {
     if [[ -p /dev/stdin ]]; then
-        read -d'$\n' note_names
+        read -d $"\n" note_names
         while read note_name; do
             buffer+="${note_name},"
         done <<< "$note_names"
