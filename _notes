@@ -1,0 +1,52 @@
+#compdef notes
+# ------------------------------------------------------------------------------
+# Description
+# -----------
+#
+#  Simple delightful note taking, with more unix and less lock-in. (https://github.com/pimterry/notes)
+#
+# ------------------------------------------------------------------------------
+# Authors
+# -------
+#
+#  * pimterry et al.
+#
+# ------------------------------------------------------------------------------
+
+__notes_cmd ()
+{
+  local -a list
+  list=(
+    new:'Create new file'
+    ls:'<pattern> List notes by path'
+    find:'[pattern] Search notes by filename and path'
+    grep:'<pattern> Search notes by content'
+    search:'[pattern] Search notes by filename or content'
+    open:'<name> Open a notes for editing by full name'
+    rm:'[-r | --recursive] <name> Remove note, or folder if -r or --recursive is given]'
+    --help:'Show usage'
+  )
+  _describe -t sub-commands 'sub commands' list && _ret=0
+}
+
+_notes ()
+{
+  local configured_dir=${NOTES_DIRECTORY%/}
+  local note_dir="${configured_dir:-$HOME/notes}"
+
+  if (($CURRENT == 2)); then
+    _alternative 'sub-commands:files:__notes_cmd' && _ret=0
+  elif (($CURRENT == 3)); then
+    case $words[2] in
+      open|o|rm)
+        _path_files -W "${note_dir}" && _ret=0;;
+      new|n|ls)
+        _path_files -W "${note_dir}" -/ && _ret=0;;
+    esac
+  elif (($CURRENT >= 3)); then
+    case $words[2] in
+      rm)
+        _path_files -W "${note_dir}" && _ret=0;;
+    esac
+  fi
+}
