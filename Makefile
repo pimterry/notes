@@ -5,7 +5,6 @@ BASH_COMPLETION_DIR := $(strip $(BASH_COMPLETION_DIR))
 USERDIR ?= $(HOME)
 
 # The @ symbols make the output silent.
-# the \033[0m stuff is ansi color escape codes.
 
 install: 
 	@if [ -d $(BASH_COMPLETION_DIR) ]; then \
@@ -19,13 +18,13 @@ install:
 	@install -m755 -D notes $(PREFIX)/bin/notes
 	@install -m777 -D config $(USERDIR)/.config/notes/config
 	@install -D notes.1 $(PREFIX)/share/man/man1/notes.1
-	@mandb 1>/dev/nulli 2>&1 # Fail silently if we don't have a mandb
-	@echo -e "Notes has been installed to \033[0;32m$(PREFIX)/bin/notes." \
-	"\n\033[0mA configuration file has also been created at" \
-	"\033[0;32m$(USERDIR)/.config/notes/config,\033[0m" \
+	@mandb 1>/dev/null 2>&1 # Fail silently if we don't have a mandb
+	@echo -e "Notes has been installed to $(PREFIX)/bin/notes." \
+	"A configuration file has also been created at" \
+	"$(USERDIR)/.config/notes/config," \
 	"which you can edit if you'd like to change the default settings." \
-	"\nGet started now by running \033[0;32mnotes open my-new-note\033[0m" \
-	"Or you can run \033[0;32mnotes help\033[0m for more info"
+	"\nGet started now by running notes open my-new-note" \
+	"Or you can run notes help for more info"
 	
 uninstall:
 	rm -f $(PREFIX)/bin/notes
