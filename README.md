@@ -70,7 +70,6 @@ curl https://rawgit.com/pimterry/notes/master/install.sh | bash -s uninstall
 ```
 
 ## How do I configure this?
-=======
 
 By default your notes live in ~/notes, but you can change that to anywhere you like by setting the `$NOTES_DIRECTORY` environmental variable. See [how do I configure this?](#how-do-i-configure-this) for more details.
 
