@@ -24,7 +24,7 @@ This is just one tool in the chain. `notes` is a command line tool, and some peo
 The easy way is:
 
 ```bash
-curl https://rawgit.com/pimterry/notes/master/install.sh | bash
+curl -L https://rawgit.com/pimterry/notes/master/install.sh | bash
 ```
 This will install `notes`, a default configuration, a man page, and bash completion if possible.
 
@@ -66,7 +66,7 @@ You'll need to open a new shell for this to take effect.
 ## What if I want to uninstall this?
 If you used the automated install script to install notes, you can uninstall it the same way by running:
 ```bash
-curl https://rawgit.com/pimterry/notes/master/install.sh | bash -s uninstall
+curl -L https://rawgit.com/pimterry/notes/master/install.sh | bash -s uninstall
 ```
 
 ## How do I configure this?
