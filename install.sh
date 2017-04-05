@@ -2,6 +2,11 @@
 
 # This is an install script for notes
 
+# Yay, Echo self documents! :D
+echo "Checking for root..."
+    [ "$(whoami)" != "root" ] && exec sudo -- "$0" "$@"
+
+# This has to be defined after root elevation or script will fail.
 function assertInstalled() {
     for var in "$@"; do
         if ! which $var &> /dev/null; then
@@ -10,10 +15,6 @@ function assertInstalled() {
         fi
     done
 }
-
-# Yay, Echo self documents! :D
-echo "Checking for root..."
-    [ "$(whoami)" != "root" ] && exec sudo -- "$0" "$@"
 
 # Make sure we have everything actually installed that we need to install this.
 echo "Checking for Dependencies..."
