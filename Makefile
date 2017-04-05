@@ -1,13 +1,13 @@
 PREFIX ?= /usr/local
-BASH_COMPLETION_DIR := $(shell pkg-config --variable=completionsdir bash-completion) 
+BASH_COMPLETION_DIR := $(shell pkg-config --silence-errors --variable=completionsdir bash-completion) 
 # pkg-config adds a space for some reason, we have to strip it off.
 BASH_COMPLETION_DIR := $(strip $(BASH_COMPLETION_DIR))
 USERDIR ?= $(HOME)
 
 # The @ symbols make the output silent.
 
-install: 
-	@if [ -d $(BASH_COMPLETION_DIR) ]; then \
+install:
+	@if [ $(BASH_COMPLETION_DIR) ]; then \
 		cp notes.bash_completion "$(BASH_COMPLETION_DIR)/notes"; \
 	else \
 		echo "Bash Completion was not installed, because the directory was" \
@@ -15,9 +15,12 @@ install:
 		"README (https://github.com/pimterry/notes#installing-bash-completion)" \
 		"to manually install it."; \
 	fi # Small test for bash completion support
-	@install -m755 -D notes $(PREFIX)/bin/notes
-	@install -m777 -D config $(USERDIR)/.config/notes/config
-	@install -D notes.1 $(PREFIX)/share/man/man1/notes.1
+	@install -m755 -d $(PREFIX)/bin/
+	@install -m755 notes $(PREFIX)/bin/
+	@install -m777 -d $(USERDIR)/.config/notes/
+	@install -m777 config $(USERDIR)/.config/notes/
+	@install -d $(PREFIX)/share/man/man1/
+	@install notes.1 $(PREFIX)/share/man/man1/
 	@mandb 1>/dev/null 2>&1 # Fail silently if we don't have a mandb
 	@echo -e "Notes has been installed to $(PREFIX)/bin/notes." \
 	"A configuration file has also been created at" \
