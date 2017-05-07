@@ -21,14 +21,14 @@ This is just one tool in the chain. `notes` is a command line tool, and some peo
 
 ## How do I install this?
 
-The easy way is:
+### Automatic:
 
 ```bash
 curl -L https://rawgit.com/pimterry/notes/master/install.sh | bash
 ```
 This will install `notes`, a default configuration, a man page, and bash completion if possible.
 
-The manual way is:
+### Manual:
 
 Download `notes`, `chmod +x`, put it in your `$path`. This will probably do it:
 
@@ -64,7 +64,7 @@ curl https://cdn.rawgit.com/pimterry/notes/v0.2.0/notes._notes > /usr/share/zsh/
 You'll need to open a new shell for this to take effect.
 
 ## What if I want to uninstall this?
-If you used the automated install script to install notes, you can uninstall it the same way by running:
+If you used the automated install script to install notes, you can uninstall it the same way, by running:
 ```bash
 curl -L https://rawgit.com/pimterry/notes/master/install.sh | bash -s uninstall
 ```
