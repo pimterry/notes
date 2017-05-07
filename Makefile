@@ -22,7 +22,8 @@ to manually install it.\n\n"; \
 	@install -m777 config $(USERDIR)/.config/notes/
 	@install -d $(PREFIX)/share/man/man1/
 	@install notes.1 $(PREFIX)/share/man/man1/
-	@mandb 1>/dev/null 2>&1 # Fail silently if we don't have a mandb
+
+	@mandb 1>/dev/null 2>&1 || true # Fail silently if we don't have a mandb
 
 	@printf \
 "Notes has been installed to $(PREFIX)/bin/notes. \
