@@ -21,13 +21,20 @@ This is just one tool in the chain. `notes` is a command line tool, and some peo
 
 ## How do I install this?
 
+### Automatic:
+
+```bash
+curl -L https://rawgit.com/pimterry/notes/latest-release/install.sh | bash
+```
+This will install `notes`, a default configuration, a man page, and bash completion if possible.
+
+### Manual:
+
 Download `notes`, `chmod +x`, put it in your `$path`. This will probably do it:
 
 ```bash
-curl https://cdn.rawgit.com/pimterry/notes/v0.2.0/notes > /usr/local/bin/notes && chmod +x /usr/local/bin/notes
+curl https://cdn.rawgit.com/pimterry/notes/latest-release/notes > /usr/local/bin/notes && chmod +x /usr/local/bin/notes
 ```
-
-By default your notes live in ~/notes, but you can change that to anywhere you like by setting the `$NOTES_DIRECTORY` environmental variable. See [how do I configure this?](#how-do-i-configure-this) for more details.
 
 #### Installing auto completion
 
@@ -42,25 +49,33 @@ Installing the completions might be as follows:
 **Bash**
 
 ```bash
-curl https://cdn.rawgit.com/pimterry/notes/v0.2.0/notes.bash_completion > /usr/share/bash-completion/completions/notes
+curl https://cdn.rawgit.com/pimterry/notes/latest-release/notes.bash_completion > /usr/share/bash-completion/completions/notes
 ```
 
 **Zsh**
 
 On *buntu based distros and OSX:
 ```bash
-curl -L https://rawgit.com/pimterry/notes/master/_notes > /usr/local/share/zsh/site-functions/_notes
+curl -L https://rawgit.com/pimterry/notes/latest-release/_notes > /usr/local/share/zsh/site-functions/_notes
 ```
 
 On other Unix distros:
 
 ```bash
-curl -L https://rawgit.com/pimterry/notes/master/_notes > /usr/share/zsh/site-functions/_notes
+curl -L https://rawgit.com/pimterry/notes/latest-release/_notes > /usr/share/zsh/site-functions/_notes
 ```
 
 You'll need to open a new shell for this to take effect.
 
-# How do I configure this?
+## What if I want to uninstall this?
+If you used the automated install script to install notes, you can uninstall it the same way, by running:
+```bash
+curl -L https://rawgit.com/pimterry/notes/latest-release/install.sh | bash -s -- uninstall
+```
+
+## How do I configure this?
+
+By default your notes live in ~/notes, but you can change that to anywhere you like by setting the `$NOTES_DIRECTORY` environmental variable. See [how do I configure this?](#how-do-i-configure-this) for more details.
 
 To get started with you'll want to set `$EDITOR` to your favourite text editor, and probably `$NOTES_DIRECTORY` to the directory in which you'd like to use to store your notes (this defaults to `~/notes`). You'll typically want to set these as environment variables in your `.bashrc`, `.zshrc`, or similar.
 
