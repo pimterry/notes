@@ -4,7 +4,7 @@
 
 # Yay, Echo self documents! :D
 echo "Checking for root..."
-    [ "$(whoami)" != "root" ] && exec sudo -- "$0" "$@"
+    [ "$(whoami)" != "root" ] && exec sudo -- "$0" -s -- "$@"
 
 # This has to be defined after root elevation or script will fail.
 function assertInstalled() {
@@ -17,7 +17,7 @@ function assertInstalled() {
 }
 
 # Make sure we have everything actually installed that we need to install this.
-echo "Checking for Dependencies..."
+echo "Checking for dependencies..."
     assertInstalled bash curl tar mktemp install make
 
 # Variable Definitions go here. 
