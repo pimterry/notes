@@ -46,19 +46,23 @@ To enable completion for notes, copy the completion script into your bash or zsh
 
 Installing the completions might be as follows:
 
-Bash
+**Bash**
+
 ```bash
 curl https://cdn.rawgit.com/pimterry/notes/v0.2.0/notes.bash_completion > /usr/share/bash-completion/completions/notes
 ```
 
-Zsh  
-On *buntu based distros
+**Zsh**
+
+On *buntu based distros and OSX:
 ```bash
-curl https://cdn.rawgit.com/pimterry/notes/v0.2.0/notes._notes > /usr/local/share/site-functions/_notes
+curl -L https://rawgit.com/pimterry/notes/master/_notes > /usr/local/share/zsh/site-functions/_notes
 ```
-On other Unix distros the command should as follows
+
+On other Unix distros:
+
 ```bash
-curl https://cdn.rawgit.com/pimterry/notes/v0.2.0/notes._notes > /usr/share/zsh/site-functions/_notes
+curl -L https://rawgit.com/pimterry/notes/master/_notes > /usr/share/zsh/site-functions/_notes
 ```
 
 You'll need to open a new shell for this to take effect.
