@@ -22,8 +22,20 @@ if [ -z "$EDITOR" ] && type editor &>/dev/null; then
     EDITOR=editor
 fi
 
+# Detect for piped output. This can't be inside a function
+if [ -t 1 ] || [ "$(ps -o comm= -p $PPID)" == "sshd" ]; then
+    piped_output=0
+else
+    piped_output=1
+fi
+
 without_notes_dir() {
-    cat | sed -e "s/^$escaped_notes_dir//g" | sed -E "s/^\/+//g"
+    # Determine if we're in a pipe first, if we are, output the full path.
+    if [ $piped_output == 1 ]; then
+        cat
+    else 
+        cat | sed -e "s/^$escaped_notes_dir//g" | sed -E "s/^\/+//g"
+    fi
 }
 
 ls_notes() {
@@ -171,7 +183,7 @@ usage() {
 	cat <<EOF
 notes is a command line note taking tool.
 
-Usage:
+Usage: notes [OPTION] COMMAND [ARGUMENTS]
     notes new|n <name>                    # Create a new note
     notes ls <pattern>                    # List notes by path
     notes find|f [pattern]                # Search notes by filename and path
@@ -181,10 +193,14 @@ Usage:
     notes open|o <name>                   # Open a note for editing by full name
     notes rm [-r | --recursive] <name>    # Remove note, or folder if -r or --recursive is given
     echo <name> | notes open|o            # Open all note filenames piped in
-    notes --help                          # Print this usage information
 
 'command|c' means you can use 'command' or the equivalent shorthand alias 'c'
-
+Options:
+    -p, --full-path                       # Show full path of a note in output
+                                            This is default when piping.
+    -s, --suppress-path                   # Suppress the path from output
+                                            This is default during normal use.
+    -h, --help                            # Prints this usage information
 Your notes directory is $notes_dir. You can
 override this by setting \$NOTES_DIRECTORY to your preferred path.
 EOF
@@ -199,6 +215,25 @@ main() {
         usage
         exit 1
     fi
+    
+    # Deal with options
+    while getopts ":sph --long help,suppress-path,full-path" opt; do
+        case $opt in
+        "suppress-path"|"s")
+            piped_output=0
+            ;;
+        "full-path"|"p")
+            piped_output=1
+            ;;
+        "help"|"h")
+            cmd="usage"
+            ;;
+        \?)
+            echo "Invalid option: -$OPTARG" >&2
+            ;;
+        esac
+    done
+    shift $((OPTIND-1))
 
     case "$1" in
         "new"|"n" )
@@ -226,9 +261,11 @@ main() {
             cmd="usage"
             ;;
         * )
-            printf "$1 is not a recognized notes command.\n\n"
-            cmd="usage"
-            ret=1
+            if [ "$1" ]; then
+                printf "$1 is not a recognized notes command.\n\n"
+                cmd="usage"
+                ret=1
+            fi
             ;;
     esac
     shift

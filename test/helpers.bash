@@ -27,6 +27,10 @@ setupNotesEnv() {
   export HOME=$NOTES_HOME
 }
 
+faketty() {
+    script -qefc "$(printf "%q " "$@")" | sed 's/\r$//' 
+}
+
 teardownNotesEnv() {
   if [ $BATS_TEST_COMPLETED ]; then
     rm -rf $NOTES_DIRECTORY

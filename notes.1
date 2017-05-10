@@ -3,7 +3,7 @@
 notes \ - Simple delightful note taking, with more unix and less lock-in.
 .SH SYNOPSIS
 .B notes
-\fICOMMAND\fR
+[\fB\-ps\fR] [\fB\-\-suppress-path\fR] [\fB\-\-full-path\fR] \fICOMMAND\fR \fI[ARGUMENTS]\fR
 .SH DESCRIPTION
 .B notes
 is a simple command line tool that makes note taking simpler.
@@ -44,6 +44,14 @@ absolute path or relative to $NOTES_DIRECTORY.
 .TP
 .BR rm " "\fR[\fB\-r\fR | \fB\-\-recursive\fR] " "\fINAME\fR
 Removes \fINAME\fR. If \-r or \-\-recursive is given, folders will be removed.
+.SH OPTIONS
+.TP
+.BR \-p, \-\-full-path
+Shows the full path of file listings when using grep, find, and search. By 
+default this is enabled while piping \fBnotes\fR into another program.
+.BR \-s, \-\-suppress-path
+Suppresses the full path of file listings when using grep, find, and search. This
+is the default setting when using notes interactively.
 .SH AUTHORS
 Notes was created by Tim Perry, who is still the maintainer. Numerous
 contributions have been submitted via pull requests on github.

@@ -15,7 +15,7 @@ teardown() {
 notes="./notes"
 
 @test "Should output nothing and return non-zero if there are no notes to find" {
-  run $notes find
+  run $notes -s find
 
   assert_failure
   echo $output
@@ -26,7 +26,7 @@ notes="./notes"
   touch $NOTES_DIRECTORY/note1.md
   touch $NOTES_DIRECTORY/note2.md
 
-  run $notes find
+  run $notes -s find
   assert_success
   assert_line "note1.md"
   assert_line "note2.md"
@@ -35,7 +35,7 @@ notes="./notes"
 @test "Should find notes when using the find shorthand alias" {
   touch $NOTES_DIRECTORY/note.md
 
-  run $notes f
+  run $notes -s f
   assert_success
   assert_line "note.md"
 }
@@ -44,7 +44,7 @@ notes="./notes"
   touch $NOTES_DIRECTORY/match-note1.md
   touch $NOTES_DIRECTORY/hide-note2.md
 
-  run $notes find "match"
+  run $notes -s find "match"
 
   assert_success
   assert_line "match-note1.md"
@@ -55,7 +55,7 @@ notes="./notes"
   touch $NOTES_DIRECTORY/MATCH-note1.md
   touch $NOTES_DIRECTORY/hide-note2.md
 
-  run $notes find "match"
+  run $notes -s find "match"
 
   assert_success
   assert_line "MATCH-note1.md"
@@ -67,7 +67,7 @@ notes="./notes"
   mkdir "$NOTES_DIRECTORY/match-directory"
   touch "$NOTES_DIRECTORY/match-directory/note.md"
 
-  run $notes find "match"
+  run $notes -s find "match"
 
   assert_success
   assert_output "match-directory/note.md"
@@ -77,7 +77,7 @@ notes="./notes"
   mkdir "$NOTES_DIRECTORY/path with spaces"
   touch "$NOTES_DIRECTORY/path with spaces/note.md"
 
-  run $notes find
+  run $notes -s find
 
   assert_success
   assert_output "path with spaces/note.md"
@@ -87,7 +87,7 @@ notes="./notes"
   mkdir "$NOTES_DIRECTORY/path with spaces"
   touch "$NOTES_DIRECTORY/path with spaces/note.md"
 
-  NOTES_DIRECTORY="$NOTES_DIRECTORY/path with spaces" run $notes find
+  NOTES_DIRECTORY="$NOTES_DIRECTORY/path with spaces" run $notes -s find
 
   assert_success
   assert_output "note.md"
