@@ -26,9 +26,18 @@ without_notes_dir() {
     cat | sed -e "s/^$escaped_notes_dir//g" | sed -E "s/^\/+//g"
 }
 
+print_output() {
+    if [[ $cmd_result == 0 && "$formatted_output" ]]; then
+        printf "$formatted_output\n"
+        return 0
+    else
+        return 2
+    fi
+}
+
 ls_notes() {
     local ls_output=$(ls -p "$notes_dir/$*" 2>&1)
-    local ls_result=$?
+    local cmd_result=$?
     local formatted_output
 
     if [ $# -gt 0 ]; then
@@ -37,14 +46,9 @@ ls_notes() {
     else
         formatted_output=$ls_output
     fi
-
-    if [[ $ls_result == 0 && "$formatted_output" ]]; then
-        printf "$formatted_output\n"
-        return 0
-    else
-        return 2
-    fi
+    print_output
 }
+
 
 search_filenames_and_contents() {
     if [ "$#" -gt 0 ]; then
@@ -57,46 +61,28 @@ search_filenames_and_contents() {
     else
         find_output=$(find "$notes_dir" -type f)
     fi
-    find_result=$?
+    cmd_result=$?
     formatted_output=$(printf "$find_output" | without_notes_dir)
-
-    if [[ $find_result == 0 && "$formatted_output" ]]; then
-        printf "$formatted_output\n"
-        return 0
-    else
-        return 2
-    fi
+    print_output
 }
 
 find_notes() {
     local find_output=$(find "$notes_dir" -ipath "$notes_dir/*$**" -type f 2>&1)
-    local find_result=$?
+    local cmd_result=$?
     local formatted_output=$(printf "$find_output" | without_notes_dir)
-
-    if [[ $find_result == 0 && "$formatted_output" ]]; then
-        printf "$formatted_output\n"
-        return 0
-    else
-        return 2
-    fi
+    print_output
 }
 
 grep_notes() {
     if [ ! "$#" -gt 0 ]; then
-        printf "Grep requires a pattern, but none was provided."
+        printf "Grep requires a pattern, but none was provided.\n"
         return 1
     fi
 
     local grep_output=$(grep -r "$notes_dir" -li -e "$*" 2>&1)
-    local grep_result=$?
+    local cmd_result=$?
     local formatted_output=$(printf "$grep_output" | without_notes_dir)
-
-    if [[ $grep_result == 0 && "$formatted_output" ]]; then
-        printf "$formatted_output\n"
-        return 0
-    else
-        return 2
-    fi
+    print_output
 }
 
 generate_name() {
