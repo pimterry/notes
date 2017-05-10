@@ -138,11 +138,10 @@ remove_note() {
 }
 
 open_something() {
-    if [[ -p /dev/stdin ]]; then
-        read -d'\n' note_names
-        while read note_name; do
-            open_note "$note_name"
-        done <<< "$note_names"
+    if [ $# -gt 1 ]; then
+        for note in $@ ; do
+            open_note "$note"
+        done
     elif [ $# -gt 0 ]; then
         open_note "$*"
     else
@@ -237,4 +236,9 @@ main() {
     ret=$[$ret+$?]
     exit $ret
 }
-main "$@"
+if [ ! -t 0 ]; then
+	read -d'\n' piped_in
+	main "$@" $piped_in
+else
+	main "$@"
+fi
