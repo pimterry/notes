@@ -31,6 +31,11 @@ __notes_cmd ()
 
 _notes ()
 {
+  # Look for configuration file at ~/.config/notes/config and use it
+  if [ -f ~/.config/notes/config ]; then
+      . ~/.config/notes/config
+  fi
+
   local configured_dir=${NOTES_DIRECTORY%/}
   local note_dir="${configured_dir:-$HOME/notes}"
 
