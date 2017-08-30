@@ -1,7 +1,5 @@
 PREFIX ?= /usr/local
-BASH_COMPLETION_DIR := $(shell pkg-config --silence-errors --variable=completionsdir bash-completion) 
-# pkg-config adds a space for some reason, we have to strip it off.
-BASH_COMPLETION_DIR := $(strip $(BASH_COMPLETION_DIR))
+BASH_COMPLETION_DIR := $(shell pkg-config --silence-errors --variable=completionsdir bash-completion)
 USERDIR ?= $(HOME)
 
 # The @ symbols make the output silent.
