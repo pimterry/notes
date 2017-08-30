@@ -167,6 +167,33 @@ open_note() {
     $EDITOR "$note_path" < /dev/tty
 }
 
+cat_something() {
+    if [[ -p /dev/stdin ]]; then
+        read -d'\n' note_names
+        while read note_name; do
+            cat_note "$note_name"
+        done <<< "$note_names"
+    elif [ $# -gt 0 ]; then
+        cat_note "$*"
+    else
+        printf "Cat requires a name, but none was provided."
+        return 1
+    fi
+}
+
+cat_note() {
+    local note_path=$1
+
+    if [[ "$note_path" != *.$NOTES_EXT ]]; then
+        note_path="$note_path.$NOTES_EXT"
+    fi
+    if [ ! -f "$note_path" ]; then
+        note_path="$notes_dir/$note_path"
+    fi
+
+    cat "$note_path"
+}
+
 usage() {
 	cat <<EOF
 notes is a command line note taking tool.
@@ -180,7 +207,9 @@ Usage:
     notes open|o                          # Open your notes directory
     notes open|o <name>                   # Open a note for editing by full name
     notes rm [-r | --recursive] <name>    # Remove note, or folder if -r or --recursive is given
+    notes cat <name>                      # Display note
     echo <name> | notes open|o            # Open all note filenames piped in
+    echo <name> | notes cat               # Display all note filenames piped in
     notes --help                          # Print this usage information
 
 'command|c' means you can use 'command' or the equivalent shorthand alias 'c'
@@ -221,6 +250,9 @@ main() {
             ;;
         "rm" )
             cmd="remove_note"
+            ;;
+        "cat" )
+            cmd="cat_something"
             ;;
         --help | -help | -h )
             cmd="usage"

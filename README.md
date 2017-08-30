@@ -123,6 +123,10 @@ Opens a given note in your `$EDITOR`. Name can be an absolute path, or a relativ
 
 Removes the given note if it exists. If `-r` or `--recursive` is given, deletes the folders/notes recursively.
 
+### `notes cat <note-name>`
+
+Displays the note
+
 ### `notes grep/find <pattern> | notes open`
 
 Combine these together! This opens each matching note in your `$EDITOR` in turn.

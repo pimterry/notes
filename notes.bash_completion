@@ -16,7 +16,7 @@ _notes_complete_notes() {
 }
 
 _notes_complete_commands() {
-    local valid_commands="new find grep open ls rm"
+    local valid_commands="new find grep open ls rm cat"
     COMPREPLY=($(compgen -W "${valid_commands}" -- "${1}"))
 }
 
@@ -38,6 +38,9 @@ _notes()
             grep)
                 ;;
             open)
+                _notes_complete_notes "$cur"
+                ;;
+            cat)
                 _notes_complete_notes "$cur"
                 ;;
         esac
