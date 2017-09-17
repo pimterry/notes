@@ -5,6 +5,8 @@ Simple delightful note taking, with none of the lock-in.
 
 This demo uses zsh, vim and dropbox, but don't panic, that's just me. `notes` will work just fine with whatever other text editor, shell and syncing solution you feel like.
 
+<a target='_blank' rel='nofollow' href='https://app.codesponsor.io/link/iJW7FWKrcEHBcxrqjGxT9JPS/pimterry/notes'>  <img alt='Sponsor' width='888' height='68' src='https://app.codesponsor.io/embed/iJW7FWKrcEHBcxrqjGxT9JPS/pimterry/notes.svg' /></a>
+
 ## Why do I want this?
 
 You already have a tool that backs up and syncs your data (be it Dropbox, iCloud, Seafile or whatever). You already have a text editor on your desktop, your laptops, your phone and that tablet you've forgotten about.
