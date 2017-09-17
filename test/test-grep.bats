@@ -15,7 +15,7 @@ teardown() {
 notes="./notes"
 
 @test "Should complain and ask for a pattern if not is provided to grep" {
-  run $notes grep
+  run $notes -s grep
 
   assert_failure
   assert_line "Grep requires a pattern, but none was provided."
@@ -25,7 +25,7 @@ notes="./notes"
   echo "my-pattern" > $NOTES_DIRECTORY/matching-note.md
   echo "some-other-pattern" > $NOTES_DIRECTORY/non-matching-note.md
 
-  run $notes grep my-pattern
+  run $notes -s grep my-pattern
 
   assert_success
   assert_line "matching-note.md"
@@ -35,7 +35,7 @@ notes="./notes"
 @test "Should grep notes when using the grep shorthand alias" {
   echo "my-pattern" > $NOTES_DIRECTORY/matching-note.md
 
-  run $notes g my-pattern
+  run $notes -s g my-pattern
 
   assert_success
   assert_line "matching-note.md"
@@ -44,7 +44,7 @@ notes="./notes"
 @test "Should grep case-insensitively" {
   echo "LETTERS" > $NOTES_DIRECTORY/matching-note.md
 
-  run $notes grep letter
+  run $notes -s grep letter
 
   assert_success
   assert_line "matching-note.md"
