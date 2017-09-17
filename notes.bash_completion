@@ -1,6 +1,11 @@
 #!/bin/bash
 
 _notes_complete_notes() {
+    # Look for configuration file at ~/.config/notes/config and use it
+    if [ -f ~/.config/notes/config ]; then
+        . ~/.config/notes/config
+    fi
+
     local configured_dir=${NOTES_DIRECTORY%/} # Remove trailing slashes
     local notes_dir="${configured_dir:-$HOME/notes}"
     local OLD_IFS="$IFS"
