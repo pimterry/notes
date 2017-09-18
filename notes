@@ -137,59 +137,59 @@ remove_note() {
     rm "${rm_args[@]}" "$to_remove"
 }
 
-open_something() {
+handle_multiple_notes() {
+    local cmd=$1
+
     if [[ -p /dev/stdin ]]; then
         read -d'\n' note_names
         while read note_name; do
-            open_note "$note_name"
+            ${cmd}_note "$note_name"
         done <<< "$note_names"
-    elif [ $# -gt 0 ]; then
-        open_note "$*"
     else
-        open $notes_dir
+        ${cmd}_note "${@:2}"
     fi
+}
+
+get_full_note_path() {
+    local note_path=$1
+
+    if [[ "$note_path" != *.$NOTES_EXT ]]; then
+        note_path="$note_path.$NOTES_EXT"
+    fi
+    if [ ! -f "$note_path" ]; then
+        note_path="$notes_dir/$note_path"
+    fi
+
+    echo "$note_path"
 }
 
 open_note() {
     local note_path=$1
 
-    if [[ "$note_path" != *.$NOTES_EXT ]]; then
-        note_path="$note_path.$NOTES_EXT"
+    if [[ -z "$note_path" ]]; then
+        open $notes_dir
+        return
     fi
-    if [ ! -f "$note_path" ]; then
-        note_path="$notes_dir/$note_path"
-    fi
+
     if [ -z "$EDITOR" ]; then
         printf "Please set \$EDITOR to edit notes\n"
         exit 1
     fi
 
-    $EDITOR "$note_path" < /dev/tty
-}
+    note_path=$( get_full_note_path "$note_path" )
 
-cat_something() {
-    if [[ -p /dev/stdin ]]; then
-        read -d'\n' note_names
-        while read note_name; do
-            cat_note "$note_name"
-        done <<< "$note_names"
-    elif [ $# -gt 0 ]; then
-        cat_note "$*"
-    else
-        printf "Cat requires a name, but none was provided."
-        return 1
-    fi
+    $EDITOR "$note_path" < /dev/tty
 }
 
 cat_note() {
     local note_path=$1
 
-    if [[ "$note_path" != *.$NOTES_EXT ]]; then
-        note_path="$note_path.$NOTES_EXT"
+    if [[ -z "$note_path" ]]; then
+        printf "Cat requires a name, but none was provided."
+        exit 1
     fi
-    if [ ! -f "$note_path" ]; then
-        note_path="$notes_dir/$note_path"
-    fi
+
+    note_path=$( get_full_note_path "$note_path" )
 
     cat "$note_path"
 }
@@ -246,13 +246,13 @@ main() {
             cmd="grep_notes"
             ;;
         "open"|"o" )
-            cmd="open_something"
+            cmd="handle_multiple_notes open"
             ;;
         "rm" )
             cmd="remove_note"
             ;;
         "cat" )
-            cmd="cat_something"
+            cmd="handle_multiple_notes cat"
             ;;
         --help | -help | -h )
             cmd="usage"
