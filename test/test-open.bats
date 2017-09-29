@@ -70,8 +70,7 @@ notes="./notes"
   run bash -c "$notes find | $notes open"
 
   assert_success
-  assert_line "Editing $NOTES_DIRECTORY/note.md"
-  assert_line "Editing $NOTES_DIRECTORY/note2.md"
+  assert_line "Editing $NOTES_DIRECTORY/note2.md $NOTES_DIRECTORY/note.md"
 }
 
 @test "Accepts relative notes paths to open" {

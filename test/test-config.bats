@@ -36,7 +36,7 @@ notes="./notes"
 
 @test "Configuration should override file extension" {
   mkdir -p $HOME/.config/notes
-  echo "NOTES_EXT=txt" > $HOME/.config/notes/config
+  echo "NOTES_EXT=.txt" > $HOME/.config/notes/config
   run $notes new test
 
   assert_success

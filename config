@@ -9,6 +9,11 @@
 # QUICKNOTE_FORMAT="%Y-%m-%d"
 
 # Set extension to plain txt instead of markdown
+NOTES_EXT="txt"
+
+# Color output when grep searches for text
+GREP_COLOR="always"
+=======
 # NOTES_EXT="txt"
 
 # Define the directory where notes are stored
