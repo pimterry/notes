@@ -155,6 +155,10 @@ remove_note() {
             to_remove="$notes_dir/$note_name$NOTES_EXT"
         fi
         rm "${rm_args[@]}" "$to_remove"
+        # echo "rm ${rm_args[@]} $to_remove"
+		if [ $? -ne 0 ]; then
+			return 1
+		fi
         shift
     done
 }
