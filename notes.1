@@ -1,0 +1,54 @@
+.TH NOTES 1
+.SH NAME
+notes \ - Simple delightful note taking, with more unix and less lock-in.
+.SH SYNOPSIS
+.B notes
+\fICOMMAND\fR
+.SH DESCRIPTION
+.B notes
+is a simple command line tool that makes note taking simpler.
+When run without a command, the help screen will appear and will offer a brief
+description of availible commands.
+
+\fBnotes\fR will run the default editor for your distribution when opening a 
+note. You can set $EDITOR in your shell to override it.
+\fBnotes\fR uses a configuration file located at \fB~/.config/notes/config\fR.
+This file overrides any settings in your rc file.
+.SH COMMANDS
+.TP
+.BR new ", " n " " \fR[\fINAME\fR]
+Open your text editor with a new note, with given name.
+If no name is given, a quick note will be created with an auto-generated
+name.
+.TP
+.BR find ", " f " " \fR[\fIPATTERN\fR]
+Searches for notes using the given pattern, returning all matches. If no
+pattern is given, returns every note.
+.TP
+.BR grep ", " g " " \fIPATTERN\fR
+Searches the contents of all notes for the given pattern. Returns all matches.
+.TP
+.BR search ", " s " " \fIPATTERN\fR
+Combination of find and grep.
+.TP
+.BR ls " " \fR[\fIDIRECTORY\fR]
+Lists all notes within \fIDIRECTORY\fR. Lists contents of $NOTES_DIRECTORY if 
+no path is provided.
+.TP
+.BR open ", " o
+Opens $NOTES_DIRECTORY in your file explorer.
+.TP
+.BR open ", " o " "\fINAME\fR
+Opens note \fINAME\fR using your configured editor. \fINAME\fR can either be an
+absolute path or relative to $NOTES_DIRECTORY.
+.TP
+.BR rm " "\fR[\fB\-r\fR | \fB\-\-recursive\fR] " "\fINAME\fR
+Removes \fINAME\fR. If \-r or \-\-recursive is given, folders will be removed.
+.SH AUTHORS
+Notes was created by Tim Perry, who is still the maintainer. Numerous
+contributions have been submitted via pull requests on github.
+<\fBhttp://github.com/pimterry/notes\fR>.
+
+If you have a clone of notes.git, the output of \fBgit-shortlog\fR(1) and
+\fBgit-blame\fR(1) can show you the authors for specific parts of the project.
+

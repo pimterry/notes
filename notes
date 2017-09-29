@@ -14,6 +14,11 @@ configured_dir=${NOTES_DIRECTORY%/} # Remove trailing slashes
 notes_dir="${configured_dir:-$HOME/notes}"
 escaped_notes_dir="$(printf "$notes_dir" | sed -e 's/[]\/$*.^|[]/\\&/g')"
 
+# Make sure the notes directory actually exists, and create it if it doesn't
+if [ ! -d "$notes_dir" ]; then
+    mkdir -p "$notes_dir"
+fi
+
 # If no $EDITOR, look for `editor` (symlink on debian/ubuntu/etc)
 if [ -z "$EDITOR" ] && type editor &>/dev/null; then
     EDITOR=editor

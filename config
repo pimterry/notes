@@ -1,15 +1,20 @@
-# This is an example configuration file for notes 
+# This is an example configuration file for notes
 # To use it, copy to ~/.config/notes/config
 # This config is case sensitive
 
 # Set the editor that notes are opened with
-EDITOR=nano
+# EDITOR=nano
 
 # Change the quicknote format to get rid of the word "quicknote"
-QUICKNOTE_FORMAT="%Y-%m-%d"
+# QUICKNOTE_FORMAT="%Y-%m-%d"
 
 # Set extension to plain txt instead of markdown
 NOTES_EXT="txt"
 
 # Color output when grep searches for text
 GREP_COLOR="always"
+=======
+# NOTES_EXT="txt"
+
+# Define the directory where notes are stored
+# NOTES_DIRECTORY=~/notes
