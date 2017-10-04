@@ -24,6 +24,7 @@ __notes_cmd ()
     search:'[pattern] Search notes by filename or content'
     open:'<name> Open a notes for editing by full name'
     rm:'[-r | --recursive] <name> Remove note, or folder if -r or --recursive is given]'
+    cat:'<name> Display a note by name'
     --help:'Show usage'
   )
   _describe -t sub-commands 'sub commands' list && _ret=0
@@ -43,7 +44,7 @@ _notes ()
     _alternative 'sub-commands:files:__notes_cmd' && _ret=0
   elif (($CURRENT == 3)); then
     case $words[2] in
-      open|o|rm)
+      open|o|rm|cat)
         _path_files -W "${note_dir}" && _ret=0;;
       new|n|ls)
         _path_files -W "${note_dir}" -/ && _ret=0;;

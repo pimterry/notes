@@ -137,20 +137,20 @@ remove_note() {
     rm "${rm_args[@]}" "$to_remove"
 }
 
-open_something() {
+handle_multiple_notes() {
+    local cmd=$1
+
     if [[ -p /dev/stdin ]]; then
         read -d'\n' note_names
         while read note_name; do
-            open_note "$note_name"
+            ${cmd}_note "$note_name"
         done <<< "$note_names"
-    elif [ $# -gt 0 ]; then
-        open_note "$*"
     else
-        open $notes_dir
+        ${cmd}_note "${@:2}"
     fi
 }
 
-open_note() {
+get_full_note_path() {
     local note_path=$1
 
     if [[ "$note_path" != *.$NOTES_EXT ]]; then
@@ -159,12 +159,39 @@ open_note() {
     if [ ! -f "$note_path" ]; then
         note_path="$notes_dir/$note_path"
     fi
+
+    echo "$note_path"
+}
+
+open_note() {
+    local note_path=$1
+
+    if [[ -z "$note_path" ]]; then
+        open $notes_dir
+        return
+    fi
+
     if [ -z "$EDITOR" ]; then
         printf "Please set \$EDITOR to edit notes\n"
         exit 1
     fi
 
+    note_path=$( get_full_note_path "$note_path" )
+
     $EDITOR "$note_path" < /dev/tty
+}
+
+cat_note() {
+    local note_path=$1
+
+    if [[ -z "$note_path" ]]; then
+        printf "Cat requires a name, but none was provided."
+        exit 1
+    fi
+
+    note_path=$( get_full_note_path "$note_path" )
+
+    cat "$note_path"
 }
 
 usage() {
@@ -180,7 +207,9 @@ Usage:
     notes open|o                          # Open your notes directory
     notes open|o <name>                   # Open a note for editing by full name
     notes rm [-r | --recursive] <name>    # Remove note, or folder if -r or --recursive is given
+    notes cat <name>                      # Display note
     echo <name> | notes open|o            # Open all note filenames piped in
+    echo <name> | notes cat               # Display all note filenames piped in
     notes --help                          # Print this usage information
 
 'command|c' means you can use 'command' or the equivalent shorthand alias 'c'
@@ -217,10 +246,13 @@ main() {
             cmd="grep_notes"
             ;;
         "open"|"o" )
-            cmd="open_something"
+            cmd="handle_multiple_notes open"
             ;;
         "rm" )
             cmd="remove_note"
+            ;;
+        "cat" )
+            cmd="handle_multiple_notes cat"
             ;;
         --help | -help | -h )
             cmd="usage"

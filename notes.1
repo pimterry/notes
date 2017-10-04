@@ -10,7 +10,7 @@ is a simple command line tool that makes note taking simpler.
 When run without a command, the help screen will appear and will offer a brief
 description of availible commands.
 
-\fBnotes\fR will run the default editor for your distribution when opening a 
+\fBnotes\fR will run the default editor for your distribution when opening a
 note. You can set $EDITOR in your shell to override it.
 \fBnotes\fR uses a configuration file located at \fB~/.config/notes/config\fR.
 This file overrides any settings in your rc file.
@@ -32,7 +32,7 @@ Searches the contents of all notes for the given pattern. Returns all matches.
 Combination of find and grep.
 .TP
 .BR ls " " \fR[\fIDIRECTORY\fR]
-Lists all notes within \fIDIRECTORY\fR. Lists contents of $NOTES_DIRECTORY if 
+Lists all notes within \fIDIRECTORY\fR. Lists contents of $NOTES_DIRECTORY if
 no path is provided.
 .TP
 .BR open ", " o
@@ -44,6 +44,10 @@ absolute path or relative to $NOTES_DIRECTORY.
 .TP
 .BR rm " "\fR[\fB\-r\fR | \fB\-\-recursive\fR] " "\fINAME\fR
 Removes \fINAME\fR. If \-r or \-\-recursive is given, folders will be removed.
+.TP
+.BR cat " " \fINAME\fR
+Display note \fINAME\fR. \fINAME\fR can either be an absolute path or relative
+to $NOTES_DIRECTORY.
 .SH AUTHORS
 Notes was created by Tim Perry, who is still the maintainer. Numerous
 contributions have been submitted via pull requests on github.
