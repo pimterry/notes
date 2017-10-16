@@ -35,7 +35,7 @@ This will install `notes`, a default configuration, a man page, and bash complet
 Download `notes`, `chmod +x`, put it in your `$path`. This will probably do it:
 
 ```bash
-curl https://cdn.rawgit.com/pimterry/notes/latest-release/notes > /usr/local/bin/notes && chmod +x /usr/local/bin/notes
+curl https://raw.githubusercontent.com/pimterry/notes/latest-release/notes > /usr/local/bin/notes && chmod +x /usr/local/bin/notes
 ```
 
 #### Installing auto completion
