@@ -167,7 +167,7 @@ open_note() {
     local note_path=$1
 
     if [[ -z "$note_path" ]]; then
-        open $notes_dir
+        open "$notes_dir"
         return
     fi
 
