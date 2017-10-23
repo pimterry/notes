@@ -124,8 +124,18 @@ new_note() {
 remove_note() {
     local rm_args=()
     if [[ "$1" == "-r" || "$1" == "--recursive" ]]; then
-        rm_args+=("--recursive")
+        # checks for macos, as it doesn't support long arguments for rm
+        if [[ "$OSTYPE" == "darwin"* ]]; then
+            rm_args+=("-r")
+        else
+            rm_args+=("--recursive")
+        fi
         shift
+    fi
+
+    if [ ! "$#" -gt 0 ]; then
+        printf "Remove requires a file or folder, but none was provided."
+        return 1
     fi
 
     local note_name="$*"
@@ -167,7 +177,7 @@ open_note() {
     local note_path=$1
 
     if [[ -z "$note_path" ]]; then
-        open $notes_dir
+        open "$notes_dir"
         return
     fi
 
@@ -270,3 +280,4 @@ main() {
     exit $ret
 }
 main "$@"
+

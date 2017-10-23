@@ -28,6 +28,12 @@ notes="./notes"
   assert_failure
 }
 
+@test "Should fail when no file or folder given" {
+  run $notes rm
+
+  assert_failure
+}
+
 @test "Should remove note in folder" {
   mkdir "$NOTES_DIRECTORY/folder"
   touch "$NOTES_DIRECTORY/folder/note.md"
@@ -52,7 +58,18 @@ notes="./notes"
 
   assert_success
   refute_exists "$NOTES_DIRECTORY/folder"
-  refute_exists "$NOTES_DIRECTORY/folder/notes.md"
+  refute_exists "$NOTES_DIRECTORY/folder/note.md"
+}
+
+@test "-r Should fail if no file or folder given" {
+  mkdir "$NOTES_DIRECTORY/folder"
+  touch "$NOTES_DIRECTORY/folder/note.md"
+  run $notes rm -r
+
+  assert_failure
+  assert_line "Remove requires a file or folder, but none was provided."
+  assert_exists "$NOTES_DIRECTORY/folder"
+  assert_exists "$NOTES_DIRECTORY/folder/note.md"
 }
 
 @test "--recursive Should remove folder recursively" {
@@ -62,7 +79,18 @@ notes="./notes"
 
   assert_success
   refute_exists "$NOTES_DIRECTORY/folder"
-  refute_exists "$NOTES_DIRECTORY/folder/notes.md"
+  refute_exists "$NOTES_DIRECTORY/folder/note.md"
+}
+
+@test "--recursive Should fail if no file or folder given" {
+  mkdir "$NOTES_DIRECTORY/folder"
+  touch "$NOTES_DIRECTORY/folder/note.md"
+  run $notes rm --recursive
+
+  assert_failure
+  assert_line "Remove requires a file or folder, but none was provided."
+  assert_exists "$NOTES_DIRECTORY/folder"
+  assert_exists "$NOTES_DIRECTORY/folder/note.md"
 }
 
 @test "should delete file if both folder and file exists" {
