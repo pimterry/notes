@@ -138,7 +138,7 @@ Combine these together! This opens each matching note in your `$EDITOR` in turn.
 All the above works. Here's what's coming next:
 
 - [ ] More interesting and nicer looking file/grep search result formatting, perhaps only when not piping? (https://github.com/pimterry/notes/issues/27)
-- [ ] Make the file extension optional (https://github.com/pimterry/notes/issues/24)
+- [x] Make the file extension optional (https://github.com/pimterry/notes/issues/24)
 - [ ] Interactive mode? `notes` could open a scrollable list of notes, open your editor when you pick one, and reappear after you close it. (https://github.com/pimterry/notes/issues/17)
 - [ ] Tree view (https://github.com/pimterry/notes/issues/26)
 - [ ] Easy way to see short notes snippets in find/grep/tree? Could be option (`--snippets`) or by piping to a command (`notes find | notes snippets`). Maybe call it `head`? (https://github.com/pimterry/notes/issues/22)
