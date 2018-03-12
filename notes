@@ -117,8 +117,15 @@ new_note() {
     if [[ $note_name == "" ]]; then
          note_name="$(generate_name)"
     fi
-    mkdir -p "$(dirname "$notes_dir/$note_name")"
-    open_note "$note_name.$NOTES_EXT"
+    # mkdir -p "$(dirname "$notes_dir/$note_name")"
+
+    mkdir -p "$notes_dir"
+    ext="${note_name#*.}"
+    if [[ ext = $note_name ]]; then # lacks extension
+        open_note "$note_name.$NOTES_EXT"
+    else
+        open_note "$note_name"
+    fi
 }
 
 remove_note() {
