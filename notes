@@ -119,12 +119,7 @@ new_note() {
     fi
     mkdir -p "$(dirname "$notes_dir/$note_name")"
 
-    ext="${note_name#*.}"
-    if [[ ext = $note_name ]]; then # lacks extension
-        open_note "$note_name.$NOTES_EXT"
-    else
-        open_note "$note_name"
-    fi
+    open_note "$note_name"
 }
 
 remove_note() {
