@@ -16,7 +16,7 @@ escaped_notes_dir="$(printf "$notes_dir" | sed -e 's/[]\/$*.^|[]/\\&/g')"
 # if [ ! -d "$notes_dir" ]; then
 # mkdir man page says "create the Dir(s) if they donot already exist"
 if ! $(mkdir -p "$notes_dir"); then
-    echo "set \$NOTES_DIRECTORY to a different location" >&2
+    echo "please, set \$NOTES_DIRECTORY to a different location" >&2
     exit 1
 fi
 # fi
