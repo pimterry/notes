@@ -13,9 +13,13 @@ notes_dir="${configured_dir:-$HOME/notes}"
 escaped_notes_dir="$(printf "$notes_dir" | sed -e 's/[]\/$*.^|[]/\\&/g')"
 
 # Make sure the notes directory actually exists, and create it if it doesn't
-if [ ! -d "$notes_dir" ]; then
-    mkdir -p "$notes_dir"
+# if [ ! -d "$notes_dir" ]; then
+# mkdir man page says "create the Dir(s) if they donot already exist"
+if ! $(mkdir -p "$notes_dir"); then
+    echo "set \$NOTES_DIRECTORY to a different location" >&2
+    exit 1
 fi
+# fi
 
 # If no $EDITOR, look for `editor` (symlink on debian/ubuntu/etc)
 if [ -z "$EDITOR" ] && type editor &>/dev/null; then
