@@ -23,6 +23,13 @@ if [ -z "$EDITOR" ] && type editor &>/dev/null; then
     EDITOR=editor
 fi
 
+# reference, https://en.wikipedia.org/wiki/Uname
+OS=`uname -s` 
+[[ $OS = "Linux" ]] && open() { xdg-open "$@"; }
+# Windows versions have NT in them
+[[ $OS = *NT* ]] && open() { false; }  # how do I invoke windows commands ?
+
+
 without_notes_dir() {
     cat | sed -e "s/^$escaped_notes_dir//g" | sed -E "s/^\/+//g"
 }
