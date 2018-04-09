@@ -1,8 +1,7 @@
 <!--
-Thank you for contributing to notes, before you publish your pull request, please follow this template to make sure your PR fits the criteria. 
+Thank you for contributing to notes, before you submit your pull request, please follow this template to make sure your PR fits the criteria. 
 
-
-Please enter each Issue number you are resolving in your PR after one of the following words [Fixes, Closes, Resolves]. This will auto-link these issues and close them when this PR is merged!
+Please enter each issue number you are resolving in your PR after one of the following words [Fixes, Closes, Resolves]. This will auto-link these issues and close them when this PR is merged!
 e.g. 
 Fixes #1
 Closes #2
@@ -12,9 +11,9 @@ Closes #2
 ### Checklist
 - [ ] I have made a change to this repository, be it functionality, testing, documentation, spelling, or grammar.
 - [ ] I updated my branch with the master branch.
-- [ ] I have added the nessecairy testig to prove my fix is effective or my feture work, or I did not modify functionality.
-- [ ] I have added necessary documentation about the functionality in an appropriate .md file
-- [ ] I have commented any code I have modified or I did not modify any code
+- [ ] I have added the necessary testing to prove my fix is effective/my feature works (or I did not modify functionality).
+- [ ] I have added necessary documentation about the functionality in an appropriate .md file.
+- [ ] I have appropriately commented any code I have modified
 
 ### Short description of what this PR does:
 - 
