@@ -23,6 +23,7 @@ if [ -z "$EDITOR" ] && type editor &>/dev/null; then
     EDITOR=editor
 fi
 
+
 without_notes_dir() {
     cat | sed -e "s/^$escaped_notes_dir//g" | sed -E "s/^\/+//g"
 }
@@ -51,22 +52,22 @@ search_filenames_and_contents() {
     if [ "$#" -gt 0 ]; then
         find_output=$(find "$notes_dir" -type f -exec bash -c \
             "shopt -s nocasematch
-            grep -il \"$*\" \"{}\" || if [[ \"{}\" =~ \"$*\" ]]; then
-                echo \"{}\";
-            fi" \;\
+        grep -il \"$*\" \"{}\" || if [[ \"{}\" =~ \"$*\" ]]; then
+        echo \"{}\";
+    fi" \;\
         )
-    else
-        find_output=$(find "$notes_dir" -type f)
-    fi
-    find_result=$?
-    formatted_output=$(printf "$find_output" | without_notes_dir)
+else
+    find_output=$(find "$notes_dir" -type f)
+fi
+find_result=$?
+formatted_output=$(printf "$find_output" | without_notes_dir)
 
-    if [[ $find_result == 0 && "$formatted_output" ]]; then
-        printf "$formatted_output\n"
-        return 0
-    else
-        return 2
-    fi
+if [[ $find_result == 0 && "$formatted_output" ]]; then
+    printf "$formatted_output\n"
+    return 0
+else
+    return 2
+fi
 }
 
 find_notes() {
@@ -116,7 +117,7 @@ generate_name() {
 new_note() {
     local note_name="$*"
     if [[ $note_name == "" ]]; then
-         note_name="$(generate_name)"
+        note_name="$(generate_name)"
     fi
     mkdir -p "$(dirname "$notes_dir/$note_name")"
 
@@ -175,11 +176,38 @@ get_full_note_path() {
     echo "$note_path"
 }
 
+file_manager() {
+        if ! command -v uname > /dev/null; then
+            echo "failed to detect OS" >&2
+            exit 1
+        fi
+
+        local OS=`uname -s`
+        # reference, https://en.wikipedia.org/wiki/Uname
+        if [[ $OS = Linux ]]; then
+            echo "xdg-open"
+        elif [[ $OS = Darwin ]]; then
+            echo "open"
+        else
+            echo "Opening directory is currently not supported in $OS, if you
+            know a work around. You can open an issue by going to the following
+            url, https://github.com/pimterry/notes/issues/new " >&2
+
+            exit 1
+        fi
+
+}
+
 open_note() {
     local note_path=$1
 
     if [[ -z "$note_path" ]]; then
-        open "$notes_dir"
+        fm=$(file_manager)
+        if ! (command -v $fm > /dev/null); then
+            echo "No default file manager set." >&2
+            exit 1
+        fi
+        $fm "$notes_dir"
         return
     fi
 
@@ -207,7 +235,7 @@ cat_note() {
 }
 
 usage() {
-	cat <<EOF
+    cat <<EOF
 notes is a command line note taking tool.
 
 Usage:
