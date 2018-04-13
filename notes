@@ -207,7 +207,9 @@ open_note() {
             echo "No default file manager set." >&2
             exit 1
         fi
-        $fm "$notes_dir"
+
+	echo "Opening $notes_dir"
+        $fm "$notes_dir" >/dev/null
         return
     fi
 
