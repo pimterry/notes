@@ -209,7 +209,7 @@ open_note() {
         fi
 
         echo "Opening $notes_dir"
-        $fm "$notes_dir" >/dev/null
+        $fm "$notes_dir" &>/dev/null # FIX? discarding errors is bad!
         return
     fi
 
