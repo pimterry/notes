@@ -208,7 +208,7 @@ open_note() {
             exit 1
         fi
 
-	echo "Opening $notes_dir"
+        echo "Opening $notes_dir"
         $fm "$notes_dir" >/dev/null
         return
     fi
