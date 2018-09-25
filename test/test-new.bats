@@ -73,3 +73,11 @@ notes="./notes"
   assert_success
   assert_exists "$NOTES_DIRECTORY/notes with spaces/note.md"
 }
+
+@test "Should create quicknote in a subfolder" {
+  today=`date "+%Y-%m-%d"`
+  run $notes new subfolder/
+
+  assert_success
+  assert_exists "$NOTES_DIRECTORY/subfolder/quicknote-$today.md"
+}

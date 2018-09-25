@@ -118,6 +118,11 @@ new_note() {
     if [[ $note_name == "" ]]; then
          note_name="$(generate_name)"
     fi
+
+    if echo "$note_name" | grep "/$" &> /dev/null; then
+        note_name="${note_name}/$(generate_name)"
+    fi
+
     mkdir -p "$(dirname "$notes_dir/$note_name")"
 
     open_note "$note_name"

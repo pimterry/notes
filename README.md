@@ -93,7 +93,7 @@ There are also more complex options available. You can set any configuration pro
 
 ### `notes new <note-name>`
 
-Opens your `$EDITOR` of choice for a new note, with the given name. The name can include slashes, if you want to put your note in a subfolder. Leave out the name if you want one to be generated for you (e.g. `quicknote-2016-12-21.md` - format configurable with `$QUICKNOTE_FORMAT`). Shorthand alias also available with `notes n`.
+Opens your `$EDITOR` of choice for a new note, with the given name. The name can include slashes, if you want to put your note in a subfolder. Leave out the name if you want one to be generated for you (e.g. `quicknote-2016-12-21.md` - format configurable with `$QUICKNOTE_FORMAT`). If you want to place a quicknote in a subfolder, use a trailing slash: `notes new subfolder/`. Shorthand alias also available with `notes n`.
 
 ### `notes find <part-of-a-note-name>`
 
