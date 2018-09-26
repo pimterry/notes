@@ -216,18 +216,24 @@ usage() {
 notes is a command line note taking tool.
 
 Usage:
-    notes new|n <name>                    # Create a new note
-    notes ls <pattern>                    # List notes by path
-    notes find|f [pattern]                # Search notes by filename and path
-    notes grep|g <pattern>                # Search notes by content
-    notes search|s [pattern]              # Search notes by filename or content
-    notes open|o                          # Open your notes directory
-    notes open|o <name>                   # Open a note for editing by full name
-    notes rm [-r | --recursive] <name>    # Remove note, or folder if -r or --recursive is given
-    notes cat <name>                      # Display note
-    echo <name> | notes open|o            # Open all note filenames piped in
-    echo <name> | notes cat               # Display all note filenames piped in
-    notes --help                          # Print this usage information
+    notes [options] new|n <name>                    # Create a new note
+    notes [options] ls <pattern>                    # List notes by path
+    notes [options] find|f [pattern]                # Search notes by filename and path
+    notes [options] grep|g <pattern>                # Search notes by content
+    notes [options] search|s [pattern]              # Search notes by filename or content
+    notes [options] open|o                          # Open your notes directory
+    notes [options] open|o <name>                   # Open a note for editing by full name
+    notes [options] rm [-r | --recursive] <name>    # Remove note, or folder if -r or --recursive is given
+    notes [options] cat <name>                      # Display note [options]
+    echo <name> | notes [options] open|o            # Open all note filenames piped in
+    echo <name> | notes [options] cat               # Display all note filenames piped in
+    notes --help                                    # Print this usage information
+
+Options:
+    --directory                                     # overrides NOTES_DIRECTORY
+    --ext                                           # overrides NOTES_EXT
+    --quicknote-format                              # overrides QUICKNOTE_FORMAT
+    --editor                                        # overrides EDITOR
 
 'command|c' means you can use 'command' or the equivalent shorthand alias 'c'
 
@@ -239,48 +245,107 @@ EOF
 main() {
     local ret=0
     local cmd=""
+    local directory_override=""
+    local quicknote_format_override=""
+    local ext_override=""
+    local editor_override=""
 
-    if [ -z "$1" ]; then
-        printf "No command specified\n\n"
-        usage
-        exit 1
+    while [[ $# -gt 0 ]]
+    do
+
+        if [ -z "$1" ]; then
+            printf "No command specified\n\n"
+            usage
+            exit 1
+        fi
+
+        case "$1" in
+            "new"|"n" )
+                cmd="new_note"
+                break
+                ;;
+            "ls" )
+                cmd="ls_notes"
+                break
+                ;;
+            "search"|"s" )
+                cmd="search_filenames_and_contents"
+                break
+                ;;
+            "find"|"f" )
+                cmd="find_notes"
+                break
+                ;;
+            "grep"|"g" )
+                cmd="grep_notes"
+                break
+                ;;
+            "open"|"o" )
+                cmd="handle_multiple_notes open"
+                break
+                ;;
+            "rm" )
+                cmd="remove_note"
+                break
+                ;;
+            "cat" )
+                cmd="handle_multiple_notes cat"
+                break
+                ;;
+            --help | -help | -h )
+                cmd="usage"
+                break
+                ;;
+            --directory )
+                shift
+                directory_override="$1"
+                shift
+                ;;
+            --ext )
+                shift
+                ext_override="$1"
+                shift
+                ;;
+            --quicknote-format )
+                shift
+                quicknote_format_override="$1"
+                shift
+                ;;
+            --editor )
+                shift
+                editor_override="$1"
+                shift
+                ;;
+            * )
+                printf "$1 is not a recognized notes command.\n\n"
+                cmd="usage"
+                ret=1
+                break
+                ;;
+        esac
+    done
+    shift
+
+    
+    if [ -n "${directory_override}" ]
+    then
+        notes_dir="${directory_override}"
     fi
 
-    case "$1" in
-        "new"|"n" )
-            cmd="new_note"
-            ;;
-        "ls" )
-            cmd="ls_notes"
-            ;;
-        "search"|"s" )
-            cmd="search_filenames_and_contents"
-            ;;
-        "find"|"f" )
-            cmd="find_notes"
-            ;;
-        "grep"|"g" )
-            cmd="grep_notes"
-            ;;
-        "open"|"o" )
-            cmd="handle_multiple_notes open"
-            ;;
-        "rm" )
-            cmd="remove_note"
-            ;;
-        "cat" )
-            cmd="handle_multiple_notes cat"
-            ;;
-        --help | -help | -h )
-            cmd="usage"
-            ;;
-        * )
-            printf "$1 is not a recognized notes command.\n\n"
-            cmd="usage"
-            ret=1
-            ;;
-    esac
-    shift
+    if [ -n "${quicknote_format_override}" ]
+    then
+        QUICKNOTE_FORMAT="${quicknote_format_override}"
+    fi
+
+    if [ -n "${ext_override}" ]
+    then
+        NOTES_EXT="${ext_override}"
+    fi
+
+    if [ -n "${editor_override}" ]
+    then
+       EDITOR="${editor_override}"
+    fi
 
     $cmd "$@"
     ret=$[$ret+$?]
