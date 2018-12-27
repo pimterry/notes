@@ -79,7 +79,7 @@ By default your notes live in ~/notes, but you can change that to anywhere you l
 
 To get started with you'll want to set `$EDITOR` to your favourite text editor, and probably `$NOTES_DIRECTORY` to the directory in which you'd like to use to store your notes (this defaults to `~/notes`). You'll typically want to set these as environment variables in your `.bashrc`, `.zshrc`, or similar. Remember to use `export` command when setting environment variables in command line.
 
-There are also more complex options available. You can set any configuration properties either in the environment, or in a config file (stored in `~/.config/notes/config`), with settings in config overriding those in your environment. This allows you to configure a different `$EDITOR` for notes to everything else, if you like. The config file is a good choice for more complex set ups, but probably not worth worrying about to start with. We've included an example config in this repo for you ([config.example](config.example)) that you can copy if you like. 
+There are also more complex options available. You can set any configuration properties either in the environment, or in a config file (stored in `~/.config/notes/config`), with settings in config overriding those in your environment. This allows you to configure a different `$EDITOR` for notes to everything else, if you like. The config file is a good choice for more complex set ups, but probably not worth worrying about to start with. We've included an example config in this repo for you ([config](config)) that you can copy if you like. 
 
 ### What are the configuration options?
 
