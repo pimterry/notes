@@ -211,6 +211,29 @@ cat_note() {
     cat "$note_path"
 }
 
+init_note() {
+   local gitrepo=$1
+   # Check if directory already exist
+   if [ -d "$notes_dir" ]; then
+   	printf "Directory "$notes_dir" already exits.\n"
+   	exit 1
+   fi
+   # Create git empty repo or clone from existing one if git repo is given
+   if [ -z "$gitrepo" ]; then
+      mkdir -p $notes_dir
+      git -C $notes_dir init
+   else
+      git clone $gitrepo $notes_dir
+   fi
+}
+
+git_cmd_note() {
+
+   local git_cmd=$1
+   git -C $notes_dir "$git_cmd"
+
+}
+
 usage() {
 	cat <<EOF
 notes is a command line note taking tool.
@@ -225,6 +248,8 @@ Usage:
     notes open|o <name>                   # Open a note for editing by full name
     notes rm [-r | --recursive] <name>    # Remove note, or folder if -r or --recursive is given
     notes cat <name>                      # Display note
+    notes git <command>                   # Git command (status, pull, push etc)
+    notes init|i <command>                # Initialize git repository or clone from existing
     echo <name> | notes open|o            # Open all note filenames piped in
     echo <name> | notes cat               # Display all note filenames piped in
     notes --help                          # Print this usage information
@@ -271,6 +296,12 @@ main() {
         "cat" )
             cmd="handle_multiple_notes cat"
             ;;
+        "git" )
+            cmd="git_note"
+            ;;
+        "init"|"i" )
+            cmd="init_note"
+            ;;
         --help | -help | -h )
             cmd="usage"
             ;;
@@ -287,4 +318,3 @@ main() {
     exit $ret
 }
 main "$@"
-
