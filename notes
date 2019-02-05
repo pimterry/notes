@@ -230,8 +230,11 @@ init_note() {
 git_cmd_note() {
 
    local git_cmd=$1
+   if [[ $git_cmd = "add" ]]; then
+   	git -C $notes_dir add $2
+   else
    git -C $notes_dir "$git_cmd"
-
+   fi
 }
 
 usage() {
@@ -296,8 +299,8 @@ main() {
         "cat" )
             cmd="handle_multiple_notes cat"
             ;;
-        "git" )
-            cmd="git_note"
+        "git"|"g" )
+            cmd="git_cmd_note"
             ;;
         "init"|"i" )
             cmd="init_note"

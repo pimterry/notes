@@ -48,6 +48,13 @@ Removes \fINAME\fR. If \-r or \-\-recursive is given, folders will be removed.
 .BR cat " " \fINAME\fR
 Display note \fINAME\fR. \fINAME\fR can either be an absolute path or relative
 to $NOTES_DIRECTORY.
+.TP
+.BR git " " \fINAME\fR
+Use git command on $NOTES_DIRECTORY
+.TP
+.BR init " " \fINAME\fR
+Init $NOTES_DIRECTORY: create the path if don't exist and start a empty git repo
+
 .SH AUTHORS
 Notes was created by Tim Perry, who is still the maintainer. Numerous
 contributions have been submitted via pull requests on github.
