@@ -1,3 +1,6 @@
+load 'libs/bats-support/load'
+load 'libs/bats-assert/load'
+
 assert_exists() {
   assert [ -e "$1" ]
 }
