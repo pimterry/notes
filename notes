@@ -212,22 +212,23 @@ cat_note() {
 }
 
 usage() {
+  local name=$(basename $0)
 	cat <<EOF
-notes is a command line note taking tool.
+$name is a command line note taking tool.
 
 Usage:
-    notes new|n <name>                    # Create a new note
-    notes ls <pattern>                    # List notes by path
-    notes find|f [pattern]                # Search notes by filename and path
-    notes grep|g <pattern>                # Search notes by content
-    notes search|s [pattern]              # Search notes by filename or content
-    notes open|o                          # Open your notes directory
-    notes open|o <name>                   # Open a note for editing by full name
-    notes rm [-r | --recursive] <name>    # Remove note, or folder if -r or --recursive is given
-    notes cat <name>                      # Display note
-    echo <name> | notes open|o            # Open all note filenames piped in
-    echo <name> | notes cat               # Display all note filenames piped in
-    notes --help                          # Print this usage information
+    $name new|n <name>                    # Create a new note
+    $name ls <pattern>                    # List notes by path
+    $name find|f [pattern]                # Search notes by filename and path
+    $name grep|g <pattern>                # Search notes by content
+    $name search|s [pattern]              # Search notes by filename or content
+    $name open|o                          # Open your notes directory
+    $name open|o <name>                   # Open a note for editing by full name
+    $name rm [-r | --recursive] <name>    # Remove note, or folder if -r or --recursive is given
+    $name cat <name>                      # Display note
+    echo <name> | $name open|o            # Open all note filenames piped in
+    echo <name> | $name cat               # Display all note filenames piped in
+    $name --help                          # Print this usage information
 
 'command|c' means you can use 'command' or the equivalent shorthand alias 'c'
 
