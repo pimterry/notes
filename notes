@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+# Version
+notes_version="0.4.3"
+
 # Default Date string before config
 QUICKNOTE_FORMAT="quicknote-%Y-%m-%d"
 NOTES_EXT="md"
@@ -237,6 +240,13 @@ override this by setting \$NOTES_DIRECTORY to your preferred path.
 EOF
 }
 
+version() {
+  local name=$(basename $0)
+	cat <<EOF
+$name $notes_version
+EOF
+}
+
 main() {
     local ret=0
     local cmd=""
@@ -274,6 +284,9 @@ main() {
             ;;
         --help | -help | -h )
             cmd="usage"
+            ;;
+        --version | -version )
+            cmd="version"
             ;;
         * )
             printf "$1 is not a recognized notes command.\n\n"
