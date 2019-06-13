@@ -163,3 +163,25 @@ If you submit a PR, please make sure it:
 * Doesn't break any existing tests
 * Adds new tests, if appropriate
 * Adds new documentation, if appropriate
+
+### Release process
+
+To build a new release of `notes`:
+
+* `export NEW_VERSION="X.Y.Z"` (replacing X.Y.Z with the appropriate new version)
+* Run:
+    ```
+    # Update the version number in the source
+    sed -i -e "s/notes_version=.*/notes_version=\"$NEW_VERSION\"/g" notes
+
+    # Commit, tag & push the new version
+    git add notes
+    git commit -m $NEW_VERSION
+    git tag $NEW_VERSION
+    git push origin master --tags
+
+    # Mark this version as the latest release
+    git checkout -B latest-release
+    git push --force origin latest-release
+    git checkout -
+    ```
