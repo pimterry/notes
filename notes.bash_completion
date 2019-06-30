@@ -48,6 +48,9 @@ _notes()
             cat|c)
                 _notes_complete_notes "$cur"
                 ;;
+            ls)
+                _notes_complete_notes "$cur"
+                ;;
         esac
     else
         compopt +o nospace
