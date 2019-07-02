@@ -21,6 +21,7 @@ teardown() {
   assert_contains "open" "${COMPREPLY[@]}"
   assert_contains "ls"   "${COMPREPLY[@]}"
   assert_contains "rm"   "${COMPREPLY[@]}"
+  assert_contains "search" "${COMPREPLY[@]}"
 }
 
 @test "Should show matching note when found" {

@@ -21,7 +21,7 @@ _notes_complete_notes() {
 }
 
 _notes_complete_commands() {
-    local valid_commands="new find grep open ls rm cat"
+    local valid_commands="new find grep open ls rm cat search"
     COMPREPLY=($(compgen -W "${valid_commands}" -- "${1}"))
 }
 
@@ -34,18 +34,21 @@ _notes()
 
     if [[ $COMP_CWORD -gt 1 ]]; then
         case "${COMP_WORDS[1]}" in
-            new)
+            new|n)
                 _notes_complete_notes "$cur"
                 ;;
-            find)
+            find|f)
                 _notes_complete_notes "$cur"
                 ;;
             grep)
                 ;;
-            open)
+            open|o)
                 _notes_complete_notes "$cur"
                 ;;
-            cat)
+            cat|c)
+                _notes_complete_notes "$cur"
+                ;;
+            ls)
                 _notes_complete_notes "$cur"
                 ;;
         esac
