@@ -87,7 +87,7 @@ find_notes() {
 
 grep_notes() {
     if [ ! "$#" -gt 0 ]; then
-        printf "Grep requires a pattern, but none was provided."
+        printf "Grep requires a pattern, but none was provided.\n"
         return 1
     fi
 
@@ -144,7 +144,7 @@ remove_note() {
     fi
 
     if [ ! "$#" -gt 0 ]; then
-        printf "Remove requires a file or folder, but none was provided."
+        printf "Remove requires a file or folder, but none was provided.\n"
         return 1
     fi
 
@@ -205,7 +205,7 @@ cat_note() {
     local note_path=$1
 
     if [[ -z "$note_path" ]]; then
-        printf "Cat requires a name, but none was provided."
+        printf "Cat requires a name, but none was provided.\n"
         exit 1
     fi
 
