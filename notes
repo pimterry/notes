@@ -62,7 +62,7 @@ search_filenames_and_contents() {
         find_output=$(find "$notes_dir" -type f)
     fi
     find_result=$?
-    formatted_output=$(printf "$find_output" | without_notes_dir)
+    formatted_output=$(printf "$find_output" | without_notes_dir | sort)
 
     if [[ $find_result == 0 && "$formatted_output" ]]; then
         printf "$formatted_output\n"
@@ -75,7 +75,7 @@ search_filenames_and_contents() {
 find_notes() {
     local find_output=$(find "$notes_dir" -ipath "$notes_dir/*$**" -type f 2>&1)
     local find_result=$?
-    local formatted_output=$(printf "$find_output" | without_notes_dir)
+    local formatted_output=$(printf "$find_output" | without_notes_dir | sort)
 
     if [[ $find_result == 0 && "$formatted_output" ]]; then
         printf "$formatted_output\n"
@@ -93,7 +93,7 @@ grep_notes() {
 
     local grep_output=$(grep -r "$notes_dir" -li -e "$*" 2>&1)
     local grep_result=$?
-    local formatted_output=$(printf "$grep_output" | without_notes_dir)
+    local formatted_output=$(printf "$grep_output" | without_notes_dir | sort)
 
     if [[ $grep_result == 0 && "$formatted_output" ]]; then
         printf "$formatted_output\n"
