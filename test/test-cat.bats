@@ -56,7 +56,7 @@ notes="./notes"
 }
 
 @test "Show multiple files passed by pipe from find" {
-  echo line1 >> "$NOTES_DIRECTORY/note.md"
+  echo line1 >> "$NOTES_DIRECTORY/note1.md"
   echo line2 >> "$NOTES_DIRECTORY/note2.md"
 
   run bash -c "$notes find | $notes cat"
