@@ -24,7 +24,7 @@ This is just one tool in the chain. `notes` is a command line tool, and some peo
 ### Automatic:
 
 ```bash
-curl -L https://rawgit.com/pimterry/notes/latest-release/install.sh | bash
+curl -L https://raw.githubusercontent.com/pimterry/notes/latest-release/install.sh | bash
 ```
 This will install `notes`, a default configuration, a man page, and bash completion if possible.
 
@@ -49,20 +49,20 @@ Installing the completions might be as follows:
 **Bash**
 
 ```bash
-curl https://cdn.rawgit.com/pimterry/notes/latest-release/notes.bash_completion > /usr/share/bash-completion/completions/notes
+curl https://raw.githubusercontent.com/pimterry/notes/latest-release/notes.bash_completion > /usr/share/bash-completion/completions/notes
 ```
 
 **Zsh**
 
 On *buntu based distros and OSX:
 ```bash
-curl -L https://rawgit.com/pimterry/notes/latest-release/_notes > /usr/local/share/zsh/site-functions/_notes
+curl -L https://raw.githubusercontent.com/pimterry/notes/latest-release/_notes > /usr/local/share/zsh/site-functions/_notes
 ```
 
 On other Unix distros:
 
 ```bash
-curl -L https://rawgit.com/pimterry/notes/latest-release/_notes > /usr/share/zsh/site-functions/_notes
+curl -L https://raw.githubusercontent.com/pimterry/notes/latest-release/_notes > /usr/share/zsh/site-functions/_notes
 ```
 
 You'll need to open a new shell for this to take effect.
@@ -70,7 +70,7 @@ You'll need to open a new shell for this to take effect.
 ## What if I want to uninstall this?
 If you used the automated install script to install notes, you can uninstall it the same way, by running:
 ```bash
-curl -L https://rawgit.com/pimterry/notes/latest-release/install.sh | bash -s -- uninstall
+curl -L https://raw.githubusercontent.com/pimterry/notes/latest-release/install.sh | bash -s -- uninstall
 ```
 
 ## How do I configure this?
