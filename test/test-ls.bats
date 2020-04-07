@@ -30,6 +30,20 @@ notes="./notes"
   assert_line "note2.md"
 }
 
+@test "Should not list temporary files" {
+  touch $NOTES_DIRECTORY/note1.md
+  touch $NOTES_DIRECTORY/note1.md~
+  touch $NOTES_DIRECTORY/note2~with~tilde.md
+
+  run $notes ls
+  assert_success
+
+  assert_line "note1.md"
+  assert_line "note2~with~tilde.md"
+
+  refute_line "note1.md~"
+}
+
 @test "Should list subdirectories with trailing slash" {
   touch $NOTES_DIRECTORY/match-note1.md
   mkdir $NOTES_DIRECTORY/match-dir
