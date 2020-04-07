@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Version
-notes_version="0.5.0"
+notes_version="0.5.1"
 
 # Default Date string before config
 QUICKNOTE_FORMAT="quicknote-%Y-%m-%d"
