@@ -109,7 +109,7 @@ Searches all note content and note filenames for the given string and returns al
 
 ### `notes ls <directory>`
 
-Lists note names and note directories at a single level. Lists all top level notes and directories if no path is provided, or the top-level contents of a directory if one is provided.
+Lists note names and note directories at a single level. Lists all top level notes and directories if no path is provided, or the top-level contents of a directory if one is provided. Automatically ignores hidden files or filenames ending with `~` (Vim backup files).
 
 ### `notes open`
 

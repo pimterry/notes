@@ -31,7 +31,7 @@ without_notes_dir() {
 }
 
 ls_notes() {
-    local ls_output=$(ls -p "$notes_dir/$*" -I "*~" 2>&1)
+    local ls_output=$(ls -p "$notes_dir/$*" 2>&1 | grep -v "~$")
     local ls_result=$?
     local formatted_output
 
