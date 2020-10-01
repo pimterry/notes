@@ -24,9 +24,14 @@ This is just one tool in the chain. `notes` is a command line tool, and some peo
 ### Automatic:
 
 ```bash
-curl -L https://raw.githubusercontent.com/pimterry/notes/latest-release/install.sh | bash
+curl -L https://raw.githubusercontent.com/pimterry/notes/latest-release/install.sh | sudo bash
 ```
 This will install `notes`, a default configuration, a man page, and bash completion if possible.
+
+```bash
+curl -L https://raw.githubusercontent.com/pimterry/notes/latest-release/install.sh | PREFIX=$HOME bash
+```
+For non-root installation(user directory).
 
 ### Manual:
 
