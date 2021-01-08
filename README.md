@@ -124,6 +124,10 @@ Opens your notes folder in your default configured file explorer. Shorthand alia
 
 Opens a given note in your `$EDITOR`. Name can be an absolute path, or a relative path in your notes (.md suffix optional). Shorthand alias also available with `notes o`.
 
+### `notes mv <note-name> <destination>|<directory>`
+
+Renames a given note to destination or moves the note to directory. Name can be an absolute path, or a relative path in your notes (.md suffix optional). Destination and directory have to be a relative path in your notes.
+
 ### `notes rm [-r | --recursive] <note-name>`
 
 Removes the given note if it exists. If `-r` or `--recursive` is given, deletes the folders/notes recursively.
