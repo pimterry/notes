@@ -11,7 +11,6 @@ set -l notes_dir_commands n new grep ls
 # NOTES_DIRECTORY
 ## use NOTES_DIRECTORY variable if set else...
 if not set -q NOTES_DIRECTORY
-    echo "notes dir not set"
     ## if config file exists, read it
     if test -e $HOME/.config/notes/config
         set NOTES_DIRECTORY (string split = (grep "NOTES_DIRECTORY" $HOME/.config/notes/config))[2]
