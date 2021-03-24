@@ -43,9 +43,9 @@ curl https://raw.githubusercontent.com/pimterry/notes/latest-release/notes > /us
 
 #### Installing auto completion
 
-`notes` includes auto completion, to let you tab-complete commands and your note names. This requires Bash > 4.0 and [bash-completion](https://github.com/scop/bash-completion) or Zsh to be installed - it's probably available from your friendly local package manager.
+`notes` includes auto completion, to let you tab-complete commands and your note names. This requires Bash > 4.0 and [bash-completion](https://github.com/scop/bash-completion), Zsh, or Fish-shell to be installed - it's probably available from your friendly local package manager.
 
-To enable completion for notes, copy the completion script into your bash or zsh completion directory, and it should be automatically loaded. The bash completion directory is `/usr/share/bash-completion/completions/` on a typical Debian install, or `/usr/local/etc/bash_completion.d/` on OSX with `bash-completion` from homebrew. The zsh completion directory is `/usr/share/zsh/functions/Completion/` in Linux. You may be able to find your own bash completion directory by running the following command:
+To enable completion for notes, copy the completion script into your bash, zsh, or fish completion directory, and it should be automatically loaded. The bash completion directory is `/usr/share/bash-completion/completions/` on a typical Debian install, or `/usr/local/etc/bash_completion.d/` on OSX with `bash-completion` from homebrew. The zsh completion directory is `/usr/share/zsh/functions/Completion/` in Linux. The fish completion directory is `~/.config/fish/completions` or `/etc/fish/completions`. You may be able to find your own bash completion directory by running the following command:
 
     pkg-config --variable=completionsdir bash-completion
 
@@ -68,6 +68,11 @@ On other Unix distros:
 
 ```bash
 curl -L https://raw.githubusercontent.com/pimterry/notes/latest-release/_notes > /usr/share/zsh/site-functions/_notes
+```
+**Fish**
+
+```fish
+curl -L https://raw.githubusercontent.com/pimterry/notes/latest-release/notes.fish > ~/.config/fish/completions/notes.fish
 ```
 
 You'll need to open a new shell for this to take effect.
