@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Version
-notes_version="0.5.3"
+notes_version="0.5.2"
 
 # Default Date string before config
 QUICKNOTE_FORMAT="quicknote-%Y-%m-%d"
@@ -173,10 +173,17 @@ handle_multiple_notes() {
 get_full_note_path() {
     local note_path=$1
 
-    if [[ "$note_path" != *.$NOTES_EXT ]]; then
-        note_path="$note_path.$NOTES_EXT"
-    fi
-    if [ ! -f "$note_path" ]; then
+    # first check if file exists
+    if [ -f "$note_path" ]; then # note path given is good
+        note_path="$note_path"
+    elif [ -f "$notes_dir/$note_path" ]; then # exists
+        note_path="$notes_dir/$note_path"
+    elif echo "$note_path" | grep '[.][A-Za-z]\{1,4\}$' &>/dev/null; then # has a 1-4 letter extension
+        note_path="$notes_dir/$note_path"
+    else
+        if [[ "$note_path" != *.$NOTES_EXT ]]; then
+            note_path="$note_path.$NOTES_EXT"
+        fi
         note_path="$notes_dir/$note_path"
     fi
 
