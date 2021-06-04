@@ -131,7 +131,7 @@ Opens your notes folder in your default configured file explorer. Shorthand alia
 
 Opens a given note in your `$EDITOR`. Name can be an absolute path, or a relative path in your notes (.md suffix optional). Shorthand alias also available with `notes o`.
 
-If not file-suffix is given in `note-name`, the notes will attempt to open `note-name.md` (or whatever your default suffix is set to). However, if the note-name is given an suffix, the default suffix will not be appended (e.g. `notes open note-name.txt` will open `note-name.txt`; not `note-name.md` or `note-name.txt.md`).
+If no file-suffix is given in `note-name`, the notes will attempt to open `note-name.md` (or whatever your default suffix is set to). However, if the note-name is given an suffix, the default suffix will not be appended (e.g. `notes open note-name.txt` will open `note-name.txt`; not `note-name.md` or `note-name.txt.md`).
 
 ### `notes mv <note-name> <destination>|<directory>`
 
