@@ -151,7 +151,8 @@ remove_note() {
     local note_name="$*"
     local to_remove="$notes_dir/$note_name"
 
-    if [ -f "$notes_dir/$note_name.$NOTES_EXT" ]; then
+    if [ ! -f "$to_remove" ] && [ -f "$notes_dir/$note_name.$NOTES_EXT" ]; then
+        # append default extension only if no file exists with exact filename given
         to_remove="$notes_dir/$note_name.$NOTES_EXT"
     fi
     rm "${rm_args[@]}" "$to_remove"
