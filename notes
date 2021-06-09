@@ -151,7 +151,8 @@ remove_note() {
     local note_name="$*"
     local to_remove="$notes_dir/$note_name"
 
-    if [ -f "$notes_dir/$note_name.$NOTES_EXT" ]; then
+    if [ ! -f "$to_remove" ] && [ -f "$notes_dir/$note_name.$NOTES_EXT" ]; then
+        # append default extension only if no file exists with exact filename given
         to_remove="$notes_dir/$note_name.$NOTES_EXT"
     fi
     rm "${rm_args[@]}" "$to_remove"
@@ -173,10 +174,19 @@ handle_multiple_notes() {
 get_full_note_path() {
     local note_path=$1
 
-    if [[ "$note_path" != *.$NOTES_EXT ]]; then
-        note_path="$note_path.$NOTES_EXT"
-    fi
-    if [ ! -f "$note_path" ]; then
+    # first check if file exists
+    if [ -f "$note_path" ]; then # note path given is good absolute or relative path
+        note_path="$note_path"
+    elif [ -f "$notes_dir/$note_path" ]; then # exists in notes_dir
+        note_path="$notes_dir/$note_path"
+    elif [ -f "$notes_dir/$note_path.$NOTES_EXT" ]; then # note with this name and default extension exists
+        note_path="$notes_dir/$note_path.$NOTES_EXT"
+    elif echo "$note_path" | grep '[.][A-Za-z]\{1,4\}$' &>/dev/null; then # given name has a 1-4 letter extension
+        note_path="$notes_dir/$note_path"
+    else
+        if [[ "$note_path" != *.$NOTES_EXT ]]; then
+            note_path="$note_path.$NOTES_EXT"
+        fi
         note_path="$notes_dir/$note_path"
     fi
 

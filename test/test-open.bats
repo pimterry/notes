@@ -123,3 +123,12 @@ notes="./notes"
   assert_failure
   assert_output "Please set \$EDITOR to edit notes"
 }
+
+@test "Accepts names with other file extensions to open" {
+  touch $NOTES_DIRECTORY/test-note.txt
+
+  run bash -c "$notes open test-note.txt"
+
+  assert_success
+  assert_output "Editing $NOTES_DIRECTORY/test-note.txt"
+}

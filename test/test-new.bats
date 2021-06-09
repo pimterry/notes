@@ -79,3 +79,10 @@ notes="./notes"
   assert_success
   assert_exists "$NOTES_DIRECTORY/subfolder/quicknote-$today.md"
 }
+
+@test "Should use explicitly named file extensions" {
+  run $notes new explicit-ext.zzz
+
+  assert_success
+  assert_exists "$NOTES_DIRECTORY/explicit-ext.zzz"
+}

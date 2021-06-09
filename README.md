@@ -105,6 +105,8 @@ There are also more complex options available. You can set any configuration pro
 
 Opens your `$EDITOR` of choice for a new note, with the given name. The name can include slashes, if you want to put your note in a subfolder. Leave out the name if you want one to be generated for you (e.g. `quicknote-2016-12-21.md` - format configurable with `$QUICKNOTE_FORMAT`). If you want to place a quicknote in a subfolder, use a trailing slash: `notes new subfolder/`. Shorthand alias also available with `notes n`.
 
+If you do not supply an extension in `note-name`, it will be automatically appended with the default file extension (e.g. "newnote" will become "newnote.md"). However, if you include a one-to-four-letter file extension, notes will use that extension when creating the file (e.g. "newnote.tex" is created as "newnote.tex"; not "newnote.md", or "newnote.tex.md").
+
 ### `notes find <part-of-a-note-name>`
 
 Searches note filenames and paths for the given string, and returns every single match. If no pattern is specified, this returns every single note. Shorthand alias also available with `notes f`.
@@ -128,6 +130,8 @@ Opens your notes folder in your default configured file explorer. Shorthand alia
 ### `notes open <note-name>`
 
 Opens a given note in your `$EDITOR`. Name can be an absolute path, or a relative path in your notes (.md suffix optional). Shorthand alias also available with `notes o`.
+
+If no file-suffix is given in `note-name`, the notes will attempt to open `note-name.md` (or whatever your default suffix is set to). However, if the note-name is given an suffix, the default suffix will not be appended (e.g. `notes open note-name.txt` will open `note-name.txt`; not `note-name.md` or `note-name.txt.md`).
 
 ### `notes mv <note-name> <destination>|<directory>`
 
