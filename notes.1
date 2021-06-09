@@ -42,6 +42,11 @@ Opens $NOTES_DIRECTORY in your file explorer.
 Opens note \fINAME\fR using your configured editor. \fINAME\fR can either be an
 absolute path or relative to $NOTES_DIRECTORY.
 .TP
+.BR append ", " a " "\fINAME\fR " [" \fIMESSAGE\fR]
+Appends \fINAME\fR with text \fIMESSAGE\fR if given. If no \fIMESSAGE\fR is
+defined, it will be taken from stdin. Stdin input does not work
+in interactive mode (The input must be piped in).
+.TP
 .BR rm " "\fR[\fB\-r\fR | \fB\-\-recursive\fR] " "\fINAME\fR
 Removes \fINAME\fR. If \-r or \-\-recursive is given, folders will be removed.
 .TP

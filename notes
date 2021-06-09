@@ -211,10 +211,39 @@ open_note() {
     $EDITOR "$note_path" < /dev/tty
 }
 
+append_note() {
+    local source_note_path=$( get_full_note_path "$1" )
+    local to_append="${@:2}"
+
+    # If no note name was provided, exit
+    if [[ -z "$1" ]]; then
+        printf "Append requires a name, but none was provided.\n"
+        exit 1
+    fi
+
+    # If note doesn't exist, make sure the directory does
+    if [[ ! -e "$source_note_path" ]]; then
+        mkdir -p "$(dirname "$source_note_path")"
+    fi
+
+    # if to_append is empty, check stdin
+    if [[ -z "$to_append" ]] && [[ -p /dev/stdin ]]; then
+        to_append=$(cat)
+    fi
+
+    # If to_append is *still* empty, report an error
+    if [[ -z "$to_append" ]]; then
+        printf "No text was provided to append\n"
+        exit 1
+    fi
+
+    echo "$to_append" >> "$source_note_path"
+}
+
 move_note() {
     local source_note_path=$( get_full_note_path "$1" )
     local dest_or_dir_path=$2
-    
+
     if [[ ! -e "$source_note_path" ]]; then
         printf "mv requires a source note that exists\n"
         exit 1
@@ -224,7 +253,7 @@ move_note() {
         printf "mv requires a destination name or folder\n"
         exit 1
     fi
-    
+
     dir_path="$notes_dir/$dest_or_dir_path"
     if [[ -d "$dir_path" ]]; then
         mv $source_note_path $dir_path
@@ -262,6 +291,7 @@ Usage:
     $name search|s [pattern]              # Search notes by filename or content
     $name open|o                          # Open your notes directory
     $name open|o <name>                   # Open a note for editing by full name
+    $name append|a <name> [message]       # Appends a note. Will use stdin if no message is given
     $name mv <source> <dest>|<directory>  # Rename a note, or move a note when a directory is given
     $name rm [-r | --recursive] <name>    # Remove note, or folder if -r or --recursive is given
     $name cat <name>                      # Display note
@@ -311,6 +341,9 @@ main() {
             ;;
         "open"|"o" )
             cmd="handle_multiple_notes open"
+            ;;
+        "append"|"a" )
+            cmd="append_note"
             ;;
         "mv" )
             cmd="move_note"

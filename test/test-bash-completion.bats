@@ -19,6 +19,7 @@ teardown() {
   assert_contains "find" "${COMPREPLY[@]}"
   assert_contains "grep" "${COMPREPLY[@]}"
   assert_contains "open" "${COMPREPLY[@]}"
+  assert_contains "append" "${COMPREPLY[@]}"
   assert_contains "ls"   "${COMPREPLY[@]}"
   assert_contains "rm"   "${COMPREPLY[@]}"
   assert_contains "search" "${COMPREPLY[@]}"

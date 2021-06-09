@@ -89,11 +89,11 @@ By default your notes live in ~/notes, but you can change that to anywhere you l
 
 To get started with you'll want to set `$EDITOR` to your favourite text editor, and probably `$NOTES_DIRECTORY` to the directory in which you'd like to use to store your notes (this defaults to `~/notes`). You'll typically want to set these as environment variables in your `.bashrc`, `.zshrc`, or similar. Remember to use `export` command when setting environment variables on the command line in Linux.
 
-There are also more complex options available. You can set any configuration properties either in the environment, or in a config file (stored in `~/.config/notes/config`), with settings in config overriding those in your environment. This allows you to configure a different `$EDITOR` for notes to everything else, if you like. The config file is a good choice for more complex set ups, but probably not worth worrying about to start with. We've included an example config in this repo for you ([config](config)) that you can copy if you like. 
+There are also more complex options available. You can set any configuration properties either in the environment, or in a config file (stored in `~/.config/notes/config`), with settings in config overriding those in your environment. This allows you to configure a different `$EDITOR` for notes to everything else, if you like. The config file is a good choice for more complex set ups, but probably not worth worrying about to start with. We've included an example config in this repo for you ([config](config)) that you can copy if you like.
 
 ### What are the configuration options?
 
-* `QUICKNOTE_FORMAT` changes the way that quicknotes are generated. The string formatted using the `date` command. 
+* `QUICKNOTE_FORMAT` changes the way that quicknotes are generated. The string formatted using the `date` command.
 * `NOTES_EXT` changes the default extension that notes are saved with.
 * `NOTES_DIRECTORY` changes the directory in which notes are stored.
 * `EDITOR` can also be overriden here, for `notes` only.
@@ -132,6 +132,12 @@ Opens your notes folder in your default configured file explorer. Shorthand alia
 Opens a given note in your `$EDITOR`. Name can be an absolute path, or a relative path in your notes (.md suffix optional). Shorthand alias also available with `notes o`.
 
 If no file-suffix is given in `note-name`, the notes will attempt to open `note-name.md` (or whatever your default suffix is set to). However, if the note-name is given an suffix, the default suffix will not be appended (e.g. `notes open note-name.txt` will open `note-name.txt`; not `note-name.md` or `note-name.txt.md`).
+
+### `notes append <note-name> [message]`
+
+Appends a given note with the test `message` from the command line. If no note yet exists, a new note of <note-name> will be created. This command also accepts stdin
+via piping. An example would be `echo "hello" | notes append <note-name>`
+Shorthand alias also available with `notes a`.
 
 ### `notes mv <note-name> <destination>|<directory>`
 

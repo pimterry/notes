@@ -5,7 +5,7 @@
 ## lists of commands used by notes
 set -l notes_list_commands o open mv rm cat
 set -l notes_friendly_commands new open find ls rm cat mv grep
-set -l notes_commands n new ls find f grep g search s open o mv rm cat
+set -l notes_commands n new ls find f grep g search s open o mv rm cat append a
 set -l notes_dir_commands n new grep ls
 
 # NOTES_DIRECTORY
