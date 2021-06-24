@@ -204,7 +204,11 @@ open_note() {
 
     note_path=$( get_full_note_path "$note_path" )
 
-    $EDITOR "$note_path" < /dev/tty
+    if [[ -z "/dev/tty" ]]; then
+        $EDITOR "$note_path" < /dev/tty
+    else
+        $EDITOR "$note_path"
+    fi
 }
 
 append_note() {
