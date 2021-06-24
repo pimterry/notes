@@ -84,7 +84,7 @@ notes="./notes"
   refute_line "non-matching-note.md"
 }
 
-@test "Should search notes when using the search shorthand alias" {
+@test "Should search notes when using the search shorthand alias with a pattern" {
   echo "my-pattern" > $NOTES_DIRECTORY/matching-note.md
 
   run $notes s my-pattern
