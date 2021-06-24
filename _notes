@@ -23,7 +23,7 @@ __notes_cmd ()
     grep:'<pattern> Search notes by content'
     search:'[pattern] Search notes by filename or content'
     open:'<name> Open a notes for editing by full name'
-    append:'<name> [message] '
+    append:'<name> [message] Appends a note. Will use stdin if no message is given'
     rm:'[-r | --recursive] <name> Remove note, or folder if -r or --recursive is given]'
     cat:'<name> Display a note by name'
     --version:'Show version'

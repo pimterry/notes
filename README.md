@@ -135,9 +135,7 @@ If no file-suffix is given in `note-name`, the notes will attempt to open `note-
 
 ### `notes append <note-name> [message]`
 
-Appends a given note with the test `message` from the command line. If no note yet exists, a new note of <note-name> will be created. This command also accepts stdin
-via piping. An example would be `echo "hello" | notes append <note-name>`
-Shorthand alias also available with `notes a`.
+Appends `message` to the `note-name` note. If this note does not exist, a new note of <note-name> will be created. This command also accepts stdin via piping. An example would be `echo "hello" | notes append <note-name>` Shorthand alias also available with `notes a`.
 
 ### `notes mv <note-name> <destination>|<directory>`
 
