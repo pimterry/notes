@@ -1,4 +1,4 @@
-# notes [![Travis Build Status](https://img.shields.io/travis/pimterry/notes.svg)](https://travis-ci.org/pimterry/notes)
+# notes [![Build Status](https://github.com/pimterry/notes/workflows/CI/badge.svg)](https://github.com/pimterry/notes/actions)
 Simple delightful note taking, with none of the lock-in.
 
 [![Asciicast demo](asciicast.gif)](https://asciinema.org/a/2pmdb9vyv71skgwx4r7mlnea8?speed=2&t=1&autoplay=1)
