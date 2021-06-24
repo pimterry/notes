@@ -1,0 +1,17 @@
+name: CI
+on: push
+jobs:
+  build:
+    name: Test
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: recursive
+
+      - uses: addnab/docker-run-action@v3
+        with:
+          options: -v ${{ github.workspace }}:/work
+          image: bash:latest
+          run: /work/test.sh
