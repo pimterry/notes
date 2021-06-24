@@ -134,12 +134,8 @@ new_note() {
 remove_note() {
     local rm_args=()
     if [[ "$1" == "-r" || "$1" == "--recursive" ]]; then
-        # checks for macos, as it doesn't support long arguments for rm
-        if [[ "$OSTYPE" == "darwin"* ]]; then
-            rm_args+=("-r")
-        else
-            rm_args+=("--recursive")
-        fi
+        # -r is more portable than recursive, supported in some envs e.g. OSX, Busybox
+        rm_args+=("-r")
         shift
     fi
 
