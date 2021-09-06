@@ -24,7 +24,7 @@ notes="./notes"
   run $notes open
 
   assert_success
-  assert_output "Opening $HOME/notes" 
+  assert_output "Opening $HOME/notes"
 }
 
 @test "Opens the configured notes directory if set" {
@@ -131,4 +131,48 @@ notes="./notes"
 
   assert_success
   assert_output "Editing $NOTES_DIRECTORY/test-note.txt"
+}
+
+@test "Gives a TTY input to EDITOR when available" {
+  if ! bash -c "printf '' >/dev/tty" >/dev/null 2>/dev/null; then
+    # If no working TTY is available, we can't test this, skip it
+    skip
+  fi
+
+  function checkTtyEdit() {
+    if [ -t 0 ]; then
+      echo "Editing $* with TTY"
+    else
+      echo "No TTY to edit $*"
+    fi
+  }
+  export -f checkTtyEdit
+  export EDITOR="checkTtyEdit"
+
+  touch $NOTES_DIRECTORY/note.md
+
+  run bash -c "$notes find | $notes open test-note"
+
+  assert_success
+  assert_output "Editing $NOTES_DIRECTORY/note.md with TTY"
+}
+
+@test "Opens editor with no TTY input if none is available" {
+  function checkTtyEdit() {
+    if [ -t 0 ]; then
+      echo "Editing $* with TTY"
+    else
+      echo "No TTY to edit $*"
+    fi
+  }
+  export -f checkTtyEdit
+  export EDITOR="checkTtyEdit"
+
+  touch $NOTES_DIRECTORY/note.md
+
+  # Setsid removes the controlling TTY:
+  run setsid bash -c "$notes find | $notes open test-note"
+
+  assert_success
+  assert_output "No TTY to edit $NOTES_DIRECTORY/note.md"
 }

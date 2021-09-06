@@ -204,8 +204,8 @@ open_note() {
 
     note_path=$( get_full_note_path "$note_path" )
 
-    if [[ -z "/dev/tty" ]]; then
-        $EDITOR "$note_path" < /dev/tty
+    if bash -c "printf '' >/dev/tty" >/dev/null 2>/dev/null; then
+        $EDITOR "$note_path" </dev/tty
     else
         $EDITOR "$note_path"
     fi
