@@ -97,6 +97,7 @@ There are also more complex options available. You can set any configuration pro
 * `NOTES_EXT` changes the default extension that notes are saved with.
 * `NOTES_DIRECTORY` changes the directory in which notes are stored.
 * `EDITOR` can also be overriden here, for `notes` only.
+* `POST_COMMAND` sets the command to run after any modification command (e.g. `open`, `mv`, ...) succeeds
 
 
 ## How do I use it?
