@@ -316,6 +316,8 @@ EOF
 main() {
     local ret=0
     local cmd=""
+    # variable to indicate whether it's a modification command
+    local modified=0
 
     if [ -z "$1" ]; then
         printf "No command specified\n\n"
@@ -326,6 +328,7 @@ main() {
     case "$1" in
         "new"|"n" )
             cmd="new_note"
+            modified=1
             ;;
         "ls" )
             cmd="ls_notes"
@@ -341,15 +344,19 @@ main() {
             ;;
         "open"|"o" )
             cmd="handle_multiple_notes open"
+            modified=1
             ;;
         "append"|"a" )
             cmd="append_note"
+            modified=1
             ;;
         "mv" )
             cmd="move_note"
+            modified=1
             ;;
         "rm" )
             cmd="remove_note"
+            modified=1
             ;;
         "cat" )
             cmd="handle_multiple_notes cat"
@@ -370,6 +377,12 @@ main() {
 
     $cmd "$@"
     ret=$[$ret+$?]
+
+    # run POST_COMMAND hook when modification cmd succeeds
+    if [ $ret -eq 0 ] && [ $modified -eq 1 ] && [ -n "$POST_COMMAND" ]; then
+        eval "$POST_COMMAND"
+    fi
+
     exit $ret
 }
 main "$@"
