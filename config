@@ -13,3 +13,6 @@
 
 # Define the directory where notes are stored
 # NOTES_DIRECTORY=~/notes
+
+# Define command to run after modification command
+# POST_COMMAND="/path/to/custom_script.sh"
