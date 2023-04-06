@@ -147,7 +147,7 @@ Renames a given note to destination or moves the note to directory. Name can be 
 Removes the given note if it exists. If `-r` or `--recursive` is given, deletes the folders/notes recursively.
 
 ### `notes cat <note-name>`
-
+Shorthand alias also available with `notes c`.
 Displays the note
 
 ### `notes grep/find <pattern> | notes open`

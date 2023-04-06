@@ -13,17 +13,26 @@ teardown() {
 notes="./notes"
 
 @test "Should show created note" {
-  echo line1 >> "$NOTES_DIRECTORY/note.md"
-  echo line2 >> "$NOTES_DIRECTORY/note.md"
+  echo line1 >>"$NOTES_DIRECTORY/note.md"
+  echo line2 >>"$NOTES_DIRECTORY/note.md"
   run $notes cat note.md
 
   assert_success
   assert_output $'line1\nline2'
 }
 
+@test "Should show created note when using the cat shorthand alias" {
+  echo line1 >>"$NOTES_DIRECTORY/note.md"
+  echo line2 >>"$NOTES_DIRECTORY/note.md"
+  run $notes c note.md
+
+  assert_success
+  assert_output $'line1\nline2'
+}
+
 @test "Accepts names without .md to show" {
-  echo line1 >> "$NOTES_DIRECTORY/note.md"
-  echo line2 >> "$NOTES_DIRECTORY/note.md"
+  echo line1 >>"$NOTES_DIRECTORY/note.md"
+  echo line2 >>"$NOTES_DIRECTORY/note.md"
   run $notes cat note
 
   assert_success
@@ -37,8 +46,8 @@ notes="./notes"
 }
 
 @test "Accepts relative notes paths to show" {
-  echo line1 >> "$NOTES_DIRECTORY/note.md"
-  echo line2 >> "$NOTES_DIRECTORY/note.md"
+  echo line1 >>"$NOTES_DIRECTORY/note.md"
+  echo line2 >>"$NOTES_DIRECTORY/note.md"
   run $notes cat $NOTES_DIRECTORY/note.md
 
   assert_success
@@ -46,8 +55,8 @@ notes="./notes"
 }
 
 @test "Show a file passed by pipe from find" {
-  echo line1 >> "$NOTES_DIRECTORY/note.md"
-  echo line2 >> "$NOTES_DIRECTORY/note.md"
+  echo line1 >>"$NOTES_DIRECTORY/note.md"
+  echo line2 >>"$NOTES_DIRECTORY/note.md"
 
   run bash -c "$notes find | $notes cat"
 
@@ -56,8 +65,8 @@ notes="./notes"
 }
 
 @test "Show multiple files passed by pipe from find" {
-  echo line1 >> "$NOTES_DIRECTORY/note1.md"
-  echo line2 >> "$NOTES_DIRECTORY/note2.md"
+  echo line1 >>"$NOTES_DIRECTORY/note1.md"
+  echo line2 >>"$NOTES_DIRECTORY/note2.md"
 
   run bash -c "$notes find | $notes cat"
 
