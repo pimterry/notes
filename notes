@@ -56,7 +56,8 @@ search_filenames_and_contents() {
             "shopt -s nocasematch
             grep -il \"$*\" \"{}\" || if [[ \"{}\" =~ \"$*\" ]]; then
                 echo \"{}\";
-            fi" \;)
+            fi" \;\
+        )
     else
         find_output=$(find "$notes_dir" -type f)
     fi
@@ -104,11 +105,12 @@ grep_notes() {
 
 generate_name() {
     local append_num=0
-    local format_string="$(date +$QUICKNOTE_FORMAT)"
+    local format_string="`date +$QUICKNOTE_FORMAT`"
     # Initial test has no append
     local resolved_name=$format_string
-    while [[ -e "$notes_dir/$resolved_name.$NOTES_EXT" ]]; do
-        append_num=$(($append_num + 1))
+    while [[ -e "$notes_dir/$resolved_name.$NOTES_EXT" ]]
+    do
+        append_num=$[$append_num+1]
         resolved_name=$format_string.$append_num
     done
     printf $resolved_name
@@ -117,10 +119,10 @@ generate_name() {
 new_note() {
     local note_name="$*"
     if [[ $note_name == "" ]]; then
-        note_name="$(generate_name)"
+         note_name="$(generate_name)"
     fi
 
-    if echo "$note_name" | grep "/$" &>/dev/null; then
+    if echo "$note_name" | grep "/$" &> /dev/null; then
         note_name="${note_name}/$(generate_name)"
     fi
 
@@ -159,7 +161,7 @@ handle_multiple_notes() {
         read -d'\n' note_names
         while read note_name; do
             ${cmd}_note "$note_name"
-        done <<<"$note_names"
+        done <<< "$note_names"
     else
         ${cmd}_note "${@:2}"
     fi
@@ -200,7 +202,7 @@ open_note() {
         exit 1
     fi
 
-    note_path=$(get_full_note_path "$note_path")
+    note_path=$( get_full_note_path "$note_path" )
 
     if bash -c ": >/dev/tty" >/dev/null 2>/dev/null; then
         $EDITOR "$note_path" </dev/tty
@@ -210,7 +212,7 @@ open_note() {
 }
 
 append_note() {
-    local source_note_path=$(get_full_note_path "$1")
+    local source_note_path=$( get_full_note_path "$1" )
     local to_append="${@:2}"
 
     # If no note name was provided, exit
@@ -235,11 +237,11 @@ append_note() {
         exit 1
     fi
 
-    echo "$to_append" >>"$source_note_path"
+    echo "$to_append" >> "$source_note_path"
 }
 
 move_note() {
-    local source_note_path=$(get_full_note_path "$1")
+    local source_note_path=$( get_full_note_path "$1" )
     local dest_or_dir_path=$2
 
     if [[ ! -e "$source_note_path" ]]; then
@@ -258,8 +260,8 @@ move_note() {
         return
     fi
 
-    local dest_path=$(get_full_note_path "$dest_or_dir_path")
-    mkdir -p "$(dirname $dest_path)"
+    local dest_path=$( get_full_note_path "$dest_or_dir_path" )
+    mkdir -p "$( dirname $dest_path)"
     mv $source_note_path $dest_path
 }
 
@@ -271,14 +273,14 @@ cat_note() {
         exit 1
     fi
 
-    note_path=$(get_full_note_path "$note_path")
+    note_path=$( get_full_note_path "$note_path" )
 
     cat "$note_path"
 }
 
 usage() {
-    local name=$(basename $0)
-    cat <<EOF
+  local name=$(basename $0)
+	cat <<EOF
 $name is a command line note taking tool.
 
 Usage:
@@ -305,8 +307,8 @@ EOF
 }
 
 version() {
-    local name=$(basename $0)
-    cat <<EOF
+  local name=$(basename $0)
+	cat <<EOF
 $name $notes_version
 EOF
 }
@@ -324,57 +326,57 @@ main() {
     fi
 
     case "$1" in
-    "new" | "n")
-        cmd="new_note"
-        modified=1
-        ;;
-    "ls")
-        cmd="ls_notes"
-        ;;
-    "search" | "s")
-        cmd="search_filenames_and_contents"
-        ;;
-    "find" | "f")
-        cmd="find_notes"
-        ;;
-    "grep" | "g")
-        cmd="grep_notes"
-        ;;
-    "open" | "o")
-        cmd="handle_multiple_notes open"
-        modified=1
-        ;;
-    "append" | "a")
-        cmd="append_note"
-        modified=1
-        ;;
-    "mv")
-        cmd="move_note"
-        modified=1
-        ;;
-    "rm")
-        cmd="remove_note"
-        modified=1
-        ;;
-    "cat" | "c")
-        cmd="handle_multiple_notes cat"
-        ;;
-    --help | -help | -h)
-        cmd="usage"
-        ;;
-    --version | -version)
-        cmd="version"
-        ;;
-    *)
-        printf "$1 is not a recognized notes command.\n\n"
-        cmd="usage"
-        ret=1
-        ;;
+        "new"|"n" )
+            cmd="new_note"
+            modified=1
+            ;;
+        "ls" )
+            cmd="ls_notes"
+            ;;
+        "search"|"s" )
+            cmd="search_filenames_and_contents"
+            ;;
+        "find"|"f" )
+            cmd="find_notes"
+            ;;
+        "grep"|"g" )
+            cmd="grep_notes"
+            ;;
+        "open"|"o" )
+            cmd="handle_multiple_notes open"
+            modified=1
+            ;;
+        "append"|"a" )
+            cmd="append_note"
+            modified=1
+            ;;
+        "mv" )
+            cmd="move_note"
+            modified=1
+            ;;
+        "rm" )
+            cmd="remove_note"
+            modified=1
+            ;;
+        "cat" | "c" )
+            cmd="handle_multiple_notes cat"
+            ;;
+        --help | -help | -h )
+            cmd="usage"
+            ;;
+        --version | -version )
+            cmd="version"
+            ;;
+        * )
+            printf "$1 is not a recognized notes command.\n\n"
+            cmd="usage"
+            ret=1
+            ;;
     esac
     shift
 
     $cmd "$@"
-    ret=$(($ret + $?))
+    ret=$[$ret+$?]
 
     # run POST_COMMAND hook when modification cmd succeeds
     if [ $ret -eq 0 ] && [ $modified -eq 1 ] && [ -n "$POST_COMMAND" ]; then
@@ -384,3 +386,4 @@ main() {
     exit $ret
 }
 main "$@"
+
