@@ -21,6 +21,15 @@ notes="./notes"
   assert_output $'line1\nline2'
 }
 
+@test "Should show created note when using the cat shorthand alias" {
+  echo line1 >> "$NOTES_DIRECTORY/note.md"
+  echo line2 >> "$NOTES_DIRECTORY/note.md"
+  run $notes c note.md
+
+  assert_success
+  assert_output $'line1\nline2'
+}
+
 @test "Accepts names without .md to show" {
   echo line1 >> "$NOTES_DIRECTORY/note.md"
   echo line2 >> "$NOTES_DIRECTORY/note.md"
