@@ -12,12 +12,12 @@ teardown() {
 
 notes="./notes"
 
-@test "Should output nothing and return non-zero if there are no notes to list" {
+@test "Should display the templates folder when no notes are present" {
   run $notes ls
 
-  assert_failure
+  assert_success
   echo $output
-  assert_equal $(echo $output | wc -w) 0
+  assert_equal $(echo $output | wc -w) 1
 }
 
 @test "Should list all notes in notes directory if no pattern is provided to find" {

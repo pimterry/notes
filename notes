@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Version
-notes_version="1.2.0"
+notes_version="1.3.0"
 
 # Default Date string before config
 QUICKNOTE_FORMAT="quicknote-%Y-%m-%d"
@@ -18,6 +18,12 @@ escaped_notes_dir="$(printf "$notes_dir" | sed -e 's/[]\/$*.^|[]/\\&/g')"
 # Make sure the notes directory actually exists, and create it if it doesn't
 if ! $(mkdir -p "$notes_dir"); then
     echo "Could not create directory $notes_dir, please update your \$NOTES_DIRECTORY" >&2
+    exit 1
+fi
+
+# Make 'template' directory if it doesn't exist
+if ! $(mkdir -p "$notes_dir/templates"); then
+    echo "Could not create directory $notes_dir/templates, please update your \$NOTES_DIRECTORY" >&2
     exit 1
 fi
 
@@ -117,6 +123,12 @@ generate_name() {
 }
 
 new_note() {
+    if [[ "$1" == "-t" ]]; then
+        shift
+        note_from_template "$@"
+        return
+    fi
+
     local note_name="$*"
     if [[ $note_name == "" ]]; then
          note_name="$(generate_name)"
@@ -278,13 +290,48 @@ cat_note() {
     cat "$note_path"
 }
 
+note_from_template() {
+    local tn=$1
+
+    if [[ ! "$tn" == *.$NOTES_EXT ]]; then
+        tn="$1.$NOTES_EXT"
+    fi
+
+    local template="$notes_dir/templates/$tn"
+    local note_name="$2"
+
+    if [[ ! "$note_name" == *.$NOTES_EXT ]]; then
+        note_name="$note_name.$NOTES_EXT"
+    fi
+
+    local note_path="$notes_dir/$note_name"
+
+    if [[ ! -f "$template" ]]; then
+        printf "Template not found: $template\n"
+        exit 1
+    fi
+
+    if [[ -z "$note_name" ]]; then
+        printf "New note requires a name, but none was provided.\n"
+        exit 1
+    fi
+
+    if [[ -e "$note_path" ]]; then
+        printf "Note already exists: $note_path\n"
+        exit 1
+    fi
+
+    cp "$template" "$note_path"
+    open_note "$note_name"
+}
+
 usage() {
   local name=$(basename $0)
 	cat <<EOF
 $name is a command line note taking tool.
 
 Usage:
-    $name new|n <name>                    # Create a new note
+    $name new|n [-t] <template> <name>    # Create a new note, if -t is given, use template
     $name ls <pattern>                    # List notes by path
     $name find|f [pattern]                # Search notes by filename and path
     $name grep|g <pattern>                # Search notes by content
