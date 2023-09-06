@@ -17,7 +17,7 @@ __notes_cmd ()
 {
   local -a list
   list=(
-    new:'Create new file, if -t is given, use template'
+    new:'Create new file'
     ls:'<pattern> List notes by path'
     find:'[pattern] Search notes by filename and path'
     grep:'<pattern> Search notes by content'

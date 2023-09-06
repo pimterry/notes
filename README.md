@@ -95,6 +95,7 @@ There are also more complex options available. You can set any configuration pro
 
 * `QUICKNOTE_FORMAT` changes the way that quicknotes are generated. The string formatted using the `date` command.
 * `NOTES_EXT` changes the default extension that notes are saved with.
+* `TEMPLATES_DIR` changes the directory in which templates are stored.
 * `NOTES_DIRECTORY` changes the directory in which notes are stored.
 * `EDITOR` can also be overriden here, for `notes` only.
 * `POST_COMMAND` sets the command to run after any modification command (e.g. `open`, `mv`, ...) succeeds
@@ -102,7 +103,7 @@ There are also more complex options available. You can set any configuration pro
 
 ## How do I use it?
 
-### `notes new [-t] <template-name> <note-name>`
+### `notes new [-t <template-name>] <note-name>`
 
 Opens your `$EDITOR` of choice for a new note, with the given name. The name can include slashes, if you want to put your note in a subfolder. Leave out the name if you want one to be generated for you (e.g. `quicknote-2016-12-21.md` - format configurable with `$QUICKNOTE_FORMAT`). If you want to place a quicknote in a subfolder, use a trailing slash: `notes new subfolder/`. Shorthand alias also available with `notes n`.
 
