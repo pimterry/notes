@@ -121,16 +121,32 @@ new_note() {
     local template_used=false
     local note_name=""
 
+    if [[ "$#" -eq 0 ]]; then
+        printf "Usage: new_note [-t] [template] [note_name]\n"
+        return 1
+    fi
+
     if [[ "$1" == "-t" ]]; then
+        if [[ "$#" -eq 1 ]]; then
+            printf "Error: Template name is missing.\n"
+            return 1
+        fi
         template_used=true
         shift
     fi
 
-    if [[ "$#" -eq 0 ]]; then
-        note_name="$(generate_name).$NOTES_EXT"
-    elif [[ "$#" -eq 1 ]]; then
-        note_name="$1"
+    if [[ "$#" -eq 1 ]]; then
+        if "$template_used"; then
+            note_name="$(generate_name).$NOTES_EXT"
+        else
+            printf "Error: Note name is missing.\n"
+            return 1
+        fi
     else
+        note_name="$1.$NOTES_EXT"
+    fi
+
+    if [[ "$#" -eq 2 ]]; then
         note_name="$2.$NOTES_EXT"
     fi
 
@@ -146,7 +162,7 @@ new_note() {
 
         if [[ ! -d "$template_folder" ]]; then
             printf "Template folder not found: $template_folder\n"
-            exit 1
+            return 1
         fi
 
         local template_name="$1"
@@ -157,6 +173,11 @@ new_note() {
 
         local template_path="$template_folder/$template_name"
         local note_path="$notes_dir/$note_name"
+        if [[ ! -e "$template_path" ]]; then
+            printf "Template not found\n"
+            printf "You can create it by running: notes new .templates/$template_name\n"
+            exit 1
+        fi
         cp "$template_path" "$note_path"
     fi
 
