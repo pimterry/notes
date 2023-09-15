@@ -122,8 +122,23 @@ new_note() {
     local note_name=""
 
     if [[ "$#" -eq 0 ]]; then
-        printf "Usage: new_note [-t] [template] [note_name]\n"
-        return 1
+        note_name="$(generate_name).$NOTES_EXT"
+    fi
+
+    if [[ "$#" -eq 1 ]]; then
+        if echo "$1" | grep "/$" &> /dev/null; then
+            note_name="$1$(generate_name)"
+        else
+            note_name="$1"
+        fi
+    fi
+
+    if [[ "$#" -eq 2 ]]; then
+        note_name="$(generate_name).$NOTES_EXT"
+    fi
+
+    if [[ "$#" -eq 3 ]]; then
+        note_name="$3"
     fi
 
     if [[ "$1" == "-t" ]]; then
@@ -135,19 +150,8 @@ new_note() {
         shift
     fi
 
-    if [[ "$#" -eq 1 ]]; then
-        if "$template_used"; then
-            note_name="$(generate_name).$NOTES_EXT"
-        else
-            printf "Error: Note name is missing.\n"
-            return 1
-        fi
-    else
-        note_name="$1.$NOTES_EXT"
-    fi
-
-    if [[ "$#" -eq 2 ]]; then
-        note_name="$2.$NOTES_EXT"
+    if [[ ! "$note_name" == *.* ]]; then
+        note_name="$note_name.$NOTES_EXT"
     fi
 
     if echo "$note_name" | grep "/$" &> /dev/null; then
