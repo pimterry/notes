@@ -118,70 +118,49 @@ generate_name() {
 }
 
 new_note() {
-    local template_used=false
-    local note_name=""
-
-    if [[ "$#" -eq 0 ]]; then
-        note_name="$(generate_name).$NOTES_EXT"
-    fi
-
-    if [[ "$#" -eq 1 ]]; then
-        if echo "$1" | grep "/$" &> /dev/null; then
-            note_name="$1$(generate_name)"
-        else
-            note_name="$1"
-        fi
-    fi
-
-    if [[ "$#" -eq 2 ]]; then
-        note_name="$(generate_name).$NOTES_EXT"
-    fi
-
-    if [[ "$#" -eq 3 ]]; then
-        note_name="$3"
-    fi
-
+    local template_path="" # Either empty (no template) or the path to the template we'll use
     if [[ "$1" == "-t" ]]; then
-        if [[ "$#" -eq 1 ]]; then
-            printf "Error: Template name is missing.\n"
-            return 1
-        fi
-        template_used=true
         shift
+
+        local template_name="$1"
+        if [[ $template_name == "" ]]; then
+            printf "Error: Template name is missing.\n"
+            exit 1
+        fi
+        shift
+
+        local template_folder="$notes_dir/$TEMPLATES_DIR"
+
+        if [[ ! -d "$template_folder" ]]; then
+            printf "Template folder not found: $template_folder\n"
+            exit 1
+        fi
+
+        if [[ ! "$template_name" == *.$NOTES_EXT ]]; then
+            template_name="$template_name.$NOTES_EXT"
+        fi
+
+        template_path="$template_folder/$template_name"
+        if [[ ! -e "$template_path" ]]; then
+            printf "Template not found\n"
+            printf "You can create it by running: notes new .templates/$template_name\n"
+            exit 1
+        fi
     fi
 
-    if [[ ! "$note_name" == *.* ]]; then
-        note_name="$note_name.$NOTES_EXT"
+    local note_name="$*"
+    if [[ $note_name == "" ]]; then
+        note_name="$(generate_name)"
     fi
 
     if echo "$note_name" | grep "/$" &> /dev/null; then
         note_name="${note_name}/$(generate_name)"
     fi
 
-    local note_dir="$(dirname "$notes_dir/$note_name")"
-    mkdir -p "$note_dir"
+    mkdir -p "$(dirname "$notes_dir/$note_name")"
 
-    if "$template_used"; then
-        local template_folder="$notes_dir/$TEMPLATES_DIR"
-
-        if [[ ! -d "$template_folder" ]]; then
-            printf "Template folder not found: $template_folder\n"
-            return 1
-        fi
-
-        local template_name="$1"
-
-        if [[ ! "$template_name" == *.$NOTES_EXT ]]; then
-            template_name="$template_name.$NOTES_EXT"
-        fi
-
-        local template_path="$template_folder/$template_name"
-        local note_path="$notes_dir/$note_name"
-        if [[ ! -e "$template_path" ]]; then
-            printf "Template not found\n"
-            printf "You can create it by running: notes new .templates/$template_name\n"
-            exit 1
-        fi
+    if [[ "$template_path" != "" ]]; then
+        local note_path=$(get_full_note_path "$note_name")
         cp "$template_path" "$note_path"
     fi
 
