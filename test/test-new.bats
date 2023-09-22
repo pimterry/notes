@@ -86,3 +86,35 @@ notes="./notes"
   assert_success
   assert_exists "$NOTES_DIRECTORY/explicit-ext.zzz"
 }
+
+@test "Should create a new template note" {
+  run $notes new .templates/basic
+
+  assert_success
+  assert_exists "$NOTES_DIRECTORY/.templates/basic.md"
+}
+
+@test "Should create a new note with the given template" {
+  run $notes new .templates/basic
+  run $notes new -t basic note_with_template
+
+  assert_success
+  assert_exists "$NOTES_DIRECTORY/note_with_template.md"
+}
+
+@test "Should create new note from template within subfolders" {
+  run $notes new .templates/basic
+  run $notes new -t basic subfolder/note_with_template
+
+  assert_success
+  assert_exists "$NOTES_DIRECTORY/subfolder/note_with_template.md"
+}
+
+@test "Check that the template is used" {
+  run $notes append .templates/basic "This is a basic template"
+  run $notes new -t basic note_with_template
+  run $notes cat note_with_template
+
+  assert_success
+  assert_output "This is a basic template"
+}

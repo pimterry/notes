@@ -16,10 +16,10 @@ note. You can set $EDITOR in your shell to override it.
 This file overrides any settings in your rc file.
 .SH COMMANDS
 .TP
-.BR new ", " n " " \fR[\fINAME\fR]
-Open your text editor with a new note, with given name.
+.BR new ", " n " " "\fR[\fB\-t\fR] " \fR[\fBTEMPLATE\fR] \fR[\fINAME\fR]
+Open your text editor with a new note, with the given name.
 If no name is given, a quick note will be created with an auto-generated
-name.
+name. If the \-t option is provided, the specified TEMPLATE will be used for the new note.
 .TP
 .BR find ", " f " " \fR[\fIPATTERN\fR]
 Searches for notes using the given pattern, returning all matches. If no

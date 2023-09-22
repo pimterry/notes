@@ -14,5 +14,8 @@
 # Define the directory where notes are stored
 # NOTES_DIRECTORY=~/notes
 
+# Define the directory where templates are stored
+# TEMPLATES_DIR=.templates
+
 # Define command to run after modification command
 # POST_COMMAND="/path/to/custom_script.sh"

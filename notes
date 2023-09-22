@@ -6,6 +6,7 @@ notes_version="1.2.0"
 # Default Date string before config
 QUICKNOTE_FORMAT="quicknote-%Y-%m-%d"
 NOTES_EXT="md"
+TEMPLATES_DIR=".templates"
 # Look for configuration file at ~/.config/notes/config and use it
 if [ -f ~/.config/notes/config ]; then
     . ~/.config/notes/config
@@ -117,9 +118,39 @@ generate_name() {
 }
 
 new_note() {
+    local template_path="" # Either empty (no template) or the path to the template we'll use
+    if [[ "$1" == "-t" ]]; then
+        shift
+
+        local template_name="$1"
+        if [[ $template_name == "" ]]; then
+            printf "Error: Template name is missing.\n"
+            exit 1
+        fi
+        shift
+
+        local template_folder="$notes_dir/$TEMPLATES_DIR"
+
+        if [[ ! -d "$template_folder" ]]; then
+            printf "Template folder not found: $template_folder\n"
+            exit 1
+        fi
+
+        if [[ ! "$template_name" == *.$NOTES_EXT ]]; then
+            template_name="$template_name.$NOTES_EXT"
+        fi
+
+        template_path="$template_folder/$template_name"
+        if [[ ! -e "$template_path" ]]; then
+            printf "Template not found\n"
+            printf "You can create it by running: notes new .templates/$template_name\n"
+            exit 1
+        fi
+    fi
+
     local note_name="$*"
     if [[ $note_name == "" ]]; then
-         note_name="$(generate_name)"
+        note_name="$(generate_name)"
     fi
 
     if echo "$note_name" | grep "/$" &> /dev/null; then
@@ -127,6 +158,11 @@ new_note() {
     fi
 
     mkdir -p "$(dirname "$notes_dir/$note_name")"
+
+    if [[ "$template_path" != "" ]]; then
+        local note_path=$(get_full_note_path "$note_name")
+        cp "$template_path" "$note_path"
+    fi
 
     open_note "$note_name"
 }
@@ -284,7 +320,7 @@ usage() {
 $name is a command line note taking tool.
 
 Usage:
-    $name new|n <name>                    # Create a new note
+    $name new|n [-t <template>] <name>    # Create a new note, if -t is given, use template
     $name ls <pattern>                    # List notes by path
     $name find|f [pattern]                # Search notes by filename and path
     $name grep|g <pattern>                # Search notes by content
