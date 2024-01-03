@@ -314,6 +314,18 @@ cat_note() {
     cat "$note_path"
 }
 
+realpath() {
+    local note_path=$1
+
+    if [[ -z "$note_path" ]]; then
+        note_path=$notes_dir
+    else
+        note_path=$( get_full_note_path "$note_path" )
+    fi
+
+    echo "$note_path"
+}
+
 usage() {
   local name=$(basename $0)
 	cat <<EOF
@@ -331,6 +343,7 @@ Usage:
     $name mv <source> <dest>|<directory>  # Rename a note, or move a note when a directory is given
     $name rm [-r | --recursive] <name>    # Remove note, or folder if -r or --recursive is given
     $name cat|c <name>                    # Display note
+    $name realpath [name]                 # Display full path of note, or notes directory if no name is given
     echo <name> | $name open|o            # Open all note filenames piped in
     echo <name> | $name cat               # Display all note filenames piped in
     $name --help                          # Print this usage information
@@ -396,6 +409,9 @@ main() {
             ;;
         "cat" | "c" )
             cmd="handle_multiple_notes cat"
+            ;;
+        "realpath" )
+            cmd="realpath"
             ;;
         --help | -help | -h )
             cmd="usage"
