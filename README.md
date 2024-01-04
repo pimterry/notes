@@ -156,6 +156,10 @@ Displays the note. Shorthand alias also available with `notes c`.
 
 Combine these together! This opens each matching note in your `$EDITOR` in turn.
 
+### `notes realpath [note-name]`
+
+Displays the path to the note name, if provided. Displays the root path to all notes otherwise.
+
 ## Tell me of the future
 
 All the above works. Here's what's coming next:

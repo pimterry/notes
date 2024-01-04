@@ -317,9 +317,10 @@ cat_note() {
 realpath() {
     local note_path=$1
 
+    # If no note name was provided, return notes directory
     if [[ -z "$note_path" ]]; then
         note_path=$notes_dir
-    else
+    else # otherwise, get full path of note
         note_path=$( get_full_note_path "$note_path" )
     fi
 
