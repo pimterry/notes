@@ -10,6 +10,7 @@ teardown() {
   teardownNotesEnv
 }
 
+export EDITOR=touch
 notes="./notes"
 
 @test "realpath should return notes_dir without a filename" {
